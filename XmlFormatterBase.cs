@@ -38,22 +38,27 @@ namespace pretty_registry
         /// <summary>
         /// Main entry point: process a root element into a formatted string.
         /// </summary>
-        /// <param name="root">Root XML element</param>
+        /// <param name="document">XML document</param>
         /// <returns>Formatted string</returns>
-        public string Process(XElement root)
+        public string Process(XDocument document)
         {
             var sb = new StringBuilder();
+
+            // Hacky but hard to do otherwise
+            sb.Append(document.Declaration.ToString());
+            sb.Append(Environment.NewLine);
 
             var settings = new XmlWriterSettings()
             {
                 Indent = true,
                 IndentChars = this.IndentChars,
                 Encoding = Encoding.UTF8,
+                OmitXmlDeclaration = true,
 
             };
-            using (var writer = XmlWriter.Create(sb))
+            using (var writer = XmlWriter.Create(sb, settings))
             {
-                WriteElement(writer, root);
+                WriteElement(writer, document.Root);
             }
             return sb.ToString().Replace(" />", "/>");
         }

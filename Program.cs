@@ -20,7 +20,7 @@ namespace pretty_registry
             {
                 document = XDocument.Load(reader, LoadOptions.PreserveWhitespace);
             }
-            var result = formatter.Process(document.Root);
+            var result = formatter.Process(document);
             using (var writer = new StreamWriter(origFn + ".result", false, Encoding.UTF8))
             {
                 writer.WriteLine(result);
