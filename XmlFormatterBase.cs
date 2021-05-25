@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml;
+using System;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 namespace pretty_registry
@@ -10,19 +11,55 @@ namespace pretty_registry
     public abstract class XmlFormatterBase
     {
 
-        protected static Dictionary<string, int> FindAttributeMaxLengths(IEnumerable<XElement> elements)
+        //ValueTuple<string, int>
+        public struct AttributeAlignment
+        {
+            public string Name;
+            public int AlignWidth;
+
+            public bool ShouldAlign
+            {
+                get => (AlignWidth > 0);
+            }
+
+            public int FullWidth
+            {
+                get
+                {
+                    if (!ShouldAlign) throw new InvalidOperationException("Not logical to access FullWidth when we should not align this attribute");
+                    return $"{Name}=''".Length + AlignWidth + 1;
+                }
+            }
+            public AttributeAlignment(string name, int alignWidth) => (Name, AlignWidth) = (name, alignWidth);
+        };
+        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements)
         {
             var q = from el in elements
                     from attr in el.Attributes()
                     group attr.Value.Length by attr.Name.LocalName into g
+                    // select new Tuple<string, int>(g.Key, g.Max());
                     select (Name: g.Key, MaxLength: g.Max());
-            return q.ToDictionary(p => p.Name, p => p.MaxLength);
-        }
-        protected static string[] FindAttributeOrder(IEnumerable<XElement> elements, Dictionary<string, int> maxLengths)
-        {
-            return elements.First().Attributes().Select(a => a.Name.LocalName).ToArray();
-        }
+            // group (attr, attr.Value.Length) by attr.Name.LocalName into g
+            // select (Name: g.Key, MaxLength: g.Max(arg => arg.Length));
+            var lengthDictionary = q.ToDictionary(arg => arg.Name, arg => arg.MaxLength);
 
+            var alignedAttrNames = (from a in elements.First().Attributes()
+                                    select a.Name.LocalName).ToList();
+            var knownNames = alignedAttrNames.ToHashSet();
+            var result = (from name in alignedAttrNames
+                          select new AttributeAlignment(name, lengthDictionary[name])).ToList();
+
+            // Don't align after the last attribute.
+            result[result.Count - 1] = new AttributeAlignment(result[result.Count - 1].Name, 0);
+
+            // Add all remaining attributes, with no alignment.
+            result.AddRange(
+                from a in lengthDictionary
+                where !knownNames.Contains(a.Key)
+                select new AttributeAlignment(a.Key, 0)
+            );
+            return result.ToArray();
+        }
         protected static string MakeIndent(XElement element)
         {
             var level = element.Ancestors().Count() + 1;
@@ -68,35 +105,38 @@ namespace pretty_registry
             {
                 WriteElement(writer, root);
             }
-            return sb.ToString().Replace("\" />", "\"/>");
+            return sb.ToString().Replace(" />", "/>");
         }
 
         protected abstract void WriteElement(XmlWriter writer, XElement element);
         protected void WriteElementWithAlignedAttrs(XmlWriter writer,
                                                     XElement e,
-                                                    Dictionary<string, int> maxWidths,
-                                                    string[] attrOrder,
+                                                    AttributeAlignment[] alignments,
                                                     StringBuilder sb)
         {
             writer.WriteStartElement(e.Name.LocalName);
-            foreach (var attrName in attrOrder)
+            foreach (var alignment in alignments)
             {
-                // Console.WriteLine(attrName);
-                var maxAttrWidth = maxWidths.GetValueOrDefault(attrName);
-                var attr = e.Attributes().Where(a => a.Name.LocalName == attrName).DefaultIfEmpty(null).First();
-                if (attr == null)
+                var attr = e.Attribute(alignment.Name);
+                if (alignment.ShouldAlign)
                 {
-                    var needWidth = $"{attrName}=''".Length + maxAttrWidth + 1;
-                    WriteSpaces(sb, needWidth);
+                    if (attr == null)
+                    {
+                        WriteSpaces(sb, alignment.FullWidth);
+                    }
+                    else
+                    {
+                        writer.WriteAttributeString(alignment.Name, attr.Value);
+                        writer.Flush();
+
+                        WriteSpaces(sb, alignment.AlignWidth - attr.Value.Length);
+                    }
                 }
-                else
+                else if (attr != null)
                 {
-                    writer.WriteAttributeString(attrName, attr.Value);
-                    writer.Flush();
-
-                    WriteSpaces(sb, maxAttrWidth - attr.Value.Length);
+                    // Shouldn't align this attribute, but we should handle it.
+                    writer.WriteAttributeString(alignment.Name, attr.Value);
                 }
-
             }
             WriteNodes(writer, e.Nodes());
             writer.WriteEndElement();
@@ -155,15 +195,13 @@ namespace pretty_registry
             var elements = (from n in nodeArray
                             where n.NodeType == XmlNodeType.Element
                             select n as XElement).ToArray();
-            var maxWidths = FindAttributeMaxLengths(elements);
-            if (maxWidths.Count == 0)
+            var alignments = FindAttributeAlignments(elements);
+            if (alignments.Count() == 0)
             {
                 // nothing to align here?
                 WriteNodes(writer, nodeArray);
                 return;
             }
-            var attributeOrder = FindAttributeOrder(elements, maxWidths);
-
             var settings = new XmlWriterSettings()
             {
                 Indent = false,
@@ -180,7 +218,7 @@ namespace pretty_registry
                     var childElt = n as XElement;
                     if (childElt != null)
                     {
-                        WriteElementWithAlignedAttrs(newWriter, childElt, maxWidths, attributeOrder, sb);
+                        WriteElementWithAlignedAttrs(newWriter, childElt, alignments, sb);
                     }
                     else
                     {
