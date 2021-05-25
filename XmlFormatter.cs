@@ -91,7 +91,6 @@ namespace pretty_registry
             var sb = new StringBuilder();
             using (var newWriter = XmlWriter.Create(sb, settings))
             {
-                newWriter.WriteRaw(MakeIndent(e));
                 foreach (var n in e.Nodes())
                 {
                     var childElt = n as XElement;
@@ -106,8 +105,6 @@ namespace pretty_registry
 
                     }
                 }
-                // newWriter.WriteRaw(Environment.NewLine);
-
             }
             var inner = sb.ToString();
 
