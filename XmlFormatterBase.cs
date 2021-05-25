@@ -12,9 +12,9 @@ namespace pretty_registry
 {
     public abstract class XmlFormatterBase
     {
-        protected static string MakeIndent(XElement element)
+        protected static string MakeIndent(XElement element, int levelAdjust = 0)
         {
-            var level = element.Ancestors().Count() + 1;
+            var level = element.Ancestors().Count() + levelAdjust;
             return new string(' ', level * 4);
         }
 
@@ -116,9 +116,10 @@ namespace pretty_registry
         protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings settings, WrappedWrite wrapped)
         {
             var sb = new StringBuilder();
-            settings.ConformanceLevel = ConformanceLevel.Fragment;
-            settings.OmitXmlDeclaration = true;
-            using (var newWriter = XmlWriter.Create(sb, settings))
+            var mySettings = settings.Clone();
+            mySettings.ConformanceLevel = ConformanceLevel.Fragment;
+            mySettings.OmitXmlDeclaration = true;
+            using (var newWriter = XmlWriter.Create(sb, mySettings))
             {
                 wrapped(newWriter, sb);
             }
@@ -210,7 +211,9 @@ namespace pretty_registry
         /// <param name="writer"></param>
         /// <param name="nodes"></param>
         /// <param name="extraWidths"></param>
-        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer, IEnumerable<XNode> nodes, IDictionary<string, int> extraWidths = null)
+        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer,
+                                                     IEnumerable<XNode> nodes,
+                                                     IDictionary<string, int> extraWidths = null)
         {
             var nodeArray = nodes.ToArray();
             var elements = (from n in nodeArray
@@ -327,6 +330,27 @@ namespace pretty_registry
             WriteAttributes(writer, e);
             WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidths);
             writer.WriteEndElement();
+        }
+
+        protected void WriteElementWithAttrNewlines(XmlWriter writer, XElement e, int levelAdjust = 0)
+        {
+
+            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
+            {
+                newWriter.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+                newWriter.Flush();
+                foreach (var attr in e.Attributes())
+                {
+                    sb.Append(Environment.NewLine);
+                    sb.Append(MakeIndent(e, levelAdjust + 1));
+                    newWriter.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, attr.Value);
+                    newWriter.Flush();
+                }
+
+                // Now write children
+                WriteNodes(newWriter, e.Nodes());
+                newWriter.WriteEndElement();
+            });
         }
     }
 }

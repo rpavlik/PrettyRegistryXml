@@ -80,6 +80,12 @@ namespace pretty_registry
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, e, isBitmask);
             }
+            // else if (e.Name == "extension")
+            // {
+            //     // This will change the format! (for the better, probably, though)
+            //     // Also, missing indent at level "extensions" so we adjust by -1
+            //     WriteElementWithAttrNewlines(writer, e, -1);
+            // }
             else
             {
                 base.WriteElement(writer, e);
