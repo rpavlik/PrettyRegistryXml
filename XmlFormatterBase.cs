@@ -80,31 +80,36 @@ namespace pretty_registry
                                                     StringBuilder sb)
         {
             writer.WriteStartElement(e.Name.LocalName);
+            WriteAlignedAttrs(writer, e, alignments, sb);
+            WriteNodes(writer, e.Nodes());
+            writer.WriteEndElement();
+        }
+
+        protected void WriteElementWithAlignedAttrs(XmlWriter writer,
+                                                    XElement e,
+                                                    ElementAlignment alignment,
+                                                    StringBuilder sb)
+        {
+            writer.WriteStartElement(e.Name.LocalName);
+            writer.Flush();
+            alignment.AppendElementNamePadding(e, sb);
+            WriteAlignedAttrs(writer, e, alignment.AttributeAlignments, sb);
+            WriteNodes(writer, e.Nodes());
+            writer.WriteEndElement();
+        }
+
+        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, AttributeAlignment[] alignments, StringBuilder sb)
+        {
             foreach (var alignment in alignments)
             {
                 var attr = e.Attribute(alignment.Name);
-                if (alignment.ShouldAlign)
+                if (attr != null)
                 {
-                    if (attr == null)
-                    {
-                        WriteSpaces(sb, alignment.FullWidth);
-                    }
-                    else
-                    {
-                        writer.WriteAttributeString(alignment.Name, attr.Value);
-                        writer.Flush();
-
-                        WriteSpaces(sb, alignment.AlignWidth - attr.Value.Length);
-                    }
-                }
-                else if (attr != null)
-                {
-                    // Shouldn't align this attribute, but we should handle it.
                     writer.WriteAttributeString(alignment.Name, attr.Value);
+                    writer.Flush();
                 }
+                alignment.AppendAttributePadding(attr, sb);
             }
-            WriteNodes(writer, e.Nodes());
-            writer.WriteEndElement();
         }
 
         public delegate void WrappedWrite(XmlWriter writer, StringBuilder stringBuilder);

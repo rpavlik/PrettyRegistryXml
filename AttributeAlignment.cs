@@ -214,7 +214,7 @@ namespace pretty_registry
         #endregion
     }
 
-    public class NameAlignment
+    public static class ElementNameAlignment
     {
 
         #region XElement-related methods
@@ -236,6 +236,44 @@ namespace pretty_registry
             }
         }
 
+        #endregion
+    }
+
+    public struct ElementAlignment
+    {
+        public int NameAlignment;
+
+        public AttributeAlignment[] AttributeAlignments;
+        #region Other helpers
+        public void AppendElementNamePadding(XElement element, StringBuilder stringBuilder)
+        {
+            var len = element.Name.LocalName.Length;
+            if (len < NameAlignment)
+            {
+                stringBuilder.Append("".PadRight(NameAlignment - len));
+            }
+        }
+        #endregion
+
+        #region XElement-related methods
+        /// <summary>
+        /// Compute an ElementAlignment for a collection of elements.
+        /// This wraps both FindNameAlignment and FindAttributeAlignments.
+        /// </summary>
+        /// <param name="elements">A collection of elements</param>
+        /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
+        /// <returns>Array of alignments</returns>
+        public static ElementAlignment FindElementAlignment(IEnumerable<XElement> elements, IDictionary<AttributeName, int> extraWidth = null)
+        {
+            var elts = elements.ToArray();
+            var nameAlignment = ElementNameAlignment.FindNameAlignment(elts);
+            var attrAligns = AttributeAlignment.FindAttributeAlignments(elts, extraWidth);
+            return new ElementAlignment
+            {
+                NameAlignment = nameAlignment,
+                AttributeAlignments = attrAligns,
+            };
+        }
         #endregion
     }
 }
