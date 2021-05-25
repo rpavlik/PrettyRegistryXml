@@ -135,12 +135,8 @@ namespace pretty_registry
         {
             writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
             WriteAttributes(writer, e);
-            var settings = new XmlWriterSettings()
-            {
-                Indent = false,
-                OmitXmlDeclaration = true,
-                ConformanceLevel = ConformanceLevel.Fragment,
-            };
+            var settings = writer.Settings.Clone();
+            settings.Indent = false;
             WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
             {
                 foreach (var n in e.Nodes())
@@ -179,16 +175,8 @@ namespace pretty_registry
                 return;
             }
             var alignment = ElementAlignment.FindElementAlignment(elements, extraWidths);
-            var settings = new XmlWriterSettings()
-            {
-                Indent = false,
-                OmitXmlDeclaration = true,
-                ConformanceLevel = ConformanceLevel.Fragment,
-                NewLineOnAttributes = false,
-                CloseOutput = false,
-            };
 
-            WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
+            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
                 foreach (var n in nodeArray)
                 {
@@ -226,16 +214,8 @@ namespace pretty_registry
                 WriteNodes(writer, nodeArray);
                 return;
             }
-            var settings = new XmlWriterSettings()
-            {
-                Indent = false,
-                OmitXmlDeclaration = true,
-                ConformanceLevel = ConformanceLevel.Fragment,
-                NewLineOnAttributes = false,
-                CloseOutput = false,
-            };
 
-            WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
+            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
                 foreach (var n in nodeArray)
                 {
