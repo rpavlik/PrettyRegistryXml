@@ -159,6 +159,57 @@ namespace pretty_registry
             }
         }
 
+        /// <summary>
+        /// Write nodes, aligning element names and attributes of those that are elements.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="nodes"></param>
+        /// <param name="extraWidths"></param>
+        protected void WriteNodesWithEltsAligned(XmlWriter writer, IEnumerable<XNode> nodes, IDictionary<string, int> extraWidths = null)
+        {
+            var nodeArray = nodes.ToArray();
+            var elements = (from n in nodeArray
+                            where n.NodeType == XmlNodeType.Element
+                            select n as XElement).ToArray();
+            if (elements.Length == 0)
+            {
+                // No elements to align
+                WriteNodes(writer, nodeArray);
+                return;
+            }
+            var alignment = ElementAlignment.FindElementAlignment(elements, extraWidths);
+            var settings = new XmlWriterSettings()
+            {
+                Indent = false,
+                OmitXmlDeclaration = true,
+                ConformanceLevel = ConformanceLevel.Fragment,
+                NewLineOnAttributes = false,
+                CloseOutput = false,
+            };
+
+            WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
+            {
+                foreach (var n in nodeArray)
+                {
+                    var childElt = n as XElement;
+                    if (childElt != null)
+                    {
+                        WriteElementWithAlignedAttrs(newWriter, childElt, alignment, sb);
+                    }
+                    else
+                    {
+                        n.WriteTo(newWriter);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Write nodes, aligning the attributes of those that are elements.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="nodes"></param>
+        /// <param name="extraWidths"></param>
         protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer, IEnumerable<XNode> nodes, IDictionary<string, int> extraWidths = null)
         {
             var nodeArray = nodes.ToArray();
@@ -214,7 +265,7 @@ namespace pretty_registry
             }
         }
 
-        protected void WriteElementWithSelectivelyAlignedChildAttrs(
+        protected void WriteElementWithAlignedChildAttrsInGroups(
             XmlWriter writer,
             XElement e,
             System.Predicate<XNode> groupingPredicate,
@@ -255,12 +306,26 @@ namespace pretty_registry
             writer.WriteEndElement();
         }
 
+        /// <summary>
+        /// Write an element, and write its children aligning attributes across all of them.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="e"></param>
+        /// <param name="extraWidths"></param>
         protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e, Dictionary<string, int> extraWidths = null)
         {
 
             writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
             WriteAttributes(writer, e);
             WriteNodesWithEltAlignedAttrs(writer, e.Nodes(), extraWidths);
+            writer.WriteEndElement();
+        }
+        protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e, Dictionary<string, int> extraWidths = null)
+        {
+
+            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteAttributes(writer, e);
+            WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidths);
             writer.WriteEndElement();
         }
     }

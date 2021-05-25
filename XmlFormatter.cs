@@ -61,10 +61,13 @@ namespace pretty_registry
             {
                 WriteSingleLineElement(writer, e);
             }
+            else if (e.Name == "require" && e.Parent.Name == "feature")
+            {
+                WriteElementWithAlignedChildElts(writer, e);
+            }
             else if (e.Name == "tags" && e.HasElements)
             {
                 WriteElementWithAlignedChildAttrs(writer, e);
-
             }
             else if (e.Name == "enums" && e.HasElements)
             {
@@ -75,7 +78,7 @@ namespace pretty_registry
             }
             else if (e.Name == "types")
             {
-                WriteElementWithSelectivelyAlignedChildAttrs(writer, e, isBitmask);
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, isBitmask);
             }
             else
             {
