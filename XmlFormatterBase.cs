@@ -6,92 +6,12 @@ using System.Xml;
 using System;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
+using AttributeName = System.String;
+
 namespace pretty_registry
 {
     public abstract class XmlFormatterBase
     {
-
-        //ValueTuple<string, int>
-        public struct AttributeAlignment
-        {
-            public string Name;
-            public int AlignWidth;
-
-            public bool ShouldAlign
-            {
-                get => (AlignWidth > 0);
-            }
-
-            public int FullWidth
-            {
-                get
-                {
-                    if (!ShouldAlign) throw new InvalidOperationException("Not logical to access FullWidth when we should not align this attribute");
-                    return $"{Name}=''".Length + AlignWidth + 1;
-                }
-            }
-            public AttributeAlignment(string name, int alignWidth) => (Name, AlignWidth) = (name, alignWidth);
-
-            public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
-            public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new AttributeAlignment(old.Name, alignWidth);
-            public static AttributeAlignment ReplaceWithUnaligned(AttributeAlignment old) => MakeUnaligned(old.Name);
-        };
-        private static (AttributeAlignment[], AttributeAlignment[]) FindAttributeAlignmentsInternal(IEnumerable<XElement> elements)
-        {
-            var q = from el in elements
-                    from attr in el.Attributes()
-                    group attr.Value.Length by attr.Name.LocalName into g
-                    select (Name: g.Key, MaxLength: g.Max());
-
-            var lengthDictionary = q.ToDictionary(arg => arg.Name, arg => arg.MaxLength);
-            var eltWithMostAttributes = (from elt in elements
-                                         orderby elt.Attributes().Count() descending
-                                         select elt).First();
-            var alignedAttrNames = (from a in eltWithMostAttributes.Attributes()
-                                    select a.Name.LocalName).ToList();
-            var knownNames = alignedAttrNames.ToHashSet();
-            var aligned = from name in alignedAttrNames
-                          select new AttributeAlignment(name, lengthDictionary[name]);
-            var leftovers =
-                from a in lengthDictionary
-                where !knownNames.Contains(a.Key)
-                select AttributeAlignment.MakeUnaligned(a.Key);
-            return (aligned.ToArray(), leftovers.ToArray());
-        }
-        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements)
-        {
-            var (aligned, leftovers) = FindAttributeAlignmentsInternal(elements);
-
-            var result = aligned.ToList();
-            // Don't align after the last attribute.
-            result[result.Count - 1] = AttributeAlignment.ReplaceWithUnaligned(result[result.Count - 1]);
-
-            // Add all remaining attributes, with no alignment.
-            result.AddRange(leftovers);
-            return result.ToArray();
-        }
-        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IEnumerable<KeyValuePair<string, int>> extraWidth)
-        {
-            var (aligned, leftovers) = FindAttributeAlignmentsInternal(elements);
-            var extra = extraWidth.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            for (int i = 0; i < aligned.Length; i++)
-            {
-                var name = aligned[i].Name;
-                if (extra.ContainsKey(name))
-                {
-                    aligned[i] = new AttributeAlignment(name, aligned[i].AlignWidth + extra[name]);
-                }
-            }
-            var lastIndex = aligned.Length - 1;
-            if (!extra.ContainsKey(aligned[lastIndex].Name))
-            {
-                // Don't align after the last attribute, if we didn't explicitly mention it.
-                aligned[lastIndex] = AttributeAlignment.ReplaceWithUnaligned(aligned[lastIndex]);
-            }
-            var result = aligned.ToList();
-            result.AddRange(leftovers);
-            return result.ToArray();
-        }
         protected static string MakeIndent(XElement element)
         {
             var level = element.Ancestors().Count() + 1;
@@ -106,13 +26,6 @@ namespace pretty_registry
             }
             return new string(' ', num);
         }
-        protected static void WriteSpaces(XmlWriter writer, int num)
-        {
-            if (num > 0)
-            {
-                writer.WriteRaw(MakeSpaces(num));
-            }
-        }
 
         static void WriteSpaces(StringBuilder sb, int num)
         {
@@ -122,6 +35,11 @@ namespace pretty_registry
             }
         }
 
+        /// <summary>
+        /// Main entry point: process a root element into a formatted string.
+        /// </summary>
+        /// <param name="root">Root XML element</param>
+        /// <returns>Formatted string</returns>
         public string Process(XElement root)
         {
             var sb = new StringBuilder();
@@ -129,7 +47,7 @@ namespace pretty_registry
             var settings = new XmlWriterSettings()
             {
                 Indent = true,
-                IndentChars = "    ",
+                IndentChars = this.IndentChars,
                 Encoding = Encoding.UTF8,
 
             };
@@ -140,7 +58,22 @@ namespace pretty_registry
             return sb.ToString().Replace(" />", "/>");
         }
 
-        protected abstract void WriteElement(XmlWriter writer, XElement element);
+        public abstract string IndentChars { get; }
+
+        /// <summary>
+        /// The main recursive function.
+        /// Please extend and handle your special formatting cases before falling back to calling this.
+        /// </summary>
+        /// <param name="writer">The enclosing XmlWriter</param>
+        /// <param name="element">The element that needs to be written</param>
+        protected virtual void WriteElement(XmlWriter writer, XElement element)
+        {
+            writer.WriteStartElement(element.Name.LocalName, element.Name.NamespaceName);
+            WriteAttributes(writer, element);
+            WriteNodes(writer, element.Nodes());
+            writer.WriteEndElement();
+        }
+
         protected void WriteElementWithAlignedAttrs(XmlWriter writer,
                                                     XElement e,
                                                     AttributeAlignment[] alignments,
@@ -194,7 +127,8 @@ namespace pretty_registry
 
         protected void WriteSingleLineElement(XmlWriter writer, XElement e)
         {
-            WriteStartElementAndAttributes(writer, e);
+            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteAttributes(writer, e);
             var settings = new XmlWriterSettings()
             {
                 Indent = false,
@@ -212,23 +146,22 @@ namespace pretty_registry
             writer.WriteEndElement();
         }
 
-        protected void WriteStartElementAndAttributes(XmlWriter writer, XElement e)
+        protected void WriteAttributes(XmlWriter writer, XElement e)
         {
-            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
             foreach (var attr in e.Attributes())
             {
                 writer.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, attr.Value);
             }
         }
 
-        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer, IEnumerable<XNode> nodes)
+        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer, IEnumerable<XNode> nodes, IDictionary<string, int> extraWidths = null)
         {
             var nodeArray = nodes.ToArray();
             var elements = (from n in nodeArray
                             where n.NodeType == XmlNodeType.Element
                             select n as XElement).ToArray();
-            var alignments = FindAttributeAlignments(elements);
-            if (alignments.Count() == 0)
+            AttributeAlignment[] alignments = AttributeAlignment.FindAttributeAlignments(elements, extraWidths);
+            if (alignments.Length == 0)
             {
                 // nothing to align here?
                 WriteNodes(writer, nodeArray);
@@ -280,9 +213,11 @@ namespace pretty_registry
             XmlWriter writer,
             XElement e,
             System.Predicate<XNode> groupingPredicate,
-            bool includeEmptyTextNodesBetween = true)
+            bool includeEmptyTextNodesBetween = true,
+            IDictionary<string, int> extraWidth = null)
         {
-            WriteStartElementAndAttributes(writer, e);
+            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteAttributes(writer, e);
             var grouped = e.Nodes().GroupAdjacent(n =>
             {
                 if (groupingPredicate(n))
@@ -304,7 +239,7 @@ namespace pretty_registry
                 if (g.Key)
                 {
                     // These should be aligned.
-                    WriteNodesWithEltAlignedAttrs(writer, g);
+                    WriteNodesWithEltAlignedAttrs(writer, g, extraWidth);
                 }
                 else
                 {
@@ -315,10 +250,12 @@ namespace pretty_registry
             writer.WriteEndElement();
         }
 
-        protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e)
+        protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e, Dictionary<string, int> extraWidths = null)
         {
-            WriteStartElementAndAttributes(writer, e);
-            WriteNodesWithEltAlignedAttrs(writer, e.Nodes());
+
+            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteAttributes(writer, e);
+            WriteNodesWithEltAlignedAttrs(writer, e.Nodes(), extraWidths);
             writer.WriteEndElement();
         }
     }
