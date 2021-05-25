@@ -31,33 +31,65 @@ namespace pretty_registry
                 }
             }
             public AttributeAlignment(string name, int alignWidth) => (Name, AlignWidth) = (name, alignWidth);
+
+            public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
+            public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new AttributeAlignment(old.Name, alignWidth);
+            public static AttributeAlignment ReplaceWithUnaligned(AttributeAlignment old) => MakeUnaligned(old.Name);
         };
-        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements)
+        private static (AttributeAlignment[], AttributeAlignment[]) FindAttributeAlignmentsInternal(IEnumerable<XElement> elements)
         {
             var q = from el in elements
                     from attr in el.Attributes()
                     group attr.Value.Length by attr.Name.LocalName into g
-                    // select new Tuple<string, int>(g.Key, g.Max());
                     select (Name: g.Key, MaxLength: g.Max());
-            // group (attr, attr.Value.Length) by attr.Name.LocalName into g
-            // select (Name: g.Key, MaxLength: g.Max(arg => arg.Length));
-            var lengthDictionary = q.ToDictionary(arg => arg.Name, arg => arg.MaxLength);
 
-            var alignedAttrNames = (from a in elements.First().Attributes()
+            var lengthDictionary = q.ToDictionary(arg => arg.Name, arg => arg.MaxLength);
+            var eltWithMostAttributes = (from elt in elements
+                                         orderby elt.Attributes().Count() descending
+                                         select elt).First();
+            var alignedAttrNames = (from a in eltWithMostAttributes.Attributes()
                                     select a.Name.LocalName).ToList();
             var knownNames = alignedAttrNames.ToHashSet();
-            var result = (from name in alignedAttrNames
-                          select new AttributeAlignment(name, lengthDictionary[name])).ToList();
-
-            // Don't align after the last attribute.
-            result[result.Count - 1] = new AttributeAlignment(result[result.Count - 1].Name, 0);
-
-            // Add all remaining attributes, with no alignment.
-            result.AddRange(
+            var aligned = from name in alignedAttrNames
+                          select new AttributeAlignment(name, lengthDictionary[name]);
+            var leftovers =
                 from a in lengthDictionary
                 where !knownNames.Contains(a.Key)
-                select new AttributeAlignment(a.Key, 0)
-            );
+                select AttributeAlignment.MakeUnaligned(a.Key);
+            return (aligned.ToArray(), leftovers.ToArray());
+        }
+        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements)
+        {
+            var (aligned, leftovers) = FindAttributeAlignmentsInternal(elements);
+
+            var result = aligned.ToList();
+            // Don't align after the last attribute.
+            result[result.Count - 1] = AttributeAlignment.ReplaceWithUnaligned(result[result.Count - 1]);
+
+            // Add all remaining attributes, with no alignment.
+            result.AddRange(leftovers);
+            return result.ToArray();
+        }
+        protected static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IEnumerable<KeyValuePair<string, int>> extraWidth)
+        {
+            var (aligned, leftovers) = FindAttributeAlignmentsInternal(elements);
+            var extra = extraWidth.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            for (int i = 0; i < aligned.Length; i++)
+            {
+                var name = aligned[i].Name;
+                if (extra.ContainsKey(name))
+                {
+                    aligned[i] = new AttributeAlignment(name, aligned[i].AlignWidth + extra[name]);
+                }
+            }
+            var lastIndex = aligned.Length - 1;
+            if (!extra.ContainsKey(aligned[lastIndex].Name))
+            {
+                // Don't align after the last attribute, if we didn't explicitly mention it.
+                aligned[lastIndex] = AttributeAlignment.ReplaceWithUnaligned(aligned[lastIndex]);
+            }
+            var result = aligned.ToList();
+            result.AddRange(leftovers);
             return result.ToArray();
         }
         protected static string MakeIndent(XElement element)
