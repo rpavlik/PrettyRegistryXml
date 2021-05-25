@@ -59,10 +59,9 @@ namespace pretty_registry
                 foreach (var node in e.Nodes())
                 {
                     // Try to recurse if we can
-                    XElement e2 = node as XElement;
-                    if (e2 != null)
+                    if (node.NodeType == XmlNodeType.Element)
                     {
-                        WriteElement(writer, e2);
+                        WriteElement(writer, node as XElement);
                     }
                     else
                     {
