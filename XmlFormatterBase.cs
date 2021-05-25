@@ -72,10 +72,10 @@ namespace pretty_registry
 
         protected abstract void WriteElement(XmlWriter writer, XElement element);
         protected void WriteElementWithAlignedAttrs(XmlWriter writer,
-                                          XElement e,
-                                          Dictionary<string, int> maxWidths,
-                                          string[] attrOrder,
-                                          StringBuilder sb)
+                                                    XElement e,
+                                                    Dictionary<string, int> maxWidths,
+                                                    string[] attrOrder,
+                                                    StringBuilder sb)
         {
             writer.WriteStartElement(e.Name.LocalName);
             foreach (var attrName in attrOrder)
@@ -98,6 +98,22 @@ namespace pretty_registry
 
             }
             writer.WriteEndElement();
+        }
+
+        public delegate void WrappedWrite(XmlWriter writer, StringBuilder stringBuilder);
+        protected void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings settings, WrappedWrite wrapped)
+        {
+            var sb = new StringBuilder();
+            using (var newWriter = XmlWriter.Create(sb, settings))
+            {
+                wrapped(newWriter, sb);
+            }
+            var inner = sb.ToString();
+            if (inner.Length > 0)
+            {
+                outerWriter.WriteRaw(
+                    inner);
+            }
         }
 
         protected void WriteSingleLineElement(XmlWriter writer, XElement e)
@@ -135,5 +151,89 @@ namespace pretty_registry
             }
         }
 
+
+        // protected void WriteElementsWithAlignedAttrs(XmlWriter writer, IEnumerable<XElement> elements)
+        // {
+        //     var elts = elements.ToArray();
+        //     var maxWidths = FindAttributeMaxLengths(elts);
+        //     var attributeOrder = FindAttributeOrder(elts, maxWidths);
+
+        //     var settings = new XmlWriterSettings()
+        //     {
+        //         Indent = false,
+        //         OmitXmlDeclaration = true,
+        //         ConformanceLevel = ConformanceLevel.Fragment,
+        //         NewLineOnAttributes = false,
+        //         CloseOutput = false,
+        //     };
+        //     var sb = new StringBuilder();
+        //     using (var newWriter = XmlWriter.Create(sb, settings))
+        //     {
+        //         foreach (var n in e.Nodes())
+        //         {
+        //             var childElt = n as XElement;
+        //             if (childElt != null)
+        //             {
+        //                 WriteElementWithAlignedAttrs(newWriter, childElt, maxWidths, attributeOrder, sb);
+        //             }
+        //             else
+        //             {
+
+        //                 n.WriteTo(newWriter);
+
+        //             }
+        //         }
+        //     }
+        //     var inner = sb.ToString();
+
+        //     if (inner.Length > 0)
+        //     {
+        //         writer.WriteRaw(inner);
+        //     }
+        //     writer.WriteEndElement();
+        // }
+        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer, IEnumerable<XNode> nodes)
+        {
+            var nodeArray = nodes.ToArray();
+            var elements = (from el in nodeArray.Cast<XElement>()
+                            where el != null
+                            select el).ToArray();
+            var maxWidths = FindAttributeMaxLengths(elements);
+            var attributeOrder = FindAttributeOrder(elements, maxWidths);
+
+            var settings = new XmlWriterSettings()
+            {
+                Indent = false,
+                OmitXmlDeclaration = true,
+                ConformanceLevel = ConformanceLevel.Fragment,
+                NewLineOnAttributes = false,
+                CloseOutput = false,
+            };
+            var sb = new StringBuilder();
+            using (var newWriter = XmlWriter.Create(sb, settings))
+            {
+                foreach (var n in nodeArray)
+                {
+                    var childElt = n as XElement;
+                    if (childElt != null)
+                    {
+                        WriteElementWithAlignedAttrs(newWriter, childElt, maxWidths, attributeOrder, sb);
+                    }
+                    else
+                    {
+
+                        n.WriteTo(newWriter);
+
+                    }
+                }
+            }
+            var inner = sb.ToString();
+
+            if (inner.Length > 0)
+            {
+                writer.WriteRaw(inner);
+            }
+            writer.WriteEndElement();
+        }
     }
 }

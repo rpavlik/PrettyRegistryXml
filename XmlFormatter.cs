@@ -76,42 +76,8 @@ namespace pretty_registry
 
         void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e)
         {
-            var maxWidths = FindAttributeMaxLengths(e.Elements());
-            var attributeOrder = FindAttributeOrder(e.Elements(), maxWidths);
-
             WriteStartElementAndAttributes(writer, e);
-            var settings = new XmlWriterSettings()
-            {
-                Indent = false,
-                OmitXmlDeclaration = true,
-                ConformanceLevel = ConformanceLevel.Fragment,
-                NewLineOnAttributes = false,
-                CloseOutput = false,
-            };
-            var sb = new StringBuilder();
-            using (var newWriter = XmlWriter.Create(sb, settings))
-            {
-                foreach (var n in e.Nodes())
-                {
-                    var childElt = n as XElement;
-                    if (childElt != null)
-                    {
-                        WriteElementWithAlignedAttrs(newWriter, childElt, maxWidths, attributeOrder, sb);
-                    }
-                    else
-                    {
-
-                        n.WriteTo(newWriter);
-
-                    }
-                }
-            }
-            var inner = sb.ToString();
-
-            if (inner.Length > 0)
-            {
-                writer.WriteRaw(inner);
-            }
+            WriteNodesWithEltAlignedAttrs(writer, e.Nodes());
             writer.WriteEndElement();
         }
     }
