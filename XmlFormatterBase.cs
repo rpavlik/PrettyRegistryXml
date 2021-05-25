@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml;
+using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 namespace pretty_registry
 {
@@ -82,7 +83,7 @@ namespace pretty_registry
             {
                 // Console.WriteLine(attrName);
                 var maxAttrWidth = maxWidths.GetValueOrDefault(attrName);
-                var attr = e.Attributes().Where(a => a.Name.LocalName == attrName).First();
+                var attr = e.Attributes().Where(a => a.Name.LocalName == attrName).DefaultIfEmpty(null).First();
                 if (attr == null)
                 {
                     var needWidth = $"{attrName}=''".Length + maxAttrWidth + 1;
@@ -97,6 +98,7 @@ namespace pretty_registry
                 }
 
             }
+            WriteNodes(writer, e.Nodes());
             writer.WriteEndElement();
         }
 
@@ -154,6 +156,12 @@ namespace pretty_registry
                             where n.NodeType == XmlNodeType.Element
                             select n as XElement).ToArray();
             var maxWidths = FindAttributeMaxLengths(elements);
+            if (maxWidths.Count == 0)
+            {
+                // nothing to align here?
+                WriteNodes(writer, nodeArray);
+                return;
+            }
             var attributeOrder = FindAttributeOrder(elements, maxWidths);
 
             var settings = new XmlWriterSettings()
@@ -176,12 +184,72 @@ namespace pretty_registry
                     }
                     else
                     {
-
                         n.WriteTo(newWriter);
-
                     }
                 }
             });
+        }
+
+        protected void WriteNodes(XmlWriter writer, IEnumerable<XNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                // Try to recurse if we can
+                if (node.NodeType == XmlNodeType.Element)
+                {
+                    WriteElement(writer, node as XElement);
+                }
+                else
+                {
+                    node.WriteTo(writer);
+                }
+            }
+        }
+
+        protected void WriteElementWithSelectivelyAlignedChildAttrs(
+            XmlWriter writer,
+            XElement e,
+            System.Predicate<XNode> groupingPredicate,
+            bool includeEmptyTextNodesBetween = true)
+        {
+            WriteStartElementAndAttributes(writer, e);
+            var grouped = e.Nodes().GroupAdjacent(n =>
+            {
+                if (groupingPredicate(n))
+                {
+                    return true;
+                }
+
+                return includeEmptyTextNodesBetween
+                       && n.NodeType == XmlNodeType.Text
+                       && ((n as XText).Value.Trim() == "")
+                       && n.PreviousNode != null
+                       && n.NextNode != null
+                       && groupingPredicate(n.PreviousNode)
+                       && groupingPredicate(n.NextNode);
+            }
+                );
+            foreach (var g in grouped)
+            {
+                if (g.Key)
+                {
+                    // These should be aligned.
+                    WriteNodesWithEltAlignedAttrs(writer, g);
+                }
+                else
+                {
+                    // These are not aligned.
+                    WriteNodes(writer, g);
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e)
+        {
+            WriteStartElementAndAttributes(writer, e);
+            WriteNodesWithEltAlignedAttrs(writer, e.Nodes());
+            writer.WriteEndElement();
         }
     }
 }

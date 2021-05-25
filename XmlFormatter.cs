@@ -13,22 +13,14 @@ namespace pretty_registry
         private readonly HashSet<string> singleLineContainers = new HashSet<string> { "member", "param", "proto" };
         private readonly Predicate<XElement> singleLinePredicate;
 
-        private bool ShouldAlignChildAttributes(XElement e)
-        {
-            return e.Name.LocalName == "tags";
-        }
         public XmlFormatter()
         {
             var defineCategory = new XAttribute("category", "define");
-            // Predicate<XElement> isCategoryDefine = e => e.Attribute("category")
             singleLinePredicate = e =>
                 singleLineContainers.Contains(e.Name.LocalName) ||
                 (e.Name.LocalName == "type" && e.Parent != null && e.Parent.Name.LocalName == "types" && !IsCategoryDefineOrStruct(e));
         }
-        static bool IsCategoryDefine(XElement element)
-        {
-            return element.Attributes().Where(a => a.Name.LocalName == "category" && a.Value == "define").Any();
-        }
+
         static bool IsCategoryDefineOrStruct(XElement element)
         {
             return element
@@ -38,6 +30,16 @@ namespace pretty_registry
             .Any();
         }
 
+        private System.Predicate<XNode> isBitmask = node => {
+            if (node.NodeType != XmlNodeType.Element)
+            {
+                return false;
+            }
+            var element = node as XElement;
+            var attr = element.Attribute("category");
+            return element.Name.LocalName == "type" && attr != null && attr.Value == "bitmask";
+        };
+
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
@@ -45,39 +47,21 @@ namespace pretty_registry
             {
                 WriteSingleLineElement(writer, e);
             }
-            else if (ShouldAlignChildAttributes(e))
+            else if ((e.Name == "tags" || e.Name == "enums") && e.HasElements)
             {
                 WriteElementWithAlignedChildAttrs(writer, e);
             }
-            // else if (ShouldSelectivelyAlignChildAttributes(e))
-            // {
-            //     WriteElementWithAlignedChildAttrs(writer, e);
-            // }
+            else if (e.Name == "types")
+            {
+                WriteElementWithSelectivelyAlignedChildAttrs(writer, e, isBitmask);
+            }
             else
             {
                 WriteStartElementAndAttributes(writer, e);
-                foreach (var node in e.Nodes())
-                {
-                    // Try to recurse if we can
-                    if (node.NodeType == XmlNodeType.Element)
-                    {
-                        WriteElement(writer, node as XElement);
-                    }
-                    else
-                    {
-                        node.WriteTo(writer);
-                    }
-                }
+                WriteNodes(writer, e.Nodes());
                 writer.WriteEndElement();
             }
 
-        }
-
-        void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e)
-        {
-            WriteStartElementAndAttributes(writer, e);
-            WriteNodesWithEltAlignedAttrs(writer, e.Nodes());
-            writer.WriteEndElement();
         }
     }
 }
