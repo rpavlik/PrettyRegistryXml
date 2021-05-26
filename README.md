@@ -42,6 +42,24 @@ Some of the hand-formatted XML is better than the automated stuff.
 
 [dotnet5]: https://dotnet.microsoft.com/download/dotnet/5.0
 
+## API Docs
+
+The `PrettyRegistryXml.Core` assembly has fairly complete XML documentation comments,
+that can be used by your editor, etc. If you want to view them in a readable way,
+try using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
+
+```sh
+# Install the tool: only needed once
+dotnet tool install xmldocmd -g
+
+# Build the assemblies
+dotnet build
+
+# Generate the Markdown documentation in docs/
+xmldocmd core/bin/Debug/net5.0/PrettyRegistryXml.Core.dll docs
+```
+
+
 ## License
 
 [REUSE](https://reuse.software) 3.0 compliant - use the `reuse` tool to get a
