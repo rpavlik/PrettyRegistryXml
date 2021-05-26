@@ -1,3 +1,7 @@
+// Copyright 2021 Collabora, Ltd
+//
+// SPDX-License-Identifier: BSL-1.0
+
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
