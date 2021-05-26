@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml;
 using System;
-using pretty_registry.core;
+using PrettyRegistryXml.Core;
 
 
-namespace pretty_registry.openxr
+namespace PrettyRegistryXml.OpenXR
 {
     public class XmlFormatter : XmlFormatterBase
     {

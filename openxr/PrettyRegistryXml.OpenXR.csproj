@@ -8,19 +8,18 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>pretty_registry</RootNamespace>
-    <Product>PrettyRegistry-OpenXR</Product>
+    <RootNamespace>PrettyRegistryXml</RootNamespace>
+    <Product>PrettyRegistryXml.OpenXR</Product>
     <Company>Collabora, Ltd.</Company>
     <Copyright>Copyright 2021, Collabora, Ltd. Published under BSL-1.0, with dependencies under Apache-2.0 and MIT.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
-    <PackageReference Include="morelinq" Version="3.3.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\core\pretty-registry.core.csproj" />
+    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
   </ItemGroup>
 
 </Project>

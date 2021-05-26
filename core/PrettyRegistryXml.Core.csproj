@@ -6,7 +6,7 @@
   -->
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>pretty_registry</RootNamespace>
+    <RootNamespace>PrettyRegistryXml</RootNamespace>
     <Company>Collabora, Ltd.</Company>
     <Copyright>Copyright 2021, Collabora, Ltd. Published under BSL-1.0, with dependencies under Apache-2.0.</Copyright>
   </PropertyGroup>

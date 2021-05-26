@@ -8,7 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using CommandLine;
 
-namespace pretty_registry.openxr
+namespace PrettyRegistryXml.OpenXR
 {
 
     class Program

@@ -4,7 +4,7 @@
 
 using CommandLine;
 
-namespace pretty_registry.openxr
+namespace PrettyRegistryXml.OpenXR
 {
     public record Options
     {

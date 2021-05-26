@@ -10,7 +10,7 @@ using System;
 
 using AttributeName = System.String;
 
-namespace pretty_registry.core
+namespace PrettyRegistryXml.Core
 {
     /// <summary>
     /// A structure storing the name of an attribute and a value width that it should be aligned/padded to.

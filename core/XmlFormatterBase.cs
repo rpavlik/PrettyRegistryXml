@@ -11,7 +11,7 @@ using System;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 
-namespace pretty_registry.core
+namespace PrettyRegistryXml.Core
 {
     public abstract class XmlFormatterBase
     {

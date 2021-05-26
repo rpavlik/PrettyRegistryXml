@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pretty-registry.core", "core\pretty-registry.core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Core", "core\PrettyRegistryXml.Core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pretty-registry.openxr", "openxr\pretty-registry.openxr.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR", "openxr\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
