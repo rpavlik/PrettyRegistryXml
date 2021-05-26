@@ -2,7 +2,7 @@
   <!--
     Copyright 2021 Collabora, Ltd
 
-    SPDX-License-Identifier: BSL-1.0
+    SPDX-License-Identifier: MIT
   -->
 
   <PropertyGroup>
@@ -11,7 +11,7 @@
     <RootNamespace>PrettyRegistryXml</RootNamespace>
     <Product>PrettyRegistryXml.OpenXR</Product>
     <Company>Collabora, Ltd.</Company>
-    <Copyright>Copyright 2021, Collabora, Ltd. Published under BSL-1.0, with dependencies under Apache-2.0 and MIT.</Copyright>
+    <Copyright>Copyright 2021, Collabora, Ltd. Published under MIT, with dependencies under Apache-2.0 and MIT.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

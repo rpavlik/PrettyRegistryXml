@@ -47,7 +47,7 @@ Some of the hand-formatted XML is better than the automated stuff.
 [REUSE](https://reuse.software) 3.0 compliant - use the `reuse` tool to get a
 software BOM.
 
-The code in this repo is BSL-1.0. This file is CC-BY-4.0. A few random data-ish
+The code in this repo is MIT. This file is CC-BY-4.0. A few random data-ish
 files are CC0-1.0.
 
 Dependencies downloaded from NuGet include:

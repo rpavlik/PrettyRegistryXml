@@ -2,13 +2,13 @@
   <!--
     Copyright 2021 Collabora, Ltd
 
-    SPDX-License-Identifier: BSL-1.0
+    SPDX-License-Identifier: MIT
   -->
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>PrettyRegistryXml</RootNamespace>
     <Company>Collabora, Ltd.</Company>
-    <Copyright>Copyright 2021, Collabora, Ltd. Published under BSL-1.0, with dependencies under Apache-2.0.</Copyright>
+    <Copyright>Copyright 2021, Collabora, Ltd. Published under MIT, with dependencies under Apache-2.0.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
