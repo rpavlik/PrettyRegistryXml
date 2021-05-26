@@ -23,22 +23,6 @@ namespace PrettyRegistryXml.Core
             return new string(' ', level * 4);
         }
 
-        protected static string MakeSpaces(int num)
-        {
-            if (num <= 0)
-            {
-                return "";
-            }
-            return new string(' ', num);
-        }
-
-        static void WriteSpaces(StringBuilder sb, int num)
-        {
-            if (num > 0)
-            {
-                sb.Append(MakeSpaces(num));
-            }
-        }
 
         /// <summary>
         /// Main entry point: process a root element into a formatted string.
