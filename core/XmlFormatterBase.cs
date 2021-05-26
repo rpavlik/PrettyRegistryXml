@@ -10,9 +10,8 @@ using System.Xml;
 using System;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
-using AttributeName = System.String;
 
-namespace pretty_registry
+namespace pretty_registry.core
 {
     public abstract class XmlFormatterBase
     {

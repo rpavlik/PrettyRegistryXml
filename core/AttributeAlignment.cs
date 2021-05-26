@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using System.Xml;
 using System;
-using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 using AttributeName = System.String;
 
-namespace pretty_registry
+namespace pretty_registry.core
 {
     /// <summary>
     /// A structure storing the name of an attribute and a value width that it should be aligned/padded to.

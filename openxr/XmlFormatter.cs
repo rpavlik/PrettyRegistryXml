@@ -3,14 +3,13 @@
 // SPDX-License-Identifier: BSL-1.0
 
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using System.Xml;
 using System;
+using pretty_registry.core;
 
-namespace pretty_registry
+
+namespace pretty_registry.openxr
 {
     public class XmlFormatter : XmlFormatterBase
     {

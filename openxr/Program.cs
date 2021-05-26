@@ -3,14 +3,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using CommandLine;
 
-namespace pretty_registry
+namespace pretty_registry.openxr
 {
     class Program
     {
