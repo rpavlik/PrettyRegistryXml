@@ -17,6 +17,9 @@ namespace PrettyRegistryXml.Core
     /// <summary>
     /// A structure storing the name of an attribute and a value width that it should be aligned/padded to.
     /// </summary>
+    /// <remarks>
+    /// Typically created in an array by <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{AttributeName, int}?)"/>
+    /// </remarks>
     public struct AttributeAlignment
     {
 
@@ -47,8 +50,10 @@ namespace PrettyRegistryXml.Core
 
         /// <summary>
         /// The width for the full attribute: name, equals sign, quotes, and value.
-        /// Used when filling in for a missing attribute with blanks.
         /// </summary>
+        /// <remarks>
+        /// Used when filling in for a missing attribute with blanks.
+        /// </remarks>
         public int FullWidth
         {
             get
@@ -57,6 +62,7 @@ namespace PrettyRegistryXml.Core
                 return $"{Name}=\"\"".Length + AlignWidth + 1;
             }
         }
+
         #endregion
 
         #region Internal/Implementation
@@ -66,17 +72,19 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Helper for throwing exceptions on invalid widths.
         /// </summary>
-        /// <param name="value">User-proposed value for AlignWidth</param>
-        /// <returns>value</returns>
+        /// <param name="value">User-proposed value for <see cref="AttributeAlignment.AlignWidth" /></param>
+        /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
             if (value < 0) throw new ArgumentOutOfRangeException("AlignWidth cannot be negative");
             return value;
         }
+
         #endregion
 
 
         #region String Conversion
+
         /// <summary>
         /// Format as a string.
         /// </summary>
@@ -89,6 +97,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="alignments">A collection of AttributeAlignment values</param>
         /// <returns>A string suitable for human reading during debugging/testing.</returns>
         public static string FormatEnumerable(IEnumerable<AttributeAlignment> alignments) => string.Join(",", from a in alignments select a.ToString());
+
         #endregion
 
         #region Constructor/Factory Methods
@@ -104,27 +113,32 @@ namespace PrettyRegistryXml.Core
         /// Make an AttributeAlignment that indicates the attribute should not be aligned.
         /// </summary>
         /// <param name="name">Attribute name</param>
-        /// <returns>Unaligned AttributeAlignment</returns>
+        /// <returns>A new unaligned AttributeAlignment</returns>
         public static AttributeAlignment MakeUnaligned(AttributeName name) => new AttributeAlignment(name, 0);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but different width from the old one.
         /// </summary>
-        /// <param name="old">Value to use name from</param>
+        /// <param name="old">An old attributeAlignment to use name from</param>
         /// <param name="alignWidth">New width</param>
-        /// <returns>AttributeAlignment with name from old.Name but with new width</returns>
+        /// <returns>A new AttributeAlignment with name from old.Name but with new width</returns>
         public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new AttributeAlignment(old.Name, alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but marked as unaligned.
         /// </summary>
-        /// <param name="old"></param>
-        /// <returns></returns>
+        /// <param name="old">An old attributeAlignment to use the name from</param>
+        /// <returns>A new AttributeAlignment</returns>
         public static AttributeAlignment ReplaceWithUnaligned(AttributeAlignment old) => MakeUnaligned(old.Name);
         #endregion
 
         #region Other helpers
 
+        /// <summary>
+        /// Append padding to a StringBuilder as appropriate for an attribute.
+        /// </summary>
+        /// <param name="attribute">An attribute (or null) from <c>myXElement.Attribute(aa.Name)</c></param>
+        /// <param name="stringBuilder">Where to append the spaces, if required.</param>
         public void AppendAttributePadding(XAttribute? attribute, StringBuilder stringBuilder)
         {
             if (!ShouldAlign) return;
@@ -148,15 +162,18 @@ namespace PrettyRegistryXml.Core
         #endregion
 
         #region XElement-related methods
+
         /// <summary>
         /// Compute an array of AttributeAlignment for a collection of elements.
+        /// </summary>
+        /// <remarks>
         /// The element with the most attributes is used to extract the attributes to align and their order.
         /// The align width for each of those attributes is the maximum length of that attribute's value across all elements,
-        /// except for the last attribute, which gets set as "do not align" if it is not mentioned in extraWidth.
+        /// except for the last attribute, which gets set as "do not align" if it is not mentioned in <paramref name="extraWidth"/>.
         /// This prevents a lot of space before the end of the tag.
         /// Any other attributes mentioned in other elements are added to the end of the list as "do not align",
         /// so the resulting list contains every attribute name in the entire collection of elements.
-        /// </summary>
+        /// </remarks>
         /// <param name="elements">A collection of elements</param>
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
         /// <returns>Array of alignments</returns>
@@ -216,6 +233,7 @@ namespace PrettyRegistryXml.Core
                 select a.Key;
             return (aligned.ToArray(), leftovers.ToArray());
         }
+
         #endregion
     }
 

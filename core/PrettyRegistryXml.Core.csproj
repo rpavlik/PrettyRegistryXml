@@ -9,6 +9,7 @@
     <RootNamespace>PrettyRegistryXml</RootNamespace>
     <Company>Collabora, Ltd.</Company>
     <Copyright>Copyright 2021, Collabora, Ltd. Published under MIT, with dependencies under Apache-2.0.</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
