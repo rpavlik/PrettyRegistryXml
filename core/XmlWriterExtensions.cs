@@ -10,7 +10,7 @@ namespace PrettyRegistryXml.Core.Extensions
 {
     /// <summary>
     /// Extensions for <see cref="XmlWriter" />
-    /// /// </summary>
+    /// </summary>
     public static class XmlWriterExtensions
     {
 
