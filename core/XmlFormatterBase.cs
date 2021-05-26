@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+#nullable enable
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,8 +50,11 @@ namespace PrettyRegistryXml.Core
             var sb = new StringBuilder();
 
             // Hacky but hard to do otherwise
-            sb.Append(document.Declaration.ToString());
-            sb.Append(Environment.NewLine);
+            if (document.Declaration != null)
+            {
+                sb.Append(document.Declaration.ToString());
+                sb.Append(Environment.NewLine);
+            }
 
             var settings = new XmlWriterSettings()
             {
@@ -110,7 +115,7 @@ namespace PrettyRegistryXml.Core
         {
             foreach (var alignment in alignments)
             {
-                var attr = e.Attribute(alignment.Name);
+                XAttribute? attr = e.Attribute(alignment.Name);
                 if (attr != null)
                 {
                     writer.WriteAttributeString(alignment.Name, attr.Value);
@@ -121,12 +126,14 @@ namespace PrettyRegistryXml.Core
         }
 
         public delegate void WrappedWrite(XmlWriter writer, StringBuilder stringBuilder);
-        protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings settings, WrappedWrite wrapped)
+        protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings? settings, WrappedWrite wrapped)
         {
-            var sb = new StringBuilder();
-            var mySettings = settings.Clone();
+            XmlWriterSettings mySettings = (settings == null) ? new XmlWriterSettings() : settings.Clone();
+
             mySettings.ConformanceLevel = ConformanceLevel.Fragment;
             mySettings.OmitXmlDeclaration = true;
+
+            var sb = new StringBuilder();
             using (var newWriter = XmlWriter.Create(sb, mySettings))
             {
                 wrapped(newWriter, sb);
@@ -134,8 +141,7 @@ namespace PrettyRegistryXml.Core
             var inner = sb.ToString();
             if (inner.Length > 0)
             {
-                outerWriter.WriteRaw(
-                    inner);
+                outerWriter.WriteRaw(inner);
             }
         }
 
@@ -143,7 +149,7 @@ namespace PrettyRegistryXml.Core
         {
             writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
             WriteAttributes(writer, e);
-            var settings = writer.Settings.Clone();
+            var settings = writer.CloneOrCreateSettings();
             settings.Indent = false;
             WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
             {

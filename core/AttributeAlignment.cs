@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+#nullable enable
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +21,11 @@ namespace PrettyRegistryXml.Core
     {
 
         #region Properties
+
         /// <summary>
         /// The attribute name
         /// </summary>
-        public AttributeName Name;
+        public AttributeName Name { get; init; }
 
 
         /// <summary>
@@ -122,7 +125,7 @@ namespace PrettyRegistryXml.Core
 
         #region Other helpers
 
-        public void AppendAttributePadding(XAttribute attribute, StringBuilder stringBuilder)
+        public void AppendAttributePadding(XAttribute? attribute, StringBuilder stringBuilder)
         {
             if (!ShouldAlign) return;
             if (attribute == null)
@@ -157,7 +160,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="elements">A collection of elements</param>
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
         /// <returns>Array of alignments</returns>
-        public static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IDictionary<AttributeName, int> extraWidth = null)
+        public static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IDictionary<AttributeName, int>? extraWidth = null)
         {
             var (aligned, leftovers) = FindAttributeAlignmentsAndLeftovers(elements);
             if (extraWidth != null)
