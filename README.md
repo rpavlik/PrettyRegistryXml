@@ -19,3 +19,4 @@ files are CC0-1.0.
 Dependencies downloaded from NuGet include:
 
 - [MoreLinq](https://www.nuget.org/packages/morelinq/3.3.2): Apache-2.0
+- [CommandLineParser](https://www.nuget.org/packages/CommandLineParser/2.9.0-preview1): MIT
