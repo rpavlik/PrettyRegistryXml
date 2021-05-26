@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: pretty-registry-openxr
+Upstream-Name: PrettyRegistryXml
 Upstream-Contact: Ryan Pavlik <ryan.pavlik@collabora.com>
-Source: https://github.com/rpavlik/pretty-registry-openxr
+Source: https://github.com/rpavlik/PrettyRegistryXml
 
 # Sample paragraph, commented out:
 #
