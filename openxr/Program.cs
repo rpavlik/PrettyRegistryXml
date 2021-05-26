@@ -27,8 +27,8 @@ namespace PrettyRegistryXml.OpenXR
             var formatter = new XmlFormatter(options);
             var result = formatter.Process(document);
 
-            Console.WriteLine($"Writing processed registry to {options.OutputFile}");
-            using (var writer = new StreamWriter(options.OutputFile, false, Encoding.UTF8))
+            Console.WriteLine($"Writing processed registry to {options.ActualOutputFile}");
+            using (var writer = new StreamWriter(options.ActualOutputFile, false, Encoding.UTF8))
             {
                 writer.WriteLine(result);
             }
