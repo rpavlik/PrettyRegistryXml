@@ -2,12 +2,12 @@
 //
 // SPDX-License-Identifier: MIT
 
+using PrettyRegistryXml.Core;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml;
 using System;
-using PrettyRegistryXml.Core;
-using System.Linq;
 
 
 namespace PrettyRegistryXml.OpenXR
@@ -109,6 +109,27 @@ namespace PrettyRegistryXml.OpenXR
                 base.WriteElement(writer, e);
             }
 
+        }
+
+        protected override XText CleanWhitespaceNode(XText whitespaceText)
+        {
+            // Don't bother modifying a whitespace-only node without a newline: won't affect indent.
+            if (!whitespaceText.Value.Contains("\n")) { return whitespaceText; }
+
+            // Completely replace whitespace-only nodes that do contain a newline:
+            // keep total number of newlines the same, but re-construct with correct indent.
+
+            var cleanNewlines = string.Join(null, (from c in whitespaceText.Value
+                                                   where c == '\n'
+                                                   select Environment.NewLine));
+
+            // this is a heuristic but seems to work.
+            bool followedByClosingTag = whitespaceText.NextNode == null;
+            var additionalAdjust = followedByClosingTag ? -1 : 0;
+
+            var indent = MakeIndent(whitespaceText, ComputeLevelAdjust(whitespaceText) + additionalAdjust);
+
+            return new XText(cleanNewlines + indent);
         }
     }
 }
