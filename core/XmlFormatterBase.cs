@@ -292,6 +292,10 @@ namespace PrettyRegistryXml.Core
             }
             if (node is XText text && IsWhitespace(node) && !PreserveWhitespace(text))
             {
+                if (!text.Value.Contains(Environment.NewLine))
+                {
+                    writer.WriteRaw(" ");
+                }
                 // early out here to not write this.
                 return;
             }
