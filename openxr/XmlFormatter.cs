@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using System.Xml;
 using System;
 using PrettyRegistryXml.Core;
+using System.Linq;
 
 
 namespace PrettyRegistryXml.OpenXR
@@ -61,6 +62,17 @@ namespace PrettyRegistryXml.OpenXR
                    && attr.Value == "bitmask";
         };
 
+        protected override int ComputeLevelAdjust(XNode node)
+        {
+            var extensionsInAncestors = (from el in node.Ancestors()
+                                         where el.Name == "extensions"
+                                         select el).Count() != 0;
+            if (extensionsInAncestors)
+            {
+                return -1;
+            }
+            return 0;
+        }
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)
         {

@@ -29,19 +29,33 @@ namespace PrettyRegistryXml.Core
     {
 
         /// <summary>
-        /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="element"/>.
+        /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>.
         /// </summary>
         /// <remarks>
         /// Currently assumes that each level is 4 spaces.
         /// </remarks>
-        /// <param name="element">An element</param>
+        /// <param name="node">A node</param>
         /// <param name="levelAdjust">Optional adjustment to nesting level</param>
-        protected static string MakeIndent(XElement element, int levelAdjust = 0)
+        protected static string MakeIndent(XNode node, int levelAdjust = 0)
         {
-            var level = element.Ancestors().Count() + levelAdjust;
+            var level = node.Ancestors().Count() + levelAdjust;
             return new string(' ', level * 4);
         }
 
+        /// <summary>
+        /// Compute how much our indent level should differ from expected for a given node.
+        /// </summary>
+        /// <param name="node">The node</param>
+        /// <returns>A signed integer</returns>
+        protected virtual int ComputeLevelAdjust(XNode node) => 0;
+
+        /// <summary>
+        /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>
+        /// with adjustments based on <see cref="XmlFormatterBase.ComputeLevelAdjust(XNode)"/>.
+        /// </summary>
+        /// <param name="node">The node</param>
+        /// <returns>A string of whitespace</returns>
+        protected string MakeIndent(XNode node) => MakeIndent(node, ComputeLevelAdjust(node));
 
         private static bool IsWhitespace(XNode node)
         {
