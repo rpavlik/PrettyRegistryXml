@@ -67,6 +67,10 @@ namespace PrettyRegistryXml.Core
                 OmitXmlDeclaration = true,
 
             };
+            if (document.Root == null)
+            {
+                throw new InvalidOperationException("Document root cannot be null");
+            }
             using (var writer = XmlWriter.Create(sb, settings))
             {
                 WriteElement(writer, document.Root);
@@ -290,10 +294,11 @@ namespace PrettyRegistryXml.Core
         {
             foreach (var node in nodes)
             {
+                var elt = node as XElement;
                 // Try to recurse if we can
-                if (node.NodeType == XmlNodeType.Element)
+                if (elt != null)
                 {
-                    WriteElement(writer, node as XElement);
+                    WriteElement(writer, elt);
                 }
                 else
                 {
