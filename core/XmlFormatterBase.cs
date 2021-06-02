@@ -203,10 +203,7 @@ namespace PrettyRegistryXml.Core
             settings.Indent = false;
             WriteUsingWrappedWriter(writer, settings, (newWriter, sb) =>
             {
-                foreach (var n in e.Nodes())
-                {
-                    n.WriteTo(newWriter);
-                }
+                WriteNodes(newWriter, e.Nodes());
 
             });
             writer.WriteEndElement();
@@ -247,18 +244,45 @@ namespace PrettyRegistryXml.Core
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
-                foreach (XNode n in nodeArray)
+                foreach (XNode node in nodeArray)
                 {
-                    if (n is XElement element)
+                    if (node is XElement element)
                     {
                         WriteElementWithAlignedAttrs(newWriter, element, alignment, sb);
                     }
                     else
                     {
-                        n.WriteTo(newWriter);
+                        WriteNode(newWriter, node);
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Write a node.
+        /// </summary>
+        /// <remark>
+        /// Delegates to <see cref="XmlFormatterBase.WriteElement(XmlWriter, XElement)"/> for nodes that are elements.
+        /// For nodes that are text with a whitespace value, checks <see cref="XmlFormatterBase.PreserveWhitespace(XText)"/> before writing.
+        /// Otherwise just calls <see cref="XNode.WriteTo(XmlWriter)"/>.
+        /// </remark>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="node">A node</param>
+        protected void WriteNode(XmlWriter writer, XNode node)
+        {
+            if (node is XElement element)
+            {
+                // Call our recursive policy-owning method
+                WriteElement(writer, element);
+                return;
+            }
+            if (node is XText text && IsWhitespace(node) && !PreserveWhitespace(text))
+            {
+                // early out here to not write this.
+                return;
+            }
+            // Write everything that remains in the "normal" way.
+            node.WriteTo(writer);
         }
 
         /// <summary>
@@ -309,18 +333,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="nodes">A collection of nodes</param>
         protected void WriteNodes(XmlWriter writer, IEnumerable<XNode> nodes)
         {
-            foreach (var node in nodes)
+            foreach (XNode node in nodes)
             {
-                var elt = node as XElement;
-                // Try to recurse if we can
-                if (elt != null)
-                {
-                    WriteElement(writer, elt);
-                }
-                else
-                {
-                    node.WriteTo(writer);
-                }
+                WriteNode(writer, node);
             }
         }
 
