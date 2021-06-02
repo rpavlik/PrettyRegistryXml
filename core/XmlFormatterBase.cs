@@ -228,12 +228,11 @@ namespace PrettyRegistryXml.Core
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
-                foreach (var n in nodeArray)
+                foreach (XNode n in nodeArray)
                 {
-                    var childElt = n as XElement;
-                    if (childElt != null)
+                    if (n is XElement element)
                     {
-                        WriteElementWithAlignedAttrs(newWriter, childElt, alignment, sb);
+                        WriteElementWithAlignedAttrs(newWriter, element, alignment, sb);
                     }
                     else
                     {
@@ -267,16 +266,15 @@ namespace PrettyRegistryXml.Core
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
-                foreach (var n in nodeArray)
+                foreach (XNode node in nodeArray)
                 {
-                    var childElt = n as XElement;
-                    if (childElt != null)
+                    if (node is XElement element)
                     {
-                        WriteElementWithAlignedAttrs(newWriter, childElt, alignments, sb);
+                        WriteElementWithAlignedAttrs(newWriter, element, alignments, sb);
                     }
                     else
                     {
-                        n.WriteTo(newWriter);
+                        WriteNode(newWriter, node);
                     }
                 }
             });
