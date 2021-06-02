@@ -45,11 +45,12 @@ Some of the hand-formatted XML is better than the automated stuff.
 ## API Docs
 
 The `PrettyRegistryXml.Core` assembly has fairly complete XML documentation
-comments, that can be used by your editor, etc. A Markdown version of them is
-[committed and included](docs/PrettyRegistryXml.Core.md), along with the
-[docs for the OpenXR assembly](docs/PrettyRegistryXml.OpenXR.md) which
-are less complete but perhaps useful as an example. You can re-generate these
-locally using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
+comments, that can be used by your editor, etc. A
+[Markdown version of the `PrettyRegistryXml.Core` docs](docs/PrettyRegistryXml.Core.md)
+is committed and included, along with the
+[docs for the PrettyRegistryXml.OpenXR assembly](docs/PrettyRegistryXml.OpenXR.md)
+which are less complete but perhaps useful as an example. You can re-generate
+these locally using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
 
 ```sh
 # This script runs the tool through the local manifest.
