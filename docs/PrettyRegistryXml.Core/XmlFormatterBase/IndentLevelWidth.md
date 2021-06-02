@@ -1,12 +1,12 @@
-# XmlFormatterBase.IndentChars property
+# XmlFormatterBase.IndentLevelWidth property
 
 ```csharp
-public virtual string IndentChars { get; }
+public abstract int IndentLevelWidth { get; }
 ```
 
 ## Property Value
 
-The string (probably several spaces) to use for one indent level.
+Width (in spaces) of a single indent level
 
 ## See Also
 

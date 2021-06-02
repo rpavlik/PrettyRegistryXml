@@ -3,7 +3,7 @@
 Wraps WriteEndElement.
 
 ```csharp
-protected void WriteEndElement(XmlWriter writer, XElement element)
+protected virtual void WriteEndElement(XmlWriter writer, XElement element)
 ```
 
 | parameter | description |

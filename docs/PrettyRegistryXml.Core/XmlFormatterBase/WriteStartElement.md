@@ -3,7 +3,7 @@
 Wraps String).
 
 ```csharp
-protected void WriteStartElement(XmlWriter writer, XElement element)
+protected virtual void WriteStartElement(XmlWriter writer, XElement element)
 ```
 
 | parameter | description |

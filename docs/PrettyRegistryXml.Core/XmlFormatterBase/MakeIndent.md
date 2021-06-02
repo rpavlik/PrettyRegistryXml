@@ -26,17 +26,13 @@ A string of whitespace
 Return the indentation we'd expect from the nesting level (number of ancestors) of *node*.
 
 ```csharp
-protected static string MakeIndent(XNode node, int levelAdjust = 0)
+protected string MakeIndent(XNode node, int levelAdjust = 0)
 ```
 
 | parameter | description |
 | --- | --- |
 | node | A node |
 | levelAdjust | Optional adjustment to nesting level |
-
-## Remarks
-
-Currently assumes that each level is 4 spaces.
 
 ## See Also
 
