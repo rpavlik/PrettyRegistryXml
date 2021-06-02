@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml;
@@ -98,7 +99,7 @@ namespace PrettyRegistryXml.Core
             {
                 WriteElement(writer, document.Root);
             }
-            return sb.ToString().Replace(" />", "/>");
+            return Regex.Replace(sb.ToString(), @"\s*/>", "/>");
         }
 
         /// <value>The string (probably several spaces) to use for one indent level.</value>
