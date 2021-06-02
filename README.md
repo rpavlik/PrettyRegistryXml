@@ -46,8 +46,8 @@ Some of the hand-formatted XML is better than the automated stuff.
 
 The `PrettyRegistryXml.Core` assembly has fairly complete XML documentation
 comments, that can be used by your editor, etc. A Markdown version of them is
-[committed and included](docs/PrettyRegistryXmlCoreAssembly.md), along with the
-[docs for the OpenXR assembly](docs/PrettyRegistryXmlOpenXRAssembly.md) which
+[committed and included](docs/PrettyRegistryXml.Core.md), along with the
+[docs for the OpenXR assembly](docs/PrettyRegistryXml.OpenXR.md) which
 are less complete but perhaps useful as an example. You can re-generate these
 locally using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
 
