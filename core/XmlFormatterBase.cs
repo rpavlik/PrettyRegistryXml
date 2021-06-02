@@ -117,9 +117,9 @@ namespace PrettyRegistryXml.Core
         }
 
         private void WriteElementWithAlignedAttrs(XmlWriter writer,
-                                                    XElement e,
-                                                    AttributeAlignment[] alignments,
-                                                    StringBuilder sb)
+                                                  XElement e,
+                                                  AttributeAlignment[] alignments,
+                                                  StringBuilder sb)
         {
             writer.WriteStartElement(e.Name.LocalName);
             WriteAlignedAttrs(writer, e, alignments, sb);
@@ -128,9 +128,9 @@ namespace PrettyRegistryXml.Core
         }
 
         private void WriteElementWithAlignedAttrs(XmlWriter writer,
-                                                    XElement e,
-                                                    ElementAlignment alignment,
-                                                    StringBuilder sb)
+                                                  XElement e,
+                                                  ElementAlignment alignment,
+                                                  StringBuilder sb)
         {
             writer.WriteStartElement(e.Name.LocalName);
             writer.Flush();
