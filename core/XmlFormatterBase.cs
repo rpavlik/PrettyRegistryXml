@@ -291,13 +291,20 @@ namespace PrettyRegistryXml.Core
                 WriteElement(writer, element);
                 return;
             }
-            if (node is XText text && IsWhitespace(node) && !PreserveWhitespace(text))
+            if (node is XText text && IsWhitespace(node))
             {
-                if (!text.Value.Contains(Environment.NewLine))
+                if (!PreserveWhitespace(text))
                 {
-                    writer.WriteRaw(" ");
+                    if (!text.Value.Contains(Environment.NewLine))
+                    {
+                        writer.WriteRaw(" ");
+                    }
+                    // early out here to not write this.
+                    return;
                 }
-                // early out here to not write this.
+
+                // Possibly munge this, then write it.
+                CleanWhitespaceNode(text).WriteTo(writer);
                 return;
             }
             // Write everything that remains in the "normal" way.
@@ -491,6 +498,16 @@ namespace PrettyRegistryXml.Core
         protected virtual void WriteEndElement(XmlWriter writer, XElement element)
         {
             writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Allows use of a modified version of a whitespace-only node.
+        /// </summary>
+        /// <param name="whitespaceText">A whitespace-only node</param>
+        /// <returns>A whitespace-only node, possibly a new one, possibly the same as the input</returns>
+        protected virtual XText CleanWhitespaceNode(XText whitespaceText)
+        {
+            return whitespaceText;
         }
     }
 }
