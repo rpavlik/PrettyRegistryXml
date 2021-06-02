@@ -45,18 +45,12 @@ Some of the hand-formatted XML is better than the automated stuff.
 ## API Docs
 
 The `PrettyRegistryXml.Core` assembly has fairly complete XML documentation comments,
-that can be used by your editor, etc. If you want to view them in a readable way,
-try using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
+that can be used by your editor, etc. A committed Markdown version of them is included,
+using [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/):
 
 ```sh
-# Install the tool: only needed once
-dotnet tool install xmldocmd -g
-
-# Build the assemblies
-dotnet build
-
-# Generate the Markdown documentation in docs/
-xmldocmd core/bin/Debug/net5.0/PrettyRegistryXml.Core.dll docs
+# This script runs the tool through the local manifest.
+./BuildDocs.ps1
 ```
 
 ## License
