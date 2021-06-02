@@ -65,7 +65,7 @@ namespace PrettyRegistryXml.OpenXR
         {
             var extensionsInAncestors = (from el in node.Ancestors()
                                          where el.Name == "extensions"
-                                         select el).Count() != 0;
+                                         select el).Any();
             if (extensionsInAncestors)
             {
                 return -1;
@@ -125,9 +125,9 @@ namespace PrettyRegistryXml.OpenXR
 
             // this is a heuristic but seems to work.
             bool followedByClosingTag = whitespaceText.NextNode == null;
-            var additionalAdjust = followedByClosingTag ? -1 : 0;
 
-            var indent = MakeIndent(whitespaceText, ComputeLevelAdjust(whitespaceText) + additionalAdjust);
+            // This seems to be the most robust way to get the indent right.
+            var indent = followedByClosingTag ? MakeIndent(whitespaceText.Parent) : MakeIndent(whitespaceText);
 
             return new XText(cleanNewlines + indent);
         }
