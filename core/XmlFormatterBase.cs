@@ -114,10 +114,10 @@ namespace PrettyRegistryXml.Core
         /// <param name="element">The element that needs to be written</param>
         protected virtual void WriteElement(XmlWriter writer, XElement element)
         {
-            writer.WriteStartElement(element.Name.LocalName, element.Name.NamespaceName);
+            WriteStartElement(writer, element);
             WriteAttributes(writer, element);
             WriteNodes(writer, element.Nodes());
-            writer.WriteEndElement();
+            WriteEndElement(writer, element);
         }
 
         /// <summary>
@@ -135,10 +135,10 @@ namespace PrettyRegistryXml.Core
                                                   AttributeAlignment[] alignments,
                                                   StringBuilder sb)
         {
-            writer.WriteStartElement(e.Name.LocalName);
+            WriteStartElement(writer, e);
             WriteAlignedAttrs(writer, e, alignments, sb);
             WriteNodes(writer, e.Nodes());
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
         private void WriteElementWithAlignedAttrs(XmlWriter writer,
@@ -146,12 +146,12 @@ namespace PrettyRegistryXml.Core
                                                   ElementAlignment alignment,
                                                   StringBuilder sb)
         {
-            writer.WriteStartElement(e.Name.LocalName);
+            WriteStartElement(writer, e);
             writer.Flush();
             alignment.AppendElementNamePadding(e, sb);
             WriteAlignedAttrs(writer, e, alignment.AttributeAlignments, sb);
             WriteNodes(writer, e.Nodes());
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
         private static void WriteAlignedAttrs(XmlWriter writer, XElement e, AttributeAlignment[] alignments, StringBuilder sb)
@@ -211,7 +211,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="e">An element</param>
         protected void WriteSingleLineElement(XmlWriter writer, XElement e)
         {
-            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteStartElement(writer, e);
             WriteAttributes(writer, e);
             var settings = writer.CloneOrCreateSettings();
             settings.Indent = false;
@@ -220,13 +220,13 @@ namespace PrettyRegistryXml.Core
                 WriteNodes(newWriter, e.Nodes());
 
             });
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
         /// <summary>
         /// Write all attributes of <paramref name="e"/> to <paramref name="writer"/>.
         /// </summary>
-        /// <param name="writer">An XmlWriter in the correct state (has had <see cref="XmlWriter.WriteStartElement(string)"/> or similar called)</param>
+        /// <param name="writer">An XmlWriter in the correct state (has had <see cref="XmlFormatterBase.WriteStartElement(XmlWriter, XElement)"/> called)</param>
         /// <param name="e">An element that may have attributes.</param>
         protected void WriteAttributes(XmlWriter writer, XElement e)
         {
@@ -369,7 +369,7 @@ namespace PrettyRegistryXml.Core
             bool includeEmptyTextNodesBetween = true,
             IDictionary<string, int>? extraWidth = null)
         {
-            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteStartElement(writer, e);
             WriteAttributes(writer, e);
             var grouped = e.Nodes().GroupAdjacent(n =>
             {
@@ -401,7 +401,7 @@ namespace PrettyRegistryXml.Core
                     WriteNodes(writer, g);
                 }
             }
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
         /// <summary>
@@ -413,10 +413,10 @@ namespace PrettyRegistryXml.Core
         protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e, Dictionary<string, int>? extraWidth = null)
         {
 
-            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteStartElement(writer, e);
             WriteAttributes(writer, e);
             WriteNodesWithEltAlignedAttrs(writer, e.Nodes(), extraWidth);
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
         /// <summary>
@@ -431,10 +431,10 @@ namespace PrettyRegistryXml.Core
         protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e, Dictionary<string, int>? extraWidth = null)
         {
 
-            writer.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+            WriteStartElement(writer, e);
             WriteAttributes(writer, e);
             WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidth);
-            writer.WriteEndElement();
+            WriteEndElement(writer, e);
         }
 
 
@@ -452,7 +452,7 @@ namespace PrettyRegistryXml.Core
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
-                newWriter.WriteStartElement(e.Name.LocalName, e.Name.NamespaceName);
+                WriteStartElement(newWriter, e);
                 newWriter.Flush();
                 foreach (var attr in e.Attributes())
                 {
@@ -464,8 +464,28 @@ namespace PrettyRegistryXml.Core
 
                 // Now write children
                 WriteNodes(newWriter, e.Nodes());
-                newWriter.WriteEndElement();
+                WriteEndElement(newWriter, e);
             });
+        }
+
+        /// <summary>
+        /// Wraps <see cref="XmlWriter.WriteStartElement(string)"/>.
+        /// </summary>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="element">An element</param>
+        protected void WriteStartElement(XmlWriter writer, XElement element)
+        {
+            writer.WriteStartElement(element.Name.LocalName);
+        }
+
+        /// <summary>
+        /// Wraps <see cref="XmlWriter.WriteEndElement"/>.
+        /// </summary>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="element">An element</param>
+        protected void WriteEndElement(XmlWriter writer, XElement element)
+        {
+            writer.WriteEndElement();
         }
     }
 }
