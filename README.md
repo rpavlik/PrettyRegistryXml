@@ -59,7 +59,6 @@ dotnet build
 xmldocmd core/bin/Debug/net5.0/PrettyRegistryXml.Core.dll docs
 ```
 
-
 ## License
 
 [REUSE](https://reuse.software) 3.0 compliant - use the `reuse` tool to get a
