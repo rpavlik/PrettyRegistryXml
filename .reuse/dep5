@@ -3,8 +3,7 @@ Upstream-Name: PrettyRegistryXml
 Upstream-Contact: Ryan Pavlik <ryan.pavlik@collabora.com>
 Source: https://github.com/rpavlik/PrettyRegistryXml
 
-# Sample paragraph, commented out:
-#
-# Files: src/*
-# Copyright: $YEAR $NAME <$CONTACT>
-# License: ...
+Files: docs/*
+Copyright: 2021, Collabora, Ltd
+License: MIT
+Comment: Documentation generated from compiled source and xml comments.
