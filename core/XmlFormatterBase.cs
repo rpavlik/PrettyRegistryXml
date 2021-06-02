@@ -43,6 +43,15 @@ namespace PrettyRegistryXml.Core
         }
 
 
+        private static bool IsWhitespace(XNode node)
+        {
+            if (node is XText text)
+            {
+                return text.Value.Trim().Length == 0;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Main entry point: process a root element into a formatted string.
         /// </summary>
@@ -95,6 +104,16 @@ namespace PrettyRegistryXml.Core
             WriteAttributes(writer, element);
             WriteNodes(writer, element.Nodes());
             writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Whether this whitespace node should be preserved. Can be overridden
+        /// </summary>
+        /// <param name="text">A whitespace text node</param>
+        /// <returns>true if it should be preserved as-is (default)</returns>
+        protected virtual bool PreserveWhitespace(XText text)
+        {
+            return true;
         }
 
         private void WriteElementWithAlignedAttrs(XmlWriter writer,
