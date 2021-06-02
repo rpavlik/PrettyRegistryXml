@@ -478,7 +478,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="element">An element</param>
-        protected void WriteStartElement(XmlWriter writer, XElement element)
+        protected virtual void WriteStartElement(XmlWriter writer, XElement element)
         {
             writer.WriteStartElement(element.Name.LocalName);
         }
@@ -488,7 +488,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="element">An element</param>
-        protected void WriteEndElement(XmlWriter writer, XElement element)
+        protected virtual void WriteEndElement(XmlWriter writer, XElement element)
         {
             writer.WriteEndElement();
         }
