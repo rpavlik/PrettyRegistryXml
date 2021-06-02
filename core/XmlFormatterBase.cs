@@ -28,19 +28,21 @@ namespace PrettyRegistryXml.Core
     /// </remarks>
     public abstract class XmlFormatterBase
     {
+        /// <value>Width (in spaces) of a single indent level</value>
+        public abstract int IndentLevelWidth { get; }
+
+        /// <value>The string (probably several spaces) to use for one indent level.</value>
+        public virtual string IndentChars { get => new string(' ', IndentLevelWidth); }
 
         /// <summary>
         /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>.
         /// </summary>
-        /// <remarks>
-        /// Currently assumes that each level is 4 spaces.
-        /// </remarks>
         /// <param name="node">A node</param>
         /// <param name="levelAdjust">Optional adjustment to nesting level</param>
-        protected static string MakeIndent(XNode node, int levelAdjust = 0)
+        protected string MakeIndent(XNode node, int levelAdjust = 0)
         {
             var level = node.Ancestors().Count() + levelAdjust;
-            return new string(' ', level * 4);
+            return new string(' ', level * IndentLevelWidth);
         }
 
         /// <summary>
@@ -102,8 +104,6 @@ namespace PrettyRegistryXml.Core
             return Regex.Replace(sb.ToString(), @"\s*/>", "/>");
         }
 
-        /// <value>The string (probably several spaces) to use for one indent level.</value>
-        public abstract string IndentChars { get; }
 
         /// <summary>
         /// The main recursive function.

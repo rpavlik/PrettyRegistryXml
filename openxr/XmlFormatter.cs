@@ -14,9 +14,10 @@ namespace PrettyRegistryXml.OpenXR
 {
     public class XmlFormatter : XmlFormatterBase
     {
-        private readonly Predicate<XElement> childrenShouldBeSingleLine;
-
+        public override int IndentLevelWidth { get => 4; }
         public override string IndentChars { get => "    "; }
+
+        private readonly Predicate<XElement> childrenShouldBeSingleLine;
 
         private bool WrapExtensions { get; init; }
 
@@ -46,8 +47,6 @@ namespace PrettyRegistryXml.OpenXR
                         && !isCategoryNonSingleLine(e));
             };
         }
-
-
 
         private System.Predicate<XNode> isBitmask = node =>
         {
