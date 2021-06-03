@@ -132,29 +132,7 @@ namespace PrettyRegistryXml.OpenXR
         }
 
         protected override XText CleanWhitespaceNode(XText whitespaceText)
-        {
-            // Don't bother modifying a whitespace-only node without a newline: won't affect indent.
-            if (!whitespaceText.Value.Contains("\n")) { return whitespaceText; }
-
-            // Completely replace whitespace-only nodes that do contain a newline:
-            // keep total number of newlines the same, but re-construct with correct indent.
-
-            var cleanNewlines = string.Join(null, (from c in whitespaceText.Value
-                                                   where c == '\n'
-                                                   select Environment.NewLine));
-
-            // this is a heuristic but seems to work.
-            bool followedByClosingTag = whitespaceText.NextNode == null;
-
-            // This seems to be the most robust way to get the indent right.
-            XNode indentDeterminingNode = whitespaceText;
-            if (followedByClosingTag && whitespaceText.Parent != null)
-            {
-                indentDeterminingNode = whitespaceText.Parent;
-            }
-            var indent = MakeIndent(indentDeterminingNode);
-
-            return new XText(cleanNewlines + indent);
-        }
+            => FormatterUtilities.RegenerateIndentation(this, whitespaceText);
     }
 }
+
