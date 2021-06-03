@@ -20,10 +20,14 @@ namespace PrettyRegistryXml.OpenXR
         private readonly Predicate<XElement> childrenShouldBeSingleLine;
 
         private bool WrapExtensions { get; init; }
+        private bool SortReturnVals { get; init; }
+
+        private ReturnCodeSorter CodeSorter = new();
 
         public XmlFormatter(Options options)
         {
             WrapExtensions = options.WrapExtensions;
+            SortReturnVals = false;
 
             var singleLineContainers = new HashSet<string> { "member", "param", "proto" };
 
@@ -75,6 +79,20 @@ namespace PrettyRegistryXml.OpenXR
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
+            if (e.Name == "command" && SortReturnVals)
+            {
+                var success = e.Attribute("successcodes");
+                if (success != null)
+                {
+                    success.Value = CodeSorter.SortReturnCodeString(success.Value);
+                }
+
+                var error = e.Attribute("errorcodes");
+                if (error != null)
+                {
+                    error.Value = CodeSorter.SortReturnCodeString(error.Value);
+                }
+            }
             if (childrenShouldBeSingleLine(e))
             {
                 WriteSingleLineElement(writer, e);
