@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+#nullable enable
+
 using PrettyRegistryXml.Core;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,8 +61,8 @@ namespace PrettyRegistryXml.OpenXR
                 return false;
             }
             var element = node as XElement;
-            var attr = element.Attribute("category");
-            return element.Name.LocalName == "type"
+            var attr = element?.Attribute("category");
+            return element?.Name == "type"
                    && attr != null
                    && attr.Value == "bitmask";
         };
@@ -97,7 +99,7 @@ namespace PrettyRegistryXml.OpenXR
             {
                 WriteSingleLineElement(writer, e);
             }
-            else if (e.Name == "require" && e.Parent.Name == "feature")
+            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
             {
                 WriteElementWithAlignedChildElts(writer, e);
             }
@@ -145,7 +147,12 @@ namespace PrettyRegistryXml.OpenXR
             bool followedByClosingTag = whitespaceText.NextNode == null;
 
             // This seems to be the most robust way to get the indent right.
-            var indent = followedByClosingTag ? MakeIndent(whitespaceText.Parent) : MakeIndent(whitespaceText);
+            XNode indentDeterminingNode = whitespaceText;
+            if (followedByClosingTag && whitespaceText.Parent != null)
+            {
+                indentDeterminingNode = whitespaceText.Parent;
+            }
+            var indent = MakeIndent(indentDeterminingNode);
 
             return new XText(cleanNewlines + indent);
         }
