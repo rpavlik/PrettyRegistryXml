@@ -1,7 +1,7 @@
 # ReturnCodeSorter class
 
 ```csharp
-public sealed class ReturnCodeSorter
+public sealed class ReturnCodeSorter : ReturnCodeSorterBase
 ```
 
 ## Public Members
@@ -9,7 +9,6 @@ public sealed class ReturnCodeSorter
 | name | description |
 | --- | --- |
 | [ReturnCodeSorter](ReturnCodeSorter/ReturnCodeSorter.md)() | The default constructor. |
-| [SortReturnCodeString](ReturnCodeSorter/SortReturnCodeString.md)(…) |  |
 
 ## See Also
 
