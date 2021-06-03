@@ -3,7 +3,7 @@
 Compute how much our indent level should differ from expected for a given node.
 
 ```csharp
-protected virtual int ComputeLevelAdjust(XNode node)
+public virtual int ComputeLevelAdjust(XNode node)
 ```
 
 | parameter | description |

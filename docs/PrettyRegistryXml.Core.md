@@ -6,6 +6,7 @@
 | --- | --- |
 | struct [AttributeAlignment](PrettyRegistryXml.Core/AttributeAlignment.md) | A structure storing the name of an attribute and a value width that it should be aligned/padded to. |
 | struct [ElementAlignment](PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |
+| class [FormatterUtilities](PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
 | abstract class [XmlFormatterBase](PrettyRegistryXml.Core/XmlFormatterBase.md) | The base of your project-specific formatting class. |
 
 ## PrettyRegistryXml.Core.Extensions namespace

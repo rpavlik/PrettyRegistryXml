@@ -11,13 +11,13 @@ public class XmlFormatter : XmlFormatterBase
 | [XmlFormatter](XmlFormatter/XmlFormatter.md)(…) |  |
 | override [IndentChars](XmlFormatter/IndentChars.md) { get; } |  |
 | override [IndentLevelWidth](XmlFormatter/IndentLevelWidth.md) { get; } |  |
+| override [ComputeLevelAdjust](XmlFormatter/ComputeLevelAdjust.md)(…) |  |
 
 ## Protected Members
 
 | name | description |
 | --- | --- |
 | override [CleanWhitespaceNode](XmlFormatter/CleanWhitespaceNode.md)(…) |  |
-| override [ComputeLevelAdjust](XmlFormatter/ComputeLevelAdjust.md)(…) |  |
 | override [WriteElement](XmlFormatter/WriteElement.md)(…) |  |
 
 ## See Also

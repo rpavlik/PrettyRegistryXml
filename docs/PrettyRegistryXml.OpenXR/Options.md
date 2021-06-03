@@ -12,6 +12,7 @@ public class Options : IEquatable<Options>
 | [ActualOutputFile](Options/ActualOutputFile.md) { get; } |  |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
+| [SortCodes](Options/SortCodes.md) { get; set; } |  |
 | [WrapExtensions](Options/WrapExtensions.md) { get; set; } |  |
 | override [Equals](Options/Equals.md)(…) |  |
 | virtual [Equals](Options/Equals.md)(…) |  |

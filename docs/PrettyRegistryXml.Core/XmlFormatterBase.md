@@ -12,6 +12,8 @@ public abstract class XmlFormatterBase
 | --- | --- |
 | virtual [IndentChars](XmlFormatterBase/IndentChars.md) { get; } |  |
 | abstract [IndentLevelWidth](XmlFormatterBase/IndentLevelWidth.md) { get; } |  |
+| virtual [ComputeLevelAdjust](XmlFormatterBase/ComputeLevelAdjust.md)(…) | Compute how much our indent level should differ from expected for a given node. |
+| [MakeIndent](XmlFormatterBase/MakeIndent.md)(…) | Return the indentation we'd expect from the nesting level (number of ancestors) of *node*. (2 methods) |
 | [Process](XmlFormatterBase/Process.md)(…) | Main entry point: process a root element into a formatted string. |
 | delegate [WrappedWrite](XmlFormatterBase.WrappedWrite.md) | A delegate type for [`WriteUsingWrappedWriter`](XmlFormatterBase/WriteUsingWrappedWriter.md) |
 
@@ -21,8 +23,6 @@ public abstract class XmlFormatterBase
 | --- | --- |
 | [XmlFormatterBase](XmlFormatterBase/XmlFormatterBase.md)() | The default constructor. |
 | virtual [CleanWhitespaceNode](XmlFormatterBase/CleanWhitespaceNode.md)(…) | Allows use of a modified version of a whitespace-only node. |
-| virtual [ComputeLevelAdjust](XmlFormatterBase/ComputeLevelAdjust.md)(…) | Compute how much our indent level should differ from expected for a given node. |
-| [MakeIndent](XmlFormatterBase/MakeIndent.md)(…) | Return the indentation we'd expect from the nesting level (number of ancestors) of *node*. (2 methods) |
 | virtual [PreserveWhitespace](XmlFormatterBase/PreserveWhitespace.md)(…) | Whether this whitespace node should be preserved. Can be overridden |
 | [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
 | virtual [WriteElement](XmlFormatterBase/WriteElement.md)(…) | The main recursive function. |

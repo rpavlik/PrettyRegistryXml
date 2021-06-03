@@ -3,7 +3,7 @@
 Return the indentation we'd expect from the nesting level (number of ancestors) of *node* with adjustments based on [`ComputeLevelAdjust`](ComputeLevelAdjust.md).
 
 ```csharp
-protected string MakeIndent(XNode node)
+public string MakeIndent(XNode node)
 ```
 
 | parameter | description |
@@ -26,7 +26,7 @@ A string of whitespace
 Return the indentation we'd expect from the nesting level (number of ancestors) of *node*.
 
 ```csharp
-protected string MakeIndent(XNode node, int levelAdjust = 0)
+public string MakeIndent(XNode node, int levelAdjust = 0)
 ```
 
 | parameter | description |
