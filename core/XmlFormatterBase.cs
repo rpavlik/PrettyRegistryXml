@@ -126,10 +126,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="text">A whitespace text node</param>
         /// <returns>true if it should be preserved as-is (default)</returns>
-        protected virtual bool PreserveWhitespace(XText text)
-        {
-            return true;
-        }
+        protected virtual bool PreserveWhitespace(XText text) => true;
 
         private void WriteElementWithAlignedAttrs(XmlWriter writer,
                                                   XElement e,
@@ -186,7 +183,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="settings">The <see cref="XmlWriterSettings"/> which will be used (with slight modification) for the wrapped call</param>
         /// <param name="wrapped">Your action to invoke on the wrapped writer</param>
         /// <seealso cref="XmlFormatterBase.WrappedWrite"/>
-        protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings? settings, WrappedWrite wrapped)
+        protected static void WriteUsingWrappedWriter(XmlWriter outerWriter,
+                                                      XmlWriterSettings? settings,
+                                                      WrappedWrite wrapped)
         {
             XmlWriterSettings mySettings = (settings == null) ? new XmlWriterSettings() : settings.Clone();
 
@@ -243,7 +242,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="nodes">A collection of nodes</param>
         /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
-        protected void WriteNodesWithEltsAligned(XmlWriter writer, IEnumerable<XNode> nodes, IDictionary<string, int>? extraWidth = null)
+        protected void WriteNodesWithEltsAligned(XmlWriter writer,
+                                                 IEnumerable<XNode> nodes,
+                                                 IDictionary<string, int>? extraWidth = null)
         {
             var nodeArray = nodes.ToArray();
             var elements = (from n in nodeArray
@@ -422,7 +423,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
-        protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e, Dictionary<string, int>? extraWidth = null)
+        protected void WriteElementWithAlignedChildAttrs(XmlWriter writer,
+                                                         XElement e,
+                                                         Dictionary<string, int>? extraWidth = null)
         {
 
             WriteStartElement(writer, e);
@@ -440,7 +443,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
-        protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e, Dictionary<string, int>? extraWidth = null)
+        protected void WriteElementWithAlignedChildElts(XmlWriter writer,
+                                                        XElement e,
+                                                        Dictionary<string, int>? extraWidth = null)
         {
 
             WriteStartElement(writer, e);
@@ -459,7 +464,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="levelAdjust">Adjustment to indentation level that would be assumed from nesting level</param>
-        protected void WriteElementWithAttrNewlines(XmlWriter writer, XElement e, int levelAdjust = 0)
+        protected void WriteElementWithAttrNewlines(XmlWriter writer,
+                                                    XElement e,
+                                                    int levelAdjust = 0)
         {
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
