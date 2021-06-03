@@ -39,7 +39,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="node">A node</param>
         /// <param name="levelAdjust">Optional adjustment to nesting level</param>
-        protected string MakeIndent(XNode node, int levelAdjust = 0)
+        public string MakeIndent(XNode node, int levelAdjust = 0)
         {
             var level = node.Ancestors().Count() + levelAdjust;
             return new string(' ', level * IndentLevelWidth);
@@ -50,7 +50,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="node">The node</param>
         /// <returns>A signed integer</returns>
-        protected virtual int ComputeLevelAdjust(XNode node) => 0;
+        public virtual int ComputeLevelAdjust(XNode node) => 0;
 
         /// <summary>
         /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>
@@ -58,7 +58,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="node">The node</param>
         /// <returns>A string of whitespace</returns>
-        protected string MakeIndent(XNode node) => MakeIndent(node, ComputeLevelAdjust(node));
+        public string MakeIndent(XNode node) => MakeIndent(node, ComputeLevelAdjust(node));
 
         private static bool IsWhitespace(XNode node)
         {

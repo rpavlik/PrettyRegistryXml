@@ -67,7 +67,7 @@ namespace PrettyRegistryXml.OpenXR
                    && attr.Value == "bitmask";
         };
 
-        protected override int ComputeLevelAdjust(XNode node)
+        public override int ComputeLevelAdjust(XNode node)
         {
             var extensionsInAncestors = (from el in node.Ancestors()
                                          where el.Name == "extensions"
