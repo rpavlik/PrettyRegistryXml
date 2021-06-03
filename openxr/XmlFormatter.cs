@@ -27,7 +27,7 @@ namespace PrettyRegistryXml.OpenXR
         public XmlFormatter(Options options)
         {
             WrapExtensions = options.WrapExtensions;
-            SortReturnVals = false;
+            SortReturnVals = options.SortCodes;
 
             var singleLineContainers = new HashSet<string> { "member", "param", "proto" };
 
