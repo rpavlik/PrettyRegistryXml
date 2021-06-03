@@ -28,7 +28,7 @@ namespace PrettyRegistryXml.Core
                                 .Reverse()
                                 // turn items into an item, increased-reverse-index tuple
                                 .Select((item, index) => (item, index + 100).ToTuple())
-                                .ToDictionary(tup => tup.Item1, tup => tup);
+                                .ToDictionary(keySelector: tup => tup.Item1, elementSelector: tup => tup);
 
 
         /// <summary>
