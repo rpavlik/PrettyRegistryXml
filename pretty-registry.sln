@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Core", "c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR", "openxr\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "openxr.Tests", "openxr.Tests\openxr.Tests.csproj", "{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}.Release|x64.Build.0 = Release|Any CPU
 		{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}.Release|x86.ActiveCfg = Release|Any CPU
 		{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}.Release|x86.Build.0 = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|x64.Build.0 = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Debug|x86.Build.0 = Debug|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|x64.ActiveCfg = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|x64.Build.0 = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|x86.ActiveCfg = Release|Any CPU
+		{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
