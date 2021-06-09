@@ -128,21 +128,10 @@ namespace PrettyRegistryXml.Core
         /// <returns>true if it should be preserved as-is (default)</returns>
         protected virtual bool PreserveWhitespace(XText text) => true;
 
-        private void WriteElementWithAlignedAttrs(XmlWriter writer,
-                                                  XElement e,
-                                                  AttributeAlignment[] alignments,
-                                                  StringBuilder sb)
-        {
-            WriteStartElement(writer, e);
-            WriteAlignedAttrs(writer, e, alignments, sb);
-            WriteNodes(writer, e.Nodes());
-            WriteEndElement(writer, e);
-        }
-
-        private void WriteElementWithAlignedAttrs(XmlWriter writer,
-                                                  XElement e,
-                                                  ElementAlignment alignment,
-                                                  StringBuilder sb)
+        private void WriteAlignedElement(XmlWriter writer,
+                                         XElement e,
+                                         ElementAlignment alignment,
+                                         StringBuilder sb)
         {
             WriteStartElement(writer, e);
             writer.Flush();
@@ -264,7 +253,7 @@ namespace PrettyRegistryXml.Core
                 {
                     if (node is XElement element)
                     {
-                        WriteElementWithAlignedAttrs(newWriter, element, alignment, sb);
+                        WriteAlignedElement(newWriter, element, alignment, sb);
                     }
                     else
                     {
@@ -310,44 +299,6 @@ namespace PrettyRegistryXml.Core
             }
             // Write everything that remains in the "normal" way.
             node.WriteTo(writer);
-        }
-
-        /// <summary>
-        /// Write nodes, aligning the attributes of those that are elements.
-        /// </summary>
-        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
-        /// <param name="nodes">Some nodes</param>
-        /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
-        protected void WriteNodesWithEltAlignedAttrs(XmlWriter writer,
-                                                     IEnumerable<XNode> nodes,
-                                                     IDictionary<string, int>? extraWidth = null)
-        {
-            var nodeArray = nodes.ToArray();
-            var elements = (from n in nodeArray
-                            where n.NodeType == XmlNodeType.Element
-                            select n as XElement).ToArray();
-            AttributeAlignment[] alignments = AttributeAlignment.FindAttributeAlignments(elements, extraWidth);
-            if (alignments.Length == 0)
-            {
-                // nothing to align here?
-                WriteNodes(writer, nodeArray);
-                return;
-            }
-
-            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
-            {
-                foreach (XNode node in nodeArray)
-                {
-                    if (node is XElement element)
-                    {
-                        WriteElementWithAlignedAttrs(newWriter, element, alignments, sb);
-                    }
-                    else
-                    {
-                        WriteNode(newWriter, node);
-                    }
-                }
-            });
         }
 
         /// <summary>
@@ -406,7 +357,7 @@ namespace PrettyRegistryXml.Core
                 if (g.Key)
                 {
                     // These should be aligned.
-                    WriteNodesWithEltAlignedAttrs(writer, g, extraWidth);
+                    WriteNodesWithEltsAligned(writer, g, extraWidth);
                 }
                 else
                 {
@@ -430,7 +381,7 @@ namespace PrettyRegistryXml.Core
 
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
-            WriteNodesWithEltAlignedAttrs(writer, e.Nodes(), extraWidth);
+            WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidth);
             WriteEndElement(writer, e);
         }
 
