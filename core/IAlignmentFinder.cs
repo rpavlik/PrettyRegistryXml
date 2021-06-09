@@ -19,8 +19,7 @@ namespace PrettyRegistryXml.Core
         /// Compute alignment state for some collection of elements
         /// </summary>
         /// <param name="elements">A collection of elements</param>
-        /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
-        /// <returns>IAttributeAlignmentState implementation, which functions somewhat like an array of alignments</returns>
-        IAlignmentState FindAlignment(IEnumerable<XElement> elements, IDictionary<string, int>? extraWidth = null);
+        /// <returns><see cref="IAlignmentState"/> implementation, which functions somewhat like an array of alignments</returns>
+        IAlignmentState FindAlignment(IEnumerable<XElement> elements);
     }
 }

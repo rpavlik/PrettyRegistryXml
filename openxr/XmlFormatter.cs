@@ -78,6 +78,12 @@ namespace PrettyRegistryXml.OpenXR
             }
             return 0;
         }
+
+        private IAlignmentFinder simpleAlignmentWithExtraValueWidth =
+            new SimpleAlignment(new Dictionary<string, int>{
+                {"value", 2}
+            });
+
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
@@ -105,14 +111,12 @@ namespace PrettyRegistryXml.OpenXR
             }
             else if (e.Name == "tags" && e.HasElements)
             {
-                WriteElementWithAlignedChildAttrs(writer, e);
+                WriteElementWithAlignedChildElts(writer, e);
             }
             else if (e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
-                WriteElementWithAlignedChildAttrs(writer, e, new Dictionary<string, int>{
-                    {"value", 2}
-                });
+                WriteElementWithAlignedChildElts(writer, e, simpleAlignmentWithExtraValueWidth);
             }
             else if (e.Name == "types")
             {

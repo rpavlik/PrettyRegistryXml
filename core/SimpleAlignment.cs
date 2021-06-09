@@ -16,11 +16,18 @@ namespace PrettyRegistryXml.Core
     /// </summary>
     public class SimpleAlignment : IAlignmentFinder
     {
+
+        private IDictionary<string, int>? extraWidth;
+
+
+        /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
+        public SimpleAlignment(IDictionary<string, int>? extraWidth = null) => this.extraWidth = extraWidth;
+
         /// <summary>
         /// Find the simple alignment, delegating to
         /// <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int}?)"/>
         /// </summary>
-        public IAlignmentState FindAlignment(IEnumerable<XElement> elements, IDictionary<string, int>? extraWidth = null) => new State(ElementAlignment.FindElementAlignment(elements, extraWidth));
+        public IAlignmentState FindAlignment(IEnumerable<XElement> elements) => new State(ElementAlignment.FindElementAlignment(elements, extraWidth));
 
         private class State : IAlignmentState
         {

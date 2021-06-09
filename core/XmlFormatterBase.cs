@@ -240,10 +240,10 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="nodes">A collection of nodes</param>
-        /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
         protected void WriteNodesWithEltsAligned(XmlWriter writer,
                                                  IEnumerable<XNode> nodes,
-                                                 IDictionary<string, int>? extraWidth = null)
+                                                 IAlignmentFinder alignmentFinder)
         {
             var nodeArray = nodes.ToArray();
             var elements = (from n in nodeArray
@@ -255,7 +255,7 @@ namespace PrettyRegistryXml.Core
                 WriteNodes(writer, nodeArray);
                 return;
             }
-            var alignment = (new SimpleAlignment()).FindAlignment(elements, extraWidth);
+            var alignment = alignmentFinder.FindAlignment(elements);
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
@@ -335,13 +335,28 @@ namespace PrettyRegistryXml.Core
         /// <param name="groupingPredicate">A predicate determining if a given node is one to align attributes for.</param>
         /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
         /// between nodes that satisfy <paramref name="groupingPredicate"/> will not interrupt a group of aligning elements</param>
-        /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
         protected void WriteElementWithAlignedChildAttrsInGroups(
             XmlWriter writer,
             XElement e,
             System.Predicate<XNode> groupingPredicate,
-            bool includeEmptyTextNodesBetween = true,
-            IDictionary<string, int>? extraWidth = null)
+            bool includeEmptyTextNodesBetween = true)
+            => WriteElementWithAlignedChildAttrsInGroups(writer, e, defaultAlignmentFinder, groupingPredicate, includeEmptyTextNodesBetween);
+
+        /// <summary>
+        /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
+        /// </summary>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="e">An element</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
+        /// <param name="groupingPredicate">A predicate determining if a given node is one to align attributes for.</param>
+        /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
+        /// between nodes that satisfy <paramref name="groupingPredicate"/> will not interrupt a group of aligning elements</param>
+        protected void WriteElementWithAlignedChildAttrsInGroups(
+            XmlWriter writer,
+            XElement e,
+            IAlignmentFinder alignmentFinder,
+            System.Predicate<XNode> groupingPredicate,
+            bool includeEmptyTextNodesBetween = true)
         {
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
@@ -367,7 +382,7 @@ namespace PrettyRegistryXml.Core
                 if (g.Key)
                 {
                     // These should be aligned.
-                    WriteNodesWithEltsAligned(writer, g, extraWidth);
+                    WriteNodesWithEltsAligned(writer, g, alignmentFinder);
                 }
                 else
                 {
@@ -383,35 +398,42 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
-        /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
         protected void WriteElementWithAlignedChildAttrs(XmlWriter writer,
                                                          XElement e,
-                                                         Dictionary<string, int>? extraWidth = null)
+                                                         IAlignmentFinder alignmentFinder)
         {
 
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
-            WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidth);
+            WriteNodesWithEltsAligned(writer, e.Nodes(), alignmentFinder);
             WriteEndElement(writer, e);
         }
+
+        private readonly IAlignmentFinder defaultAlignmentFinder = new SimpleAlignment();
 
         /// <summary>
         /// Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself.
         /// </summary>
-        /// <remarks>
-        /// Slightly more sophisticated than <see cref="XmlFormatterBase.WriteElementWithAlignedChildAttrs(XmlWriter, XElement, Dictionary{string, int}?)"/>
-        /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
-        /// <param name="extraWidth">An optional dictionary of attribute name to additional width</param>
+        protected void WriteElementWithAlignedChildElts(XmlWriter writer,
+                                                        XElement e) => WriteElementWithAlignedChildElts(writer, e, defaultAlignmentFinder);
+
+        /// <summary>
+        /// Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself.
+        /// </summary>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="e">An element</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
         protected void WriteElementWithAlignedChildElts(XmlWriter writer,
                                                         XElement e,
-                                                        Dictionary<string, int>? extraWidth = null)
+                                                        IAlignmentFinder alignmentFinder)
         {
 
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
-            WriteNodesWithEltsAligned(writer, e.Nodes(), extraWidth);
+            WriteNodesWithEltsAligned(writer, e.Nodes(), alignmentFinder);
             WriteEndElement(writer, e);
         }
 
@@ -419,9 +441,6 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Write an element, wrapping each attribute onto its own line, then writing its children.
         /// </summary>
-        /// <remarks>
-        /// Slightly more sophisticated than <see cref="XmlFormatterBase.WriteElementWithAlignedChildAttrs(XmlWriter, XElement, Dictionary{string, int}?)"/>
-        /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="levelAdjust">Adjustment to indentation level that would be assumed from nesting level</param>
