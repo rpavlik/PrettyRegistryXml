@@ -31,6 +31,9 @@ namespace PrettyRegistryXml.OpenXR
         [Option("sort-codes", Default = (bool)false, HelpText = "Whether to sort success and error codes.")]
         public bool SortCodes { get; init; }
 
+        [Option("no-align-indent", Default = (bool)true, HelpText = "Whether to adjust indentation and align attributes where specified by policy.")]
+        public bool AlignAndIndent { get; init; }
+
         // Automatically used by CommandLineParser for help.
 
         [Usage(ApplicationAlias = "PrettyRegistryXml.OpenXR")]

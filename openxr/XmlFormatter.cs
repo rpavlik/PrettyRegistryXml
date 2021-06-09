@@ -23,6 +23,7 @@ namespace PrettyRegistryXml.OpenXR
 
         private bool WrapExtensions { get; init; }
         private bool SortReturnVals { get; init; }
+        private bool AlignAndIndent { get; init; }
 
         private ReturnCodeSorter CodeSorter = new();
 
@@ -30,6 +31,7 @@ namespace PrettyRegistryXml.OpenXR
         {
             WrapExtensions = options.WrapExtensions;
             SortReturnVals = options.SortCodes;
+            AlignAndIndent = options.AlignAndIndent;
 
             var singleLineContainers = new HashSet<string> { "member", "param", "proto" };
 
@@ -95,30 +97,30 @@ namespace PrettyRegistryXml.OpenXR
                     error.Value = CodeSorter.SortReturnCodeString(error.Value);
                 }
             }
-            if (childrenShouldBeSingleLine(e))
+            if (AlignAndIndent && childrenShouldBeSingleLine(e))
             {
                 WriteSingleLineElement(writer, e);
             }
-            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
+            else if (AlignAndIndent && e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
             {
                 WriteElementWithAlignedChildElts(writer, e);
             }
-            else if (e.Name == "tags" && e.HasElements)
+            else if (AlignAndIndent && e.Name == "tags" && e.HasElements)
             {
                 WriteElementWithAlignedChildAttrs(writer, e);
             }
-            else if (e.Name == "enums" && e.HasElements)
+            else if (AlignAndIndent && e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
                 WriteElementWithAlignedChildAttrs(writer, e, new Dictionary<string, int>{
                     {"value", 2}
                 });
             }
-            else if (e.Name == "types")
+            else if (AlignAndIndent && e.Name == "types")
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, e, isBitmask);
             }
-            else if (e.Name == "interaction_profile")
+            else if (AlignAndIndent && e.Name == "interaction_profile")
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, e, node => node is XElement element && element.Name == "component");
             }
@@ -136,7 +138,7 @@ namespace PrettyRegistryXml.OpenXR
         }
 
         protected override XText CleanWhitespaceNode(XText whitespaceText)
-            => FormatterUtilities.RegenerateIndentation(this, whitespaceText);
+            => AlignAndIndent ? FormatterUtilities.RegenerateIndentation(this, whitespaceText) : whitespaceText;
     }
 }
 
