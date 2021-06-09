@@ -16,38 +16,13 @@ namespace PrettyRegistryXml.OpenXR.Tests
         public static ReturnCodeSorter Sorter = new ReturnCodeSorter();
         public static string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
 
-        [Fact]
-        public void StringComparison()
-        {
-            // aka "XR_ERROR_ACTION_TYPE_MISMATCH" > "XR_ERROR_ACTIONSET_NOT_ATTACHED"
-            Assert.True(("XR_ERROR_ACTION_TYPE_MISMATCH" as IComparable).CompareTo("XR_ERROR_ACTIONSET_NOT_ATTACHED") > 0);
-        }
-
-        [Fact]
-        public void TupleComparison()
-        {
-            {
-                // Tuple<int, string> a = (101, "XR_ERROR_LIMIT_REACHED").ToTuple();
-                // Tuple<int, string> b = (108, "XR_ERROR_FUNCTION_UNSUPPORTED").ToTuple();
-                Tuple<int, string> a = (109, "XR_SESSION_LOSS_PENDING").ToTuple();
-                Tuple<int, string> b = (110, "XR_SUCCESS").ToTuple();
-                Assert.True((a as IComparable).CompareTo(b) < 0);
-            }
-            {
-                var a = (0, "XR_ERROR_ACTIONSET_NOT_ATTACHED").ToTuple();
-                var b = (0, "XR_ERROR_ACTION_TYPE_MISMATCH").ToTuple();
-                Assert.Equal(new Tuple<int, string>[] { a, b }, (new Tuple<int, string>[] { b, a }).OrderBy(val => val));
-            }
-            // Assert.Equal(  Sorter.SortReturnCodes(new string[]{a.Item2, b.Item2}))
-        }
-
         public static IEnumerable<object[]> SmallData => new List<object[]>{
             // not special, underscore sorting
             new object[]{
-                // expected - what the python does
-                new string[]{"XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH"},
-                // unsorted
+                // expected - what the python does (when sorting reverse!)
                 new string[]{"XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"},
+                // unsorted
+                new string[]{"XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH"},
             },
             // special codes
             new object[]{

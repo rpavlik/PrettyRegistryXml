@@ -12,7 +12,11 @@ namespace PrettyRegistryXml.OpenXR
     /// <summary>
     /// A utility class for OpenXR's policy for sorting return codes.
     /// </summary>
-    public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodes
+    /// <remarks>
+    /// Due to a design defect in the original sorting script, the alphabetical codes after the
+    /// "important" ones are in reverse alphabetical order.
+    /// </remarks>
+    public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodesAndReverse
     {
         private static string[] _specialPresorted = new string[]{
                 // These codes will be sorted first, in this order.
