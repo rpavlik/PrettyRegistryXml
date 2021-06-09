@@ -28,3 +28,5 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: REUSE Compliance Check
+      uses: fsfe/reuse-action@v1.1
