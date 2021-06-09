@@ -1,0 +1,53 @@
+
+# Copyright 2021 Collabora, Ltd
+#
+# SPDX-License-Identifier: MIT
+
+name: Update docs
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - docs/**
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+          dotnet tool restore
+      - name: Build and publish locally
+        run: dotnet publish -c Release -o out --no-restore
+      - name: Build Docs
+        run: |
+          dotnet tool run xmldocmd out/PrettyRegistryXml.Core.dll docs --source ../core --clean
+          dotnet tool run xmldocmd out/PrettyRegistryXml.OpenXR.dll docs --source ../openxr --clean
+
+      - name: Commit and push if applicable
+        run: |
+          git add docs
+          if ! git diff HEAD --quiet; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git commit -m "Automatic docs update"
+          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
