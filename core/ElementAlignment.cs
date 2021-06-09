@@ -69,7 +69,19 @@ namespace PrettyRegistryXml.Core
 
 
         #region Other helpers
-
+        /// <summary>
+        /// Compute padding as appropriate for an element name.
+        /// </summary>
+        /// <param name="element">An element whose name has been written already</param>
+        public int ComputeElementPaddingWidth(XElement element)
+        {
+            var len = element.Name.LocalName.Length;
+            if (len < NameAlignment)
+            {
+                return NameAlignment - len;
+            }
+            return 0;
+        }
         /// <summary>
         /// Append padding to a StringBuilder as appropriate for an element name.
         /// </summary>
@@ -77,10 +89,10 @@ namespace PrettyRegistryXml.Core
         /// <param name="stringBuilder">Where to append the spaces, if required.</param>
         public void AppendElementNamePadding(XElement element, StringBuilder stringBuilder)
         {
-            var len = element.Name.LocalName.Length;
-            if (len < NameAlignment)
+            var padLen = ComputeElementPaddingWidth(element);
+            if (padLen > 0)
             {
-                stringBuilder.Append("".PadRight(NameAlignment - len));
+                stringBuilder.Append("".PadRight(padLen));
             }
         }
 
