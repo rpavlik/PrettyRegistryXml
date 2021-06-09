@@ -263,12 +263,9 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="elements">A collection of elements</param>
         /// <returns>Maximum width/alignment</returns>
-        public static int FindNameAlignment(IEnumerable<XElement> elements)
-        {
-            return (from el in elements
-                    let len = el.Name.LocalName.Length
-                    select len).Max();
-        }
+        public static int FindNameAlignment(IEnumerable<XElement> elements) => (from el in elements
+                                                                                let len = el.Name.LocalName.Length
+                                                                                select len).Max();
 
         /// <summary>
         /// Compute an ElementAlignment for a collection of elements.
