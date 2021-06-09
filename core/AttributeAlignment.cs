@@ -213,12 +213,11 @@ namespace PrettyRegistryXml.Core
         /// and an array of all attribute names found in the collection that aren't in the first array.</returns>
         private static (AttributeAlignment[], string[]) FindAttributeAlignmentsAndLeftovers(IEnumerable<XElement> elements)
         {
-            var q = from el in elements
-                    from attr in el.Attributes()
-                    group attr.Value.Length by attr.Name.LocalName into g
-                    select (Name: g.Key, MaxLength: g.Max());
+            Dictionary<string, int> lengthDictionary = new(from el in elements
+                                                           from attr in el.Attributes()
+                                                           group attr.Value.Length by attr.Name.LocalName into g
+                                                           select KeyValuePair.Create(g.Key, g.Max()));
 
-            var lengthDictionary = q.ToDictionary(arg => arg.Name, arg => arg.MaxLength);
             var eltWithMostAttributes = (from elt in elements
                                          orderby elt.Attributes().Count() descending
                                          select elt).First();

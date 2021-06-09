@@ -28,12 +28,15 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Constructor - processes your PresorterSpecialCodes
         /// </summary>
-        public BaseReturnCodeSorterWithSpecialCodes() => importance = PresortedSpecialCodes
-                                // reverse so that later items get a smaller index
+        public BaseReturnCodeSorterWithSpecialCodes()
+        {
+            // Construct dictionary from IEnumerable<KeyValuePair>
+            importance = new(PresortedSpecialCodes
+                                // reverse so that later codes get a smaller index
                                 .Reverse()
-                                // turn items into an negated-decreased-reverse-index, item tuple
-                                .Select((item, index) => (-index - 100, item).ToTuple())
-                                .ToDictionary(keySelector: tup => tup.Item2, elementSelector: tup => tup);
+                                // turn codes into a key-value pair: mapping a code to a (negated-decreased-reverse-index, code) tuple
+                                .Select((code, index) => KeyValuePair.Create(code, (-index - 100, code).ToTuple())));
+        }
 
 
         /// <summary>
