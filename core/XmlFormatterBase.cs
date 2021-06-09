@@ -130,18 +130,28 @@ namespace PrettyRegistryXml.Core
 
         private void WriteAlignedElement(XmlWriter writer,
                                          XElement e,
-                                         ElementAlignment alignment,
+                                         IAlignmentState alignment,
                                          StringBuilder sb)
         {
             WriteStartElement(writer, e);
             writer.Flush();
-            alignment.AppendElementNamePadding(e, sb);
-            WriteAlignedAttrs(writer, e, alignment.AttributeAlignments, sb);
+            var elementPadding = alignment.ComputeElementPaddingWidth(e);
+            if (elementPadding > 0)
+            {
+                sb.Append("".PadRight(elementPadding));
+            }
+            WriteAlignedAttrs(writer, e, alignment, sb);
             WriteNodes(writer, e.Nodes());
             WriteEndElement(writer, e);
         }
 
-        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, AttributeAlignment[] alignments, StringBuilder sb)
+        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, IAlignmentState alignment, StringBuilder sb)
+            => WriteAlignedAttrs(writer,
+                                 e,
+                                 alignment.DetermineAlignment(from attr in e.Attributes() select attr.Name.ToString()),
+                                 sb);
+
+        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, IEnumerable<AttributeAlignment> alignments, StringBuilder sb)
         {
             foreach (var alignment in alignments)
             {
@@ -245,7 +255,7 @@ namespace PrettyRegistryXml.Core
                 WriteNodes(writer, nodeArray);
                 return;
             }
-            var alignment = ElementAlignment.FindElementAlignment(elements, extraWidth);
+            var alignment = (new SimpleAlignment()).FindAlignment(elements, extraWidth);
 
             WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
             {
