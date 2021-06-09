@@ -16,6 +16,8 @@ namespace PrettyRegistryXml.OpenXR
 
         static void Run(Options options)
         {
+            Console.WriteLine("Configuration:");
+            Console.WriteLine(options.ToString());
             Console.WriteLine($"Reading registry from {options.InputFile}");
             XDocument document;
             using (var reader = new StreamReader(options.InputFile))

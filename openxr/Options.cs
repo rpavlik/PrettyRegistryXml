@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 using System.Collections.Generic;
+using System.Text;
 using CommandLine;
 using CommandLine.Text;
 
@@ -48,6 +49,16 @@ namespace PrettyRegistryXml.OpenXR
                                 }),
                 };
 
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"- Input file: {InputFile}");
+            sb.AppendLine($"- Output file: {ActualOutputFile}");
+            sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine($"- Sort return codes: {SortCodes}");
+            return sb.ToString();
         }
     }
 }
