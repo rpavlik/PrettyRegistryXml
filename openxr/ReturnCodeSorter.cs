@@ -4,6 +4,7 @@
 
 #nullable enable
 
+using System.Collections.Generic;
 using PrettyRegistryXml.Core;
 
 namespace PrettyRegistryXml.OpenXR
@@ -11,9 +12,9 @@ namespace PrettyRegistryXml.OpenXR
     /// <summary>
     /// A utility class for OpenXR's policy for sorting return codes.
     /// </summary>
-    public sealed class ReturnCodeSorter : ReturnCodeSorterBase
+    public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodes
     {
-        public ReturnCodeSorter() : base(new string[]{
+        private static string[] _specialPresorted = new string[]{
                 // These codes will be sorted first, in this order.
                 "XR_SUCCESS",
                 "XR_SESSION_LOSS_PENDING",
@@ -26,7 +27,8 @@ namespace PrettyRegistryXml.OpenXR
                 "XR_ERROR_OUT_OF_MEMORY",
                 "XR_ERROR_LIMIT_REACHED",
                 "XR_ERROR_SIZE_INSUFFICIENT",
-            })
-        { }
+            };
+
+        public override IEnumerable<string> PresortedSpecialCodes => _specialPresorted;
     }
 }
