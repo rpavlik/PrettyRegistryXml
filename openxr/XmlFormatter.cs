@@ -118,6 +118,10 @@ namespace PrettyRegistryXml.OpenXR
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, e, isBitmask);
             }
+            else if (e.Name == "interaction_profile")
+            {
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, node => node is XElement element && element.Name == "component");
+            }
             else if (WrapExtensions && e.Name == "extension")
             {
                 // This will change the format! (for the better, probably, though)
