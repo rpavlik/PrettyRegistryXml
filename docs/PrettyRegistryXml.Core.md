@@ -5,9 +5,11 @@
 | public type | description |
 | --- | --- |
 | struct [AttributeAlignment](PrettyRegistryXml.Core/AttributeAlignment.md) | A structure storing the name of an attribute and a value width that it should be aligned/padded to. |
+| abstract class [BaseReturnCodeSorter](PrettyRegistryXml.Core/BaseReturnCodeSorter.md) | Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries. |
+| abstract class [BaseReturnCodeSorterWithSpecialCodes](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodes.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest alphabetical after that. |
+| abstract class [BaseReturnCodeSorterWithSpecialCodesAndReverse](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest reverse (by accident, but left that way for now) alphabetical after that. |
 | struct [ElementAlignment](PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |
 | class [FormatterUtilities](PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
-| class [ReturnCodeSorterBase](PrettyRegistryXml.Core/ReturnCodeSorterBase.md) | Base utility class for sorting return codes, with some provided codes always in a given order, and the rest alphabetical after that. |
 | abstract class [XmlFormatterBase](PrettyRegistryXml.Core/XmlFormatterBase.md) | The base of your project-specific formatting class. |
 
 ## PrettyRegistryXml.Core.Extensions namespace

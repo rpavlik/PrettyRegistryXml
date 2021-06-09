@@ -1,7 +1,7 @@
 # ReturnCodeSorter class
 
 ```csharp
-public sealed class ReturnCodeSorter : ReturnCodeSorterBase
+public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodesAndReverse
 ```
 
 ## Public Members
@@ -9,6 +9,7 @@ public sealed class ReturnCodeSorter : ReturnCodeSorterBase
 | name | description |
 | --- | --- |
 | [ReturnCodeSorter](ReturnCodeSorter/ReturnCodeSorter.md)() | The default constructor. |
+| override [PresortedSpecialCodes](ReturnCodeSorter/PresortedSpecialCodes.md) { get; } |  |
 
 ## See Also
 
