@@ -73,13 +73,24 @@ namespace PrettyRegistryXml.Core
         /// <param name="element">An element whose name has been written already</param>
         public int ComputeElementPaddingWidth(XElement element)
         {
-            var len = element.Name.LocalName.Length;
-            if (len < NameAlignment)
+            return ComputeElementPaddingWidth(NameAlignment, element);
+        }
+
+        /// <summary>
+        /// Compute padding as appropriate for an element name. (static, two parameter)
+        /// </summary>
+        /// <param name="alignment">The width desired to pad out to for element name</param>
+        /// <param name="element">An element whose name has been written already</param>
+        public static int ComputeElementPaddingWidth(int alignment, XElement element)
+        {
+            var len = element.Name.ToString().Length;
+            if (len < alignment)
             {
-                return NameAlignment - len;
+                return alignment - len;
             }
             return 0;
         }
+
         /// <summary>
         /// Append padding to a StringBuilder as appropriate for an element name.
         /// </summary>
