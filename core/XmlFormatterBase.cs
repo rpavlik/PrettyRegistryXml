@@ -187,7 +187,7 @@ namespace PrettyRegistryXml.Core
                 wrapped(newWriter, sb);
             }
             var inner = sb.ToString();
-            if (inner.Length > 0)
+            if (!string.IsNullOrEmpty(inner))
             {
                 outerWriter.WriteRaw(inner);
             }
