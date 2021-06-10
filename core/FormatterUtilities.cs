@@ -13,7 +13,7 @@ namespace PrettyRegistryXml.Core
     /// <summary>
     /// Assorted utilities factored out from standard-specific formatters.
     /// </summary>
-    public sealed class FormatterUtilities
+    public static class FormatterUtilities
     {
         /// <summary>
         /// A useful implementation for <see cref="XmlFormatterBase.CleanWhitespaceNode(XText)"/>
@@ -47,6 +47,22 @@ namespace PrettyRegistryXml.Core
             var indent = formatter.MakeIndent(indentDeterminingNode);
 
             return new XText(cleanNewlines + indent);
+        }
+
+        /// <summary>
+        /// Generate strings of spaces of any width.
+        /// </summary>
+        /// <param name="width">A non-negative number</param>
+        /// <returns>A string of size <paramref name="width"/> of only spaces</returns>
+        public static string MakeSpaces(int width)
+        {
+            if (width < 0) {
+                throw new ArgumentOutOfRangeException("Cannot make negative spaces");
+            }
+            if (width == 0) {
+                return string.Empty;
+            }
+            return "".PadRight(width);
         }
     }
 }
