@@ -168,7 +168,7 @@ namespace PrettyRegistryXml.Core
             if (attribute == null)
             {
                 // Substituting for a full attribute
-                stringBuilder.Append("".PadRight(FullWidth));
+                stringBuilder.Append(FormatterUtilities.MakeSpaces(FullWidth));
             }
             else
             {
@@ -176,7 +176,7 @@ namespace PrettyRegistryXml.Core
                 var len = ((string)attribute).Length;
                 if (len < AlignWidth)
                 {
-                    stringBuilder.Append("".PadRight(AlignWidth - len));
+                    stringBuilder.Append(FormatterUtilities.MakeSpaces(AlignWidth - len));
 
                 }
             }

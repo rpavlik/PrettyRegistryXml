@@ -90,7 +90,7 @@ namespace PrettyRegistryXml.Core
             var padLen = ComputeElementPaddingWidth(element);
             if (padLen > 0)
             {
-                stringBuilder.Append("".PadRight(padLen));
+                stringBuilder.Append(FormatterUtilities.MakeSpaces(padLen));
             }
         }
 

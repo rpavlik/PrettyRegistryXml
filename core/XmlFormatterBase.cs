@@ -32,7 +32,7 @@ namespace PrettyRegistryXml.Core
         public abstract int IndentLevelWidth { get; }
 
         /// <value>The string (probably several spaces) to use for one indent level.</value>
-        public virtual string IndentChars { get => new string(' ', IndentLevelWidth); }
+        public virtual string IndentChars { get => FormatterUtilities.MakeSpaces(IndentLevelWidth); }
 
         /// <summary>
         /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>.
@@ -42,7 +42,7 @@ namespace PrettyRegistryXml.Core
         public string MakeIndent(XNode node, int levelAdjust = 0)
         {
             var level = node.Ancestors().Count() + levelAdjust;
-            return new string(' ', level * IndentLevelWidth);
+            return FormatterUtilities.MakeSpaces(level * IndentLevelWidth);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace PrettyRegistryXml.Core
             var elementPadding = alignment.ComputeElementPaddingWidth(e);
             if (elementPadding > 0)
             {
-                sb.Append("".PadRight(elementPadding));
+                sb.Append(FormatterUtilities.MakeSpaces(elementPadding));
             }
             WriteAlignedAttrs(writer, e, alignment, sb);
             WriteNodes(writer, e.Nodes());
