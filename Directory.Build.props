@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+    <!--
+    Copyright 2021 Collabora, Ltd
+
+    SPDX-License-Identifier: MIT
+    -->
+    <PropertyGroup>
+        <MoreLinqVersion>3.3.2</MoreLinqVersion>
+    </PropertyGroup>
+</Project>
+ 
