@@ -33,12 +33,19 @@ namespace PrettyRegistryXml.Core
         #region XElement-related methods
 
         /// <summary>
+        /// Find the element name length
+        /// </summary>
+        /// <param name="element">An element</param>
+        /// <returns>Width/alignment</returns>
+        public static int FindNameAlignment(XElement element) => element.Name.ToString().Length;
+
+        /// <summary>
         /// Find the largest element name length
         /// </summary>
         /// <param name="elements">A collection of elements</param>
         /// <returns>Maximum width/alignment</returns>
-        public static int FindNameAlignment(IEnumerable<XElement> elements) => (from el in elements
-                                                                                let len = el.Name.LocalName.Length
+        public static int FindMaxNameAlignment(IEnumerable<XElement> elements) => (from el in elements
+                                                                                let len = FindNameAlignment(el)
                                                                                 select len).Max();
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace PrettyRegistryXml.Core
         public static ElementAlignment FindElementAlignment(IEnumerable<XElement> elements, IDictionary<string, int>? extraWidth = null)
         {
             var elts = elements.ToArray();
-            var nameAlignment = FindNameAlignment(elts);
+            var nameAlignment = FindMaxNameAlignment(elts);
             var attrAligns = AttributeAlignment.FindAttributeAlignments(elts, extraWidth);
             return new ElementAlignment
             {
@@ -71,10 +78,7 @@ namespace PrettyRegistryXml.Core
         /// Compute padding as appropriate for an element name.
         /// </summary>
         /// <param name="element">An element whose name has been written already</param>
-        public int ComputeElementPaddingWidth(XElement element)
-        {
-            return ComputeElementPaddingWidth(NameAlignment, element);
-        }
+        public int ComputeElementPaddingWidth(XElement element) => ComputeElementPaddingWidth(NameAlignment, element);
 
         /// <summary>
         /// Compute padding as appropriate for an element name. (static, two parameter)
@@ -83,7 +87,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="element">An element whose name has been written already</param>
         public static int ComputeElementPaddingWidth(int alignment, XElement element)
         {
-            var len = element.Name.ToString().Length;
+            var len = FindNameAlignment(element);
             if (len < alignment)
             {
                 return alignment - len;
