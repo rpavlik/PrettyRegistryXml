@@ -182,6 +182,15 @@ namespace PrettyRegistryXml.Core
             }
         }
 
+        /// <summary>
+        /// Gets the width of an attribute.
+        /// </summary>
+        /// <param name="attr">An attribute</param>
+        /// <returns>The width of <paramref name="attr"/></returns>
+        public static int GetAttributeAlignLength(XAttribute attr)
+        {
+            return attr.Value.Length;
+        }
         #endregion
 
         #region XElement-related methods
@@ -238,7 +247,7 @@ namespace PrettyRegistryXml.Core
         {
             Dictionary<string, int> lengthDictionary = new(from el in elements
                                                            from attr in el.Attributes()
-                                                           group attr.Value.Length by attr.Name.LocalName into g
+                                                           group GetAttributeAlignLength(attr) by attr.Name.LocalName into g
                                                            select KeyValuePair.Create(g.Key, g.Max()));
 
             var eltWithMostAttributes = (from elt in elements
