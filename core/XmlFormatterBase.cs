@@ -64,7 +64,7 @@ namespace PrettyRegistryXml.Core
         {
             if (node is XText text)
             {
-                return text.Value.Trim().Length == 0;
+                return string.IsNullOrWhiteSpace(text.Value);
             }
             return false;
         }
@@ -370,7 +370,7 @@ namespace PrettyRegistryXml.Core
                 return includeEmptyTextNodesBetween
                        && n.NodeType == XmlNodeType.Text
                        && text != null
-                       && (text.Value.Trim() == "")
+                       && string.IsNullOrWhiteSpace(text.Value)
                        && n.PreviousNode != null
                        && n.NextNode != null
                        && groupingPredicate(n.PreviousNode)
