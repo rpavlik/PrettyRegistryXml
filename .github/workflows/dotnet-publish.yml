@@ -54,15 +54,15 @@ jobs:
         run: dotnet restore
 
       # for releases
-      - name: Compute version
-        if: startsWith(github.ref, 'refs/tags/')
-        shell: pwsh
-        env:
-          BUILD_OS: ${{ matrix.config.os }}
-          BUILD_REF: ${{ github.ref }}
-        run: |
-          $Version = "${Env:BUILD_REF}".Trim("refs/tags/v")
-          echo "build_version=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      # - name: Compute version
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   shell: pwsh
+      #   env:
+      #     BUILD_OS: ${{ matrix.config.os }}
+      #     BUILD_REF: ${{ github.ref }}
+      #   run: |
+      #     $Version = "${Env:BUILD_REF}".Trim("refs/tags/v")
+      #     echo "build_version=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       # For non-releases
       # - name: Compute version
@@ -80,12 +80,7 @@ jobs:
         env:
           BUILD_OS: ${{ matrix.config.os }}
           BUILD_REF: ${{ github.ref }}
-        run: |
-          $ArtifactName="PrettyRegistryXml-${Env:BUILD_OS}-${Env:build_version}"
-          echo "ARTIFACT_NAME=$ArtifactName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          dotnet build -c Release "-property:Version=${Env:build_version}" "-property:AssemblyFileVersion=${Env:build_version}" "-property:AssemblyInformationalVersionVersion=${Env:build_version}"
-          dotnet publish -c Release -o $ArtifactName/ "-property:Version=${Env:build_version}"  "-property:AssemblyFileVersion=${Env:build_version}" "-property:AssemblyInformationalVersionVersion=${Env:build_version}"
-          7za a -bd -r out/$ArtifactName.7z $ArtifactName/
+        run: Build-Artifacts.ps1
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
