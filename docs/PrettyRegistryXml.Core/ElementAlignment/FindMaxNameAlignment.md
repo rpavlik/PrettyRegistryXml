@@ -1,18 +1,18 @@
-# ElementAlignment.FindNameAlignment method
+# ElementAlignment.FindMaxNameAlignment method
 
-Find the element name length
+Find the largest element name length
 
 ```csharp
-public static int FindNameAlignment(XElement element)
+public static int FindMaxNameAlignment(IEnumerable<XElement> elements)
 ```
 
 | parameter | description |
 | --- | --- |
-| element | An element |
+| elements | A collection of elements |
 
 ## Return Value
 
-Width/alignment
+Maximum width/alignment
 
 ## See Also
 

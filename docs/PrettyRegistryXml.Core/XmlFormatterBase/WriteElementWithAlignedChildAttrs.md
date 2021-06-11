@@ -4,17 +4,18 @@ Write an element, and write its children aligning attributes across all of them.
 
 ```csharp
 protected void WriteElementWithAlignedChildAttrs(XmlWriter writer, XElement e, 
-    Dictionary<string, int>? extraWidth = null)
+    IAlignmentFinder alignmentFinder)
 ```
 
 | parameter | description |
 | --- | --- |
 | writer | Your XmlWriter in the correct state |
 | e | An element |
-| extraWidth | An optional dictionary of attribute name to additional width |
+| alignmentFinder | Your alignment finder |
 
 ## See Also
 
+* interface [IAlignmentFinder](../IAlignmentFinder.md)
 * class [XmlFormatterBase](../XmlFormatterBase.md)
 * namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
 

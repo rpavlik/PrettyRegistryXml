@@ -1,14 +1,12 @@
-# AttributeAlignment.Name property
-
-The attribute name
+# AttributeAlignment.IsPaddingOnly property
 
 ```csharp
-public string Name { get; set; }
+public bool IsPaddingOnly { get; }
 ```
 
-## Remarks
+## Property Value
 
-An empty name means this is just explicit padding.
+true if [`Name`](Name.md) is empty and thus this should be considered padding only.
 
 ## See Also
 

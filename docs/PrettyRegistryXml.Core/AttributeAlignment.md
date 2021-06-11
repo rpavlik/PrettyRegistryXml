@@ -11,17 +11,20 @@ public struct AttributeAlignment
 | name | description |
 | --- | --- |
 | [AttributeAlignment](AttributeAlignment/AttributeAlignment.md)(…) | Normal constructor |
+| static [MakePaddingOnly](AttributeAlignment/MakePaddingOnly.md)(…) | Make an AttributeAlignment that is padding only. |
 | static [MakeUnaligned](AttributeAlignment/MakeUnaligned.md)(…) | Make an AttributeAlignment that indicates the attribute should not be aligned. |
 | static [ReplaceWidth](AttributeAlignment/ReplaceWidth.md)(…) | Make an AttributeAlignment with the same name but different width from the old one. |
 | static [ReplaceWithUnaligned](AttributeAlignment/ReplaceWithUnaligned.md)(…) | Make an AttributeAlignment with the same name but marked as unaligned. |
 | [AlignWidth](AttributeAlignment/AlignWidth.md) { get; set; } | Number of characters to allow for this attribute's string value. 0 is a sentinel that means "do not align" |
 | [FullWidth](AttributeAlignment/FullWidth.md) { get; } | The width for the full attribute: name, equals sign, quotes, and value. |
+| [IsPaddingOnly](AttributeAlignment/IsPaddingOnly.md) { get; } |  |
 | [Name](AttributeAlignment/Name.md) { get; set; } | The attribute name |
 | [ShouldAlign](AttributeAlignment/ShouldAlign.md) { get; } | Whether this attribute should be padded/aligned to a given width. |
 | [AppendAttributePadding](AttributeAlignment/AppendAttributePadding.md)(…) | Append padding to a StringBuilder as appropriate for an attribute. |
 | override [ToString](AttributeAlignment/ToString.md)() | Format as a string. |
 | static [FindAttributeAlignments](AttributeAlignment/FindAttributeAlignments.md)(…) | Compute an array of AttributeAlignment for a collection of elements. |
 | static [FormatEnumerable](AttributeAlignment/FormatEnumerable.md)(…) | Format a collection of AttributeAlignment values as a string. |
+| static [GetAttributeAlignLength](AttributeAlignment/GetAttributeAlignLength.md)(…) | Gets the width of an attribute. |
 
 ## Remarks
 

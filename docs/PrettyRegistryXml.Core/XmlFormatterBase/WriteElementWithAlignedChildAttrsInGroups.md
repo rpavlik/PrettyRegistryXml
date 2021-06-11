@@ -1,11 +1,10 @@
-# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method
+# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (1 of 2)
 
 Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*.
 
 ```csharp
 protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElement e, 
-    Predicate<XNode> groupingPredicate, bool includeEmptyTextNodesBetween = true, 
-    IDictionary<string, int>? extraWidth = null)
+    Predicate<XNode> groupingPredicate, bool includeEmptyTextNodesBetween = true)
 ```
 
 | parameter | description |
@@ -14,10 +13,35 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 | e | An element |
 | groupingPredicate | A predicate determining if a given node is one to align attributes for. |
 | includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
-| extraWidth | An optional dictionary of attribute name to additional width |
 
 ## See Also
 
+* class [XmlFormatterBase](../XmlFormatterBase.md)
+* namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
+
+---
+
+# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (2 of 2)
+
+Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*.
+
+```csharp
+protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElement e, 
+    IAlignmentFinder alignmentFinder, Predicate<XNode> groupingPredicate, 
+    bool includeEmptyTextNodesBetween = true)
+```
+
+| parameter | description |
+| --- | --- |
+| writer | Your XmlWriter in the correct state |
+| e | An element |
+| alignmentFinder | Your alignment finder |
+| groupingPredicate | A predicate determining if a given node is one to align attributes for. |
+| includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
+
+## See Also
+
+* interface [IAlignmentFinder](../IAlignmentFinder.md)
 * class [XmlFormatterBase](../XmlFormatterBase.md)
 * namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
 

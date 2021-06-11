@@ -3,14 +3,14 @@
 Assorted utilities factored out from standard-specific formatters.
 
 ```csharp
-public sealed class FormatterUtilities
+public static class FormatterUtilities
 ```
 
 ## Public Members
 
 | name | description |
 | --- | --- |
-| [FormatterUtilities](FormatterUtilities/FormatterUtilities.md)() | The default constructor. |
+| static [MakeSpaces](FormatterUtilities/MakeSpaces.md)(…) | Generate strings of spaces of any width. |
 | static [RegenerateIndentation](FormatterUtilities/RegenerateIndentation.md)(…) | A useful implementation for [`CleanWhitespaceNode`](XmlFormatterBase/CleanWhitespaceNode.md) that replaces any whitespace-only text node that contains a newline, with an equivalent text node with the same number of newlines and the "correct" indentation. |
 
 ## See Also

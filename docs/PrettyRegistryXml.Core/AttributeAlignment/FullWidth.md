@@ -8,7 +8,7 @@ public int FullWidth { get; }
 
 ## Remarks
 
-Used when filling in for a missing attribute with blanks.
+Used when filling in for a missing attribute with blanks. Same as [`AlignWidth`](AlignWidth.md) when [`IsPaddingOnly`](IsPaddingOnly.md) is true.
 
 ## See Also
 

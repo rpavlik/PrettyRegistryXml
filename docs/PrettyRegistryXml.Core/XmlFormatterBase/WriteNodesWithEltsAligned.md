@@ -4,17 +4,18 @@ Write nodes, aligning element names and attributes of those that are elements.
 
 ```csharp
 protected void WriteNodesWithEltsAligned(XmlWriter writer, IEnumerable<XNode> nodes, 
-    IDictionary<string, int>? extraWidth = null)
+    IAlignmentFinder alignmentFinder)
 ```
 
 | parameter | description |
 | --- | --- |
 | writer | Your XmlWriter in the correct state |
 | nodes | A collection of nodes |
-| extraWidth | An optional dictionary of attribute name to additional width |
+| alignmentFinder | Your alignment finder |
 
 ## See Also
 
+* interface [IAlignmentFinder](../IAlignmentFinder.md)
 * class [XmlFormatterBase](../XmlFormatterBase.md)
 * namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
 

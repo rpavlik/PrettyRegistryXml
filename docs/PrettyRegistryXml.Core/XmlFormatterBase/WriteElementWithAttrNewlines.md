@@ -12,10 +12,6 @@ protected void WriteElementWithAttrNewlines(XmlWriter writer, XElement e, int le
 | e | An element |
 | levelAdjust | Adjustment to indentation level that would be assumed from nesting level |
 
-## Remarks
-
-Slightly more sophisticated than [`WriteElementWithAlignedChildAttrs`](WriteElementWithAlignedChildAttrs.md)
-
 ## See Also
 
 * class [XmlFormatterBase](../XmlFormatterBase.md)

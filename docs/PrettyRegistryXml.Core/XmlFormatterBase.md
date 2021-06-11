@@ -27,13 +27,12 @@ public abstract class XmlFormatterBase
 | [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
 | virtual [WriteElement](XmlFormatterBase/WriteElement.md)(…) | The main recursive function. |
 | [WriteElementWithAlignedChildAttrs](XmlFormatterBase/WriteElementWithAlignedChildAttrs.md)(…) | Write an element, and write its children aligning attributes across all of them. |
-| [WriteElementWithAlignedChildAttrsInGroups](XmlFormatterBase/WriteElementWithAlignedChildAttrsInGroups.md)(…) | Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*. |
-| [WriteElementWithAlignedChildElts](XmlFormatterBase/WriteElementWithAlignedChildElts.md)(…) | Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself. |
+| [WriteElementWithAlignedChildAttrsInGroups](XmlFormatterBase/WriteElementWithAlignedChildAttrsInGroups.md)(…) | Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*. (2 methods) |
+| [WriteElementWithAlignedChildElts](XmlFormatterBase/WriteElementWithAlignedChildElts.md)(…) | Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself. (2 methods) |
 | [WriteElementWithAttrNewlines](XmlFormatterBase/WriteElementWithAttrNewlines.md)(…) | Write an element, wrapping each attribute onto its own line, then writing its children. |
 | virtual [WriteEndElement](XmlFormatterBase/WriteEndElement.md)(…) | Wraps WriteEndElement. |
 | [WriteNode](XmlFormatterBase/WriteNode.md)(…) | Write a node. |
 | [WriteNodes](XmlFormatterBase/WriteNodes.md)(…) | Write the provided nodes. |
-| [WriteNodesWithEltAlignedAttrs](XmlFormatterBase/WriteNodesWithEltAlignedAttrs.md)(…) | Write nodes, aligning the attributes of those that are elements. |
 | [WriteNodesWithEltsAligned](XmlFormatterBase/WriteNodesWithEltsAligned.md)(…) | Write nodes, aligning element names and attributes of those that are elements. |
 | [WriteSingleLineElement](XmlFormatterBase/WriteSingleLineElement.md)(…) | Write an element, keeping the opening and closing tags plus all its children on a single line. |
 | virtual [WriteStartElement](XmlFormatterBase/WriteStartElement.md)(…) | Wraps String). |

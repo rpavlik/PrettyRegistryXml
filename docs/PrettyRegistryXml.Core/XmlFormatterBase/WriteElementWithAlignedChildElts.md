@@ -1,24 +1,41 @@
-# XmlFormatterBase.WriteElementWithAlignedChildElts method
+# XmlFormatterBase.WriteElementWithAlignedChildElts method (1 of 2)
 
 Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself.
 
 ```csharp
-protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e, 
-    Dictionary<string, int>? extraWidth = null)
+protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e)
 ```
 
 | parameter | description |
 | --- | --- |
 | writer | Your XmlWriter in the correct state |
 | e | An element |
-| extraWidth | An optional dictionary of attribute name to additional width |
-
-## Remarks
-
-Slightly more sophisticated than [`WriteElementWithAlignedChildAttrs`](WriteElementWithAlignedChildAttrs.md)
 
 ## See Also
 
+* class [XmlFormatterBase](../XmlFormatterBase.md)
+* namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
+
+---
+
+# XmlFormatterBase.WriteElementWithAlignedChildElts method (2 of 2)
+
+Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself.
+
+```csharp
+protected void WriteElementWithAlignedChildElts(XmlWriter writer, XElement e, 
+    IAlignmentFinder alignmentFinder)
+```
+
+| parameter | description |
+| --- | --- |
+| writer | Your XmlWriter in the correct state |
+| e | An element |
+| alignmentFinder | Your alignment finder |
+
+## See Also
+
+* interface [IAlignmentFinder](../IAlignmentFinder.md)
 * class [XmlFormatterBase](../XmlFormatterBase.md)
 * namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
 

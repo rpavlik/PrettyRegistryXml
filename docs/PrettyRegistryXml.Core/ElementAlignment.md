@@ -14,7 +14,10 @@ public struct ElementAlignment
 | [AttributeAlignments](ElementAlignment/AttributeAlignments.md) { get; set; } | An array of alignments for attributes. |
 | [NameAlignment](ElementAlignment/NameAlignment.md) { get; set; } | Alignment for the element name |
 | [AppendElementNamePadding](ElementAlignment/AppendElementNamePadding.md)(…) | Append padding to a StringBuilder as appropriate for an element name. |
-| static [FindNameAlignment](ElementAlignment/FindNameAlignment.md)(…) | Find the largest element name length |
+| [ComputeElementPaddingWidth](ElementAlignment/ComputeElementPaddingWidth.md)(…) | Compute padding as appropriate for an element name. |
+| static [ComputeElementPaddingWidth](ElementAlignment/ComputeElementPaddingWidth.md)(…) | Compute padding as appropriate for an element name. (static, two parameter) |
+| static [FindMaxNameAlignment](ElementAlignment/FindMaxNameAlignment.md)(…) | Find the largest element name length |
+| static [FindNameAlignment](ElementAlignment/FindNameAlignment.md)(…) | Find the element name length |
 
 ## Remarks
 

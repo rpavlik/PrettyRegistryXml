@@ -9,7 +9,10 @@
 | abstract class [BaseReturnCodeSorterWithSpecialCodes](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodes.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest alphabetical after that. |
 | abstract class [BaseReturnCodeSorterWithSpecialCodesAndReverse](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest reverse (by accident, but left that way for now) alphabetical after that. |
 | struct [ElementAlignment](PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |
-| class [FormatterUtilities](PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
+| static class [FormatterUtilities](PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
+| interface [IAlignmentFinder](PrettyRegistryXml.Core/IAlignmentFinder.md) | Interface to conceal both simple and more complex ways of aligning attributes. |
+| interface [IAlignmentState](PrettyRegistryXml.Core/IAlignmentState.md) | Interface wrapping the results of [`IAlignmentFinder`](PrettyRegistryXml.Core/IAlignmentFinder.md) |
+| class [SimpleAlignment](PrettyRegistryXml.Core/SimpleAlignment.md) | Simplest alignment: The attributes of the element with most attributes are aligned, any leftovers aren't aligned. |
 | abstract class [XmlFormatterBase](PrettyRegistryXml.Core/XmlFormatterBase.md) | The base of your project-specific formatting class. |
 
 ## PrettyRegistryXml.Core.Extensions namespace
