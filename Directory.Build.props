@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!--
     Copyright 2021 Collabora, Ltd
 
     SPDX-License-Identifier: MIT
     -->
+
+    <!-- our meta-data details -->
     <PropertyGroup>
-        <!-- our version -->
         <Version>1.0.0</Version>
+        <Company>Collabora, Ltd.</Company>
+        <!-- augment this with license data in individual projects -->
+        <Copyright>Copyright 2021, $(Company)</Copyright>
+
+        <!-- augment this here or in individual projects as appropriate -->
+        <Authors>Ryan Pavlik (Collabora, Ltd.)</Authors>
     </PropertyGroup>
 
+    <!-- build config -->
     <PropertyGroup>
-        <!-- dependency versions -->
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>PrettyRegistryXml</RootNamespace>
+    </PropertyGroup>
+
+    <!-- properties for tests -->
+    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
+
+    <!-- properties for not-tests -->
+    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests')) != 'true'">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <!-- dependency versions -->
+    <PropertyGroup>
         <MoreLinqVersion>3.3.2</MoreLinqVersion>
         <CommandLineParserVersion>2.9.0-preview1</CommandLineParserVersion>
     </PropertyGroup>

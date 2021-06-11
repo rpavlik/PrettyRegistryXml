@@ -1,17 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
     Copyright 2021 Collabora, Ltd
 
     SPDX-License-Identifier: MIT
   -->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>PrettyRegistryXml</RootNamespace>
-    <Company>Collabora, Ltd.</Company>
-    <Copyright>Copyright 2021, Collabora, Ltd. Published under MIT, with dependencies under Apache-2.0.</Copyright>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
+    <RootNamespace>PrettyRegistryXml.Core</RootNamespace>
 
+    <!-- only need to add license info in this file - the copyright notice is centralized -->
+    <Copyright>$(Copyright) - Published under MIT, with dependencies under Apache-2.0.</Copyright>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="morelinq" Version="$(MoreLinqVersion)" />
   </ItemGroup>
