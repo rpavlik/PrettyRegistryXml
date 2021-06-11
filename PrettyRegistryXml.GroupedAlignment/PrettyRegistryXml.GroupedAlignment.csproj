@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Copyright 2021 Collabora, Ltd
+
+    SPDX-License-Identifier: MIT
+  -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
+    <PackageReference Include="morelinq" Version="$(MoreLinqVersion)" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Company>Collabora, Ltd.</Company>
+    <Copyright>Copyright 2021, Collabora, Ltd. Published under MIT, with dependencies under Apache-2.0.</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>

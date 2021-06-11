@@ -5,6 +5,7 @@
 #nullable enable
 
 using PrettyRegistryXml.Core;
+using PrettyRegistryXml.GroupedAlignment;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -78,6 +79,16 @@ namespace PrettyRegistryXml.OpenXR
             }
             return 0;
         }
+
+        private IAlignmentFinder simpleAlignmentWithExtraValueWidth =
+            new SimpleAlignment(new Dictionary<string, int>{
+                {"value", 2}
+            });
+
+        private IAlignmentFinder extensionEnumAlignment
+            = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
+                                                            new AttributeGroup("offset", "dir", "extends")));
+
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
@@ -101,18 +112,35 @@ namespace PrettyRegistryXml.OpenXR
             }
             else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
             {
+                // Simple alignment in feature requirements (core)
                 WriteElementWithAlignedChildElts(writer, e);
+            }
+            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "extension")
+            {
+                // fancy alignment of the enums in extensions.
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, extensionEnumAlignment, node =>
+                    {
+                        if (node is XElement element && element.Name == "enum")
+                        {
+                            if (element.Attribute("name") is XAttribute name)
+                            {
+                                // don't align these two
+                                return !name.Value.EndsWith("SPEC_VERSION") && !name.Value.EndsWith("EXTENSION_NAME");
+                            };
+                            return true;
+                        }
+                        return false;
+                    }
+                    );
             }
             else if (e.Name == "tags" && e.HasElements)
             {
-                WriteElementWithAlignedChildAttrs(writer, e);
+                WriteElementWithAlignedChildElts(writer, e);
             }
             else if (e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
-                WriteElementWithAlignedChildAttrs(writer, e, new Dictionary<string, int>{
-                    {"value", 2}
-                });
+                WriteElementWithAlignedChildElts(writer, e, simpleAlignmentWithExtraValueWidth);
             }
             else if (e.Name == "types")
             {
