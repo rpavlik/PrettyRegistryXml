@@ -34,7 +34,8 @@ jobs:
         run: |
           $assemblies = Get-ChildItem out -Filter "PrettyRegistryXml.*.dll"
           foreach ($assembly in $assemblies) {
-              dotnet tool run xmldocmd (Resolve-Path -Relative $assembly) docs --source ../src/$assembly.BaseName --clean
+            $assemblyName = $assembly.BaseName
+            dotnet tool run xmldocmd (Resolve-Path -Relative $assembly) docs --source ../src/$assemblyName --clean
           }
       - name: Commit and push if applicable
         run: |
