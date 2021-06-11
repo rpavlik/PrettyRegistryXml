@@ -9,7 +9,7 @@ public class Options : IEquatable<Options>
 | name | description |
 | --- | --- |
 | [Options](Options/Options.md)() | The default constructor. |
-| [ActualOutputFile](Options/ActualOutputFile.md) { get; } |  |
+| [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](Options/OutputFile.md), if set, otherwise [`InputFile`](Options/InputFile.md) |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
 | [SortCodes](Options/SortCodes.md) { get; set; } |  |

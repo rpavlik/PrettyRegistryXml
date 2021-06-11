@@ -1,5 +1,7 @@
 # ReturnCodeSorter class
 
+A utility class for OpenXR's policy for sorting return codes.
+
 ```csharp
 public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodesAndReverse
 ```
@@ -10,6 +12,10 @@ public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodesAndRe
 | --- | --- |
 | [ReturnCodeSorter](ReturnCodeSorter/ReturnCodeSorter.md)() | The default constructor. |
 | override [PresortedSpecialCodes](ReturnCodeSorter/PresortedSpecialCodes.md) { get; } |  |
+
+## Remarks
+
+Due to a design defect in the original sorting script, the alphabetical codes after the "important" ones are in reverse alphabetical order.
 
 ## See Also
 

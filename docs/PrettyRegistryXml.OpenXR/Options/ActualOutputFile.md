@@ -1,5 +1,7 @@
 # Options.ActualOutputFile property
 
+This will be [`OutputFile`](OutputFile.md), if set, otherwise [`InputFile`](InputFile.md)
+
 ```csharp
 public string ActualOutputFile { get; }
 ```
