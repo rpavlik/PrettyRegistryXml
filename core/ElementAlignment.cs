@@ -9,15 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-using AttributeName = System.String;
-
 namespace PrettyRegistryXml.Core
 {
     /// <summary>
     /// Aligment for an entire element: element name and attributes.
     /// </summary>
     /// <remarks>
-    /// Typically created with <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{AttributeName, int}?)"/>.
+    /// Typically created with <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int}?)"/>.
     /// Wraps an integer for element name alignment, and an array of <see cref="AttributeAlignment"/>
     /// </remarks>
     public struct ElementAlignment
@@ -47,13 +45,13 @@ namespace PrettyRegistryXml.Core
         /// Compute an ElementAlignment for a collection of elements.
         /// </summary>
         /// <remarks>
-        /// This wraps both <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{AttributeName, int})" />
-        /// and <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{AttributeName, int})" />
+        /// This wraps both <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{string, int}?)" />
+        /// and <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int})" />
         /// </remarks>
         /// <param name="elements">A collection of elements</param>
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
         /// <returns>Array of alignments</returns>
-        public static ElementAlignment FindElementAlignment(IEnumerable<XElement> elements, IDictionary<AttributeName, int>? extraWidth = null)
+        public static ElementAlignment FindElementAlignment(IEnumerable<XElement> elements, IDictionary<string, int>? extraWidth = null)
         {
             var elts = elements.ToArray();
             var nameAlignment = FindNameAlignment(elts);

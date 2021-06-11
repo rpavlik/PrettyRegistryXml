@@ -18,7 +18,7 @@ namespace PrettyRegistryXml.Core
     /// A structure storing the name of an attribute and a value width that it should be aligned/padded to.
     /// </summary>
     /// <remarks>
-    /// Typically created in an array by <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{AttributeName, int}?)"/>
+    /// Typically created in an array by <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{string, int}?)"/>
     /// </remarks>
     public struct AttributeAlignment
     {
@@ -28,7 +28,7 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// The attribute name
         /// </summary>
-        public AttributeName Name { get; init; }
+        public string Name { get; init; }
 
 
         /// <summary>
@@ -107,14 +107,14 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="name">Attribute name</param>
         /// <param name="alignWidth">Value width for alignment, or 0 to not align.</param>
-        public AttributeAlignment(AttributeName name, int alignWidth) => (Name, _AlignWidth) = (name, CheckPossibleWidth(alignWidth));
+        public AttributeAlignment(string name, int alignWidth) => (Name, _AlignWidth) = (name, CheckPossibleWidth(alignWidth));
 
         /// <summary>
         /// Make an AttributeAlignment that indicates the attribute should not be aligned.
         /// </summary>
         /// <param name="name">Attribute name</param>
         /// <returns>A new unaligned AttributeAlignment</returns>
-        public static AttributeAlignment MakeUnaligned(AttributeName name) => new AttributeAlignment(name, 0);
+        public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but different width from the old one.
@@ -177,7 +177,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="elements">A collection of elements</param>
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
         /// <returns>Array of alignments</returns>
-        public static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IDictionary<AttributeName, int>? extraWidth = null)
+        public static AttributeAlignment[] FindAttributeAlignments(IEnumerable<XElement> elements, IDictionary<string, int>? extraWidth = null)
         {
             var (aligned, leftovers) = FindAttributeAlignmentsAndLeftovers(elements);
             if (extraWidth != null)
@@ -211,7 +211,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="elements"></param>
         /// <returns>An array of attribute alignments with the max width, based on the element with the most attributes,
         /// and an array of all attribute names found in the collection that aren't in the first array.</returns>
-        private static (AttributeAlignment[], AttributeName[]) FindAttributeAlignmentsAndLeftovers(IEnumerable<XElement> elements)
+        private static (AttributeAlignment[], string[]) FindAttributeAlignmentsAndLeftovers(IEnumerable<XElement> elements)
         {
             var q = from el in elements
                     from attr in el.Attributes()
