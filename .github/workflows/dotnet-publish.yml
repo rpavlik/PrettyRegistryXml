@@ -35,14 +35,14 @@ jobs:
       - name: Build artifacts
         shell: pwsh
         env:
-          BUILD_OS: ${{ matrix.config.os }}
+          BUILD_OS: ${{ runner.os }}
           BUILD_REF: ${{ github.ref }}
         run: ./Build-Artifacts.ps1
 
       - name: Upload artifacts to workflow
         uses: actions/upload-artifact@v2
         with:
-          name: PrettyRegistryXML-${{ matrix.config.os }}
+          name: PrettyRegistryXML-${{ runner.os }}
           path: out/${{ env.ARTIFACT_NAME }}.7z
 
       - name: Upload artifacts to release
