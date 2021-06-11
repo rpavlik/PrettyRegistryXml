@@ -18,7 +18,7 @@ namespace PrettyRegistryXml.OpenXR
         public string OutputFile { get; init; }
 
         /// <summary>
-        /// This will be <see cref="Options.OutputFile">, if set, otherwise <see cref="Options.InputFile">
+        /// This will be <see cref="Options.OutputFile"/>, if set, otherwise <see cref="Options.InputFile"/>
         /// </summary>
         /// <value></value>
         public string ActualOutputFile
