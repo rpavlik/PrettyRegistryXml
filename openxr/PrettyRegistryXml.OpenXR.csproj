@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
     Copyright 2021 Collabora, Ltd
 
@@ -20,6 +21,19 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="$(CommandLineParserVersion)" />
   </ItemGroup>
+
+  <!-- This is needed because the newest on nuget.org is 2.9.0-preview1 :( -->
+  <PropertyGroup>
+    <CLPRepo>https://github.com/commandlineparser/commandline</CLPRepo>
+    <CLPReleaseVersion>2.9.0-preview3</CLPReleaseVersion>
+    <CLPUrl>$(CLPRepo)/releases/download/v$(CLPReleaseVersion)/CommandLineParser.$(CLPReleaseVersion).nupkg</CLPUrl>
+  </PropertyGroup>
+
+  <Target Name="DownloadCommandLineParser" BeforeTargets="Build">
+    <DownloadFile SourceUrl="$(CLPUrl)" DestinationFolder="$(MSBuildProjectDirectory)/../deps">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
