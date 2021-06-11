@@ -11,30 +11,9 @@ on:
       - "v*"
 
 jobs:
-  create_release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-  build_assets:
-    name: Build release assets
-    needs: create_release # To get the upload URL
+
+  build:
+    name: Build and upload release
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -53,55 +32,25 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      # for releases
-      # - name: Compute version
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   shell: pwsh
-      #   env:
-      #     BUILD_OS: ${{ matrix.config.os }}
-      #     BUILD_REF: ${{ github.ref }}
-      #   run: |
-      #     $Version = "${Env:BUILD_REF}".Trim("refs/tags/v")
-      #     echo "build_version=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      # For non-releases
-      # - name: Compute version
-      #   if: not(startsWith(github.ref, 'refs/tags/'))
-      #   shell: pwsh
-      #   env:
-      #     BUILD_OS: ${{ matrix.config.os }}
-      #     BUILD_REF: ${{ github.ref }}
-      #   run: |
-      #     $Version = (git describe).Trim("v")
-      #     echo "build_version=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      - name: Build binary packages
+      - name: Build artifacts
         shell: pwsh
         env:
           BUILD_OS: ${{ matrix.config.os }}
           BUILD_REF: ${{ github.ref }}
         run: ./Build-Artifacts.ps1
-      - name: Upload artifacts
+
+      - name: Upload artifacts to workflow
         uses: actions/upload-artifact@v2
         with:
           name: PrettyRegistryXML-${{ matrix.config.os }}
           path: out/${{ env.ARTIFACT_NAME }}.7z
-      - name: Upload binaries to release
+
+      - name: Upload artifacts to release
         uses: svenstaro/upload-release-action@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          # file: out/${{ env.ARTIFACT_NAME }}.7z
           file: out/*.7z
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
-      # - name: Upload to release
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ needs.create_release.outputs.upload_url }}
-      #     asset_name: ${{ env.ARTIFACT_NAME }}
-      #     asset_path: out/${{ env.ARTIFACT_NAME }}.7z
-      #     asset_content_type: application/octet-stream
