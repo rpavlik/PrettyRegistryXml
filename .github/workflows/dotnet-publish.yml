@@ -80,7 +80,7 @@ jobs:
         env:
           BUILD_OS: ${{ matrix.config.os }}
           BUILD_REF: ${{ github.ref }}
-        run: Build-Artifacts.ps1
+        run: ./Build-Artifacts.ps1
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
