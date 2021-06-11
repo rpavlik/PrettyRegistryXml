@@ -8,8 +8,8 @@
 
     <!-- our meta-data details -->
     <PropertyGroup>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <Version>1.1.0.0</Version>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <Version>2.0.0.0</Version>
         <Company>Collabora, Ltd.</Company>
         <!-- augment this with license data in individual projects -->
         <Copyright>Copyright 2021, $(Company)</Copyright>
