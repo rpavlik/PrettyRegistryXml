@@ -15,7 +15,6 @@
 
     <!-- only need to add license info in this file - the copyright notice is centralized -->
     <Copyright>$(Copyright) - Published under MIT, with dependencies under Apache-2.0 and MIT.</Copyright>
-    <Authors>Ryan Pavlik (Collabora, Ltd.)</Authors>
   </PropertyGroup>
 
   <ItemGroup>
