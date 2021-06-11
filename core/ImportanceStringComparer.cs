@@ -21,7 +21,8 @@ namespace PrettyRegistryXml.Core
             if (x == null) return -1;
             if (y == null) return 1;
             var intResult = intComparer.Compare(x.Item1, y.Item1);
-            if (intResult != 0) {
+            if (intResult != 0)
+            {
                 return intResult;
             }
             return stringComparer.Compare(x.Item2, y.Item2);
