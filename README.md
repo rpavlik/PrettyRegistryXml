@@ -53,11 +53,12 @@ as turned into markdown documents:
 
 All assemblies and docs are within `PrettyRegistryXml`:
 
-- [`Core`](docs/PrettyRegistryXml.Core.md) - Base functionality
-- [`GroupedAlignment`](docs/PrettyRegistryXml.GroupedAlignment.md)
+- [`PrettyRegistryXml.Core`](docs/PrettyRegistryXml.Core.md)
+  - Base functionality
+- [`PrettyRegistryXml.GroupedAlignment`](docs/PrettyRegistryXml.GroupedAlignment.md)
   - Some more fancy alignment
-- [`OpenXR`](docs/PrettyRegistryXml.OpenXR.md) - OpenXR
-  frontend - less complete docs but perhaps useful as an example.
+- [`PrettyRegistryXml.OpenXR`](docs/PrettyRegistryXml.OpenXR.md)
+  - OpenXR frontend - less complete docs but perhaps useful as an example.
 
 When changes are merged into the main branch, these docs are automatically
 updated and committed, if applicable, so no need to update them yourself.
