@@ -269,4 +269,20 @@ namespace PrettyRegistryXml.Core
 
         #endregion
     }
+
+    /// <summary>
+    /// Extensions for an enumerable of <see cref="AttributeAlignment"/> objects.
+    /// </summary>
+    public static class AttributeAlignmentExtensions
+    {
+        /// <summary>
+        /// Compute the summed full-width of all aligned alignments.
+        /// </summary>
+        /// <param name="alignments">A collection of alignment objects</param>
+        /// <returns>Width</returns>
+        public static int ComputeFullWidth(this IEnumerable<AttributeAlignment> alignments) => (from alignment in alignments
+                                                                                                where alignment.ShouldAlign
+                                                                                                select alignment.FullWidth).Sum();
+
+    }
 }
