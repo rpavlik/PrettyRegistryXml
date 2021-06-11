@@ -4,7 +4,16 @@
 # SPDX-License-Identifier: MIT
 
 # dotnet clean
+dotnet restore
+dotnet tool restore
 dotnet build
 
-dotnet tool run xmldocmd core/bin/Debug/net5.0/PrettyRegistryXml.Core.dll docs --source ../core --clean
-dotnet tool run xmldocmd openxr/bin/Debug/net5.0/PrettyRegistryXml.OpenXR.dll docs --source ../openxr --clean
+$dirs = Get-ChildItem src -Exclude *.Tests
+foreach ($srcdir in $dirs) {
+    # Write-Output $srcdir
+    $filename = $srcdir.BaseName + ".dll"
+    $pathToSources = "../src/" + $srcdir.BaseName
+    $assemblypath = Join-Path $srcdir "bin/Debug/net5.0/$filename"
+    Write-Output $assemblypath
+    dotnet tool run xmldocmd $assemblypath docs --source $pathToSources --clean
+}

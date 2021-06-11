@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
+    <ProjectReference Include="..\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj" />
     <ProjectReference Include="..\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj" />
   </ItemGroup>
 
