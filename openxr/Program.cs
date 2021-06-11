@@ -38,7 +38,11 @@ namespace PrettyRegistryXml.OpenXR
 
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
+            var parser = (new Parser(with =>
+            {
+                with.GetoptMode = true;
+            }));
+            parser.ParseArguments<Options>(args)
                           .WithParsed(Run);
         }
     }

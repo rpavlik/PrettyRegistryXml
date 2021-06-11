@@ -37,7 +37,7 @@
     <!-- dependency versions -->
     <PropertyGroup>
         <MoreLinqVersion>3.3.2</MoreLinqVersion>
-        <CommandLineParserVersion>2.9.0-preview1</CommandLineParserVersion>
+        <CommandLineParserVersion>2.9.0-preview3</CommandLineParserVersion>
     </PropertyGroup>
 </Project>
  
