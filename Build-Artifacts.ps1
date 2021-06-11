@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 # Copyright 2021 Collabora, Ltd
 #
 # SPDX-License-Identifier: MIT
@@ -24,4 +25,9 @@ if (Test-Path Env:GITHUB_ENV)
 
 dotnet build -c Release "-property:Version=$Version" "-property:AssemblyFileVersion=$Version" "-property:AssemblyInformationalVersionVersion=$Version"
 dotnet publish -c Release -o $ArtifactName/ "-property:Version=$Version"  "-property:AssemblyFileVersion=$Version" "-property:AssemblyInformationalVersionVersion=$Version"
+
+# Put the licenses in there too.
+Copy-Item -Recurse LICENSES $ArtifactName/
+Copy-Item LICENSE.md $ArtifactName/LICENSE.txt
+
 7z a -bd -r out/$ArtifactName.7z $ArtifactName/
