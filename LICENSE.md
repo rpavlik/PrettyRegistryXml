@@ -1,4 +1,4 @@
-# License
+# License information for PrettyRegistryXml
 
 <!--
 Copyright 2021 Collabora, Ltd
@@ -6,8 +6,11 @@ Copyright 2021 Collabora, Ltd
 SPDX-License-Identifier: MIT
 -->
 
+Homepage: <https://github.com/rpavlik/PrettyRegistryXml>
+
 The overall software written for this package is licensed [MIT][] (also known as
-the Expat license).
+the Expat license). Some miscellaneous files in the source repo have other
+(permissive) licenses, like CC-BY-4.0 or CC0-1.0.
 
 This software does use dependencies, brought in via NuGet:
 
