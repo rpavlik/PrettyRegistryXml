@@ -7,6 +7,9 @@ using System.Text;
 using CommandLine;
 using CommandLine.Text;
 
+// Disabling in this file because there's help text for each, lack of XML docs doesn't both me here.
+#pragma warning disable CS1591
+
 namespace PrettyRegistryXml.OpenXR
 {
     public record Options
