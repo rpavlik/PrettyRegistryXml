@@ -59,20 +59,23 @@ jobs:
           BUILD_OS: ${{ matrix.config.os }}
         run: |
           $Version = (git describe).Trim("v")
+          $ArtifactName="PrettyRegistryXml-${Env:BUILD_OS}-$Version"
           echo "MY_VER=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "ARTIFACT_NAME=$ArtifactName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           dotnet build -c Release "-property:Version=$Version" "-property:AssemblyFileVersion=$Version" "-property:AssemblyInformationalVersionVersion=$Version"
-          dotnet publish -c Release -o out/${Env:BUILD_OS} "-property:Version=$Version"  "-property:AssemblyFileVersion=$Version" "-property:AssemblyInformationalVersionVersion=$Version"
+          dotnet publish -c Release -o $ArtifactName/ "-property:Version=$Version"  "-property:AssemblyFileVersion=$Version" "-property:AssemblyInformationalVersionVersion=$Version"
+          7za a -bd -r out/$ArtifactName.7z $ArtifactName/
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: PrettyRegistryXML-${{ github.ref }}-${{ matrix.config.os }}
-          path: out/${{ matrix.config.os }}
+          path: out/${{ env.ARTIFACT_NAME }}.7z
       - name: Upload to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_name: PrettyRegistryXML-${{ github.ref }}-${{ matrix.config.os }}
-          asset_path: out/${{ matrix.config.os }}
+          asset_name: ${{ env.ARTIFACT_NAME }}
+          asset_path: out/${{ env.ARTIFACT_NAME }}.7z
           asset_content_type: application/octet-stream
