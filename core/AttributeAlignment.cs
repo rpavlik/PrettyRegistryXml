@@ -55,10 +55,11 @@ namespace PrettyRegistryXml.Core
         }
 
         /// <summary>
-        /// The width for the full attribute: name, equals sign, quotes, and value.
+        /// The width for the full attribute: name, equals sign, quotes, value, and trailing space.
         /// </summary>
         /// <remarks>
         /// Used when filling in for a missing attribute with blanks.
+        /// Invalid if <see cref="ShouldAlign" /> is <c>false</c>.
         /// Same as <see cref="AlignWidth"/> when <see cref="IsPaddingOnly"/> is true.
         /// </remarks>
         public int FullWidth
@@ -173,8 +174,7 @@ namespace PrettyRegistryXml.Core
             else
             {
                 // Just right padding
-                var len = ((string)attribute).Length;
-                if (len < AlignWidth)
+                var len = GetAttributeAlignLength(attribute);
                 {
                     stringBuilder.Append(FormatterUtilities.MakeSpaces(AlignWidth - len));
 
