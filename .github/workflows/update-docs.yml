@@ -1,17 +1,18 @@
-
 # Copyright 2021 Collabora, Ltd
 #
 # SPDX-License-Identifier: MIT
 
 name: Update docs
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - docs/**
+      - .github/**
+  workflow_run:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
