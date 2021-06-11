@@ -38,7 +38,7 @@ namespace PrettyRegistryXml.Core
 
 
         /// <summary>
-        /// Number of characters to allow for this attribute's string value. 0 is a sentinel that means "do not align"
+        /// Number of characters to allow for this attribute's name, equals sign, quotes, and value. 0 is a sentinel that means "do not align"
         /// </summary>
         public int AlignWidth
         {
@@ -58,9 +58,10 @@ namespace PrettyRegistryXml.Core
         /// The width for the full attribute: name, equals sign, quotes, value, and trailing space.
         /// </summary>
         /// <remarks>
-        /// Used when filling in for a missing attribute with blanks.
+        /// Used only when filling in for a missing attribute with blanks.
         /// Invalid if <see cref="ShouldAlign" /> is <c>false</c>.
-        /// Same as <see cref="AlignWidth"/> when <see cref="IsPaddingOnly"/> is true.
+        /// Same as <see cref="AlignWidth"/> when <see cref="IsPaddingOnly"/> is true,
+        /// since the whole thing is trailing spaces then and there's never an actual attribute.
         /// </remarks>
         public int FullWidth
         {
@@ -75,7 +76,7 @@ namespace PrettyRegistryXml.Core
                     return AlignWidth;
                 }
 
-                return $"{Name}=\"\"".Length + AlignWidth + 1;
+                return AlignWidth + 1;
             }
         }
 
@@ -175,6 +176,7 @@ namespace PrettyRegistryXml.Core
             {
                 // Just right padding
                 var len = GetAttributeAlignLength(attribute);
+                if (len < AlignWidth)
                 {
                     stringBuilder.Append(FormatterUtilities.MakeSpaces(AlignWidth - len));
 
@@ -189,7 +191,7 @@ namespace PrettyRegistryXml.Core
         /// <returns>The width of <paramref name="attr"/></returns>
         public static int GetAttributeAlignLength(XAttribute attr)
         {
-            return attr.Value.Length;
+            return attr.ToString().Length;
         }
         #endregion
 
