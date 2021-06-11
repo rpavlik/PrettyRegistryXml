@@ -59,8 +59,9 @@ jobs:
         shell: pwsh
         env:
           BUILD_OS: ${{ matrix.config.os }}
+          BUILD_REF: ${{ github.ref }}
         run: |
-          $Version = (git describe).Trim("v")
+          $Version = "${Env:BUILD_REF}".Trim("refs/tags/")
           $ArtifactName="PrettyRegistryXml-${Env:BUILD_OS}-$Version"
           echo "MY_VER=$Version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "ARTIFACT_NAME=$ArtifactName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
@@ -70,7 +71,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: PrettyRegistryXML-${{ github.ref }}-${{ matrix.config.os }}
+          name: PrettyRegistryXML-${{ matrix.config.os }}
           path: out/${{ env.ARTIFACT_NAME }}.7z
       - name: Upload to release
         uses: actions/upload-release-asset@v1
