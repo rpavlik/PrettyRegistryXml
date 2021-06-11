@@ -28,7 +28,13 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// The attribute name
         /// </summary>
+        /// <remarks>
+        /// An empty name means this is just explicit padding.
+        /// </remarks>
         public string Name { get; init; }
+
+        /// <value>true if <see cref="Name"/> is empty and thus this should be considered padding only.</value>
+        public bool IsPaddingOnly => String.IsNullOrEmpty(Name);
 
 
         /// <summary>
@@ -36,8 +42,8 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         public int AlignWidth
         {
-            get => _AlignWidth;
-            set => _AlignWidth = CheckPossibleWidth(value);
+            get => alignWidth;
+            set => alignWidth = CheckPossibleWidth(value);
         }
 
         /// <summary>
@@ -45,7 +51,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         public bool ShouldAlign
         {
-            get => (AlignWidth > 0);
+            get => (AlignWidth != NO_ALIGN_SENTINEL);
         }
 
         /// <summary>
@@ -53,12 +59,21 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <remarks>
         /// Used when filling in for a missing attribute with blanks.
+        /// Same as <see cref="AlignWidth"/> when <see cref="IsPaddingOnly"/> is true.
         /// </remarks>
         public int FullWidth
         {
             get
             {
-                if (!ShouldAlign) throw new InvalidOperationException("Makes no sense to access FullWidth when we should not align this attribute");
+                if (!ShouldAlign)
+                {
+                    throw new InvalidOperationException("Makes no sense to access FullWidth when we should not align this attribute");
+                };
+                if (IsPaddingOnly)
+                {
+                    return AlignWidth;
+                }
+
                 return $"{Name}=\"\"".Length + AlignWidth + 1;
             }
         }
@@ -67,7 +82,9 @@ namespace PrettyRegistryXml.Core
 
         #region Internal/Implementation
 
-        private int _AlignWidth;
+        const int NO_ALIGN_SENTINEL = 0;
+
+        private int alignWidth;
 
         /// <summary>
         /// Helper for throwing exceptions on invalid widths.
@@ -76,7 +93,7 @@ namespace PrettyRegistryXml.Core
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
-            if (value < 0) throw new ArgumentOutOfRangeException("AlignWidth cannot be negative");
+            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException("AlignWidth cannot be negative");
             return value;
         }
 
@@ -107,7 +124,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="name">Attribute name</param>
         /// <param name="alignWidth">Value width for alignment, or 0 to not align.</param>
-        public AttributeAlignment(string name, int alignWidth) => (Name, _AlignWidth) = (name, CheckPossibleWidth(alignWidth));
+        public AttributeAlignment(string name, int alignWidth) => (Name, this.alignWidth) = (name, CheckPossibleWidth(alignWidth));
 
         /// <summary>
         /// Make an AttributeAlignment that indicates the attribute should not be aligned.
@@ -115,6 +132,12 @@ namespace PrettyRegistryXml.Core
         /// <param name="name">Attribute name</param>
         /// <returns>A new unaligned AttributeAlignment</returns>
         public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
+        /// <summary>
+        /// Make an AttributeAlignment that is padding only.
+        /// </summary>
+        /// <param name="alignWidth">Value width for alignment</param>
+        /// <returns>A new padding-only AttributeAlignment</returns>
+        public static AttributeAlignment MakePaddingOnly(int alignWidth) => new AttributeAlignment("", alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but different width from the old one.
@@ -223,14 +246,14 @@ namespace PrettyRegistryXml.Core
                                          select elt).First();
             var alignedAttrNames = (from a in eltWithMostAttributes.Attributes()
                                     select a.Name.LocalName).ToArray();
-            var knownNames = alignedAttrNames.ToHashSet();
+            var alignedNamesSet = alignedAttrNames.ToHashSet();
             var aligned = from name in alignedAttrNames
                           select new AttributeAlignment(name, lengthDictionary[name]);
-            var leftovers =
+            var leftoverNames =
                 from a in lengthDictionary
-                where !knownNames.Contains(a.Key)
+                where !alignedNamesSet.Contains(a.Key)
                 select a.Key;
-            return (aligned.ToArray(), leftovers.ToArray());
+            return (aligned.ToArray(), leftoverNames.ToArray());
         }
 
         #endregion

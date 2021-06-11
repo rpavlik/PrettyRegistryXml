@@ -155,7 +155,7 @@ namespace PrettyRegistryXml.Core
         {
             foreach (var alignment in alignments)
             {
-                XAttribute? attr = e.Attribute(alignment.Name);
+                XAttribute? attr = alignment.IsPaddingOnly ? null : e.Attribute(alignment.Name);
                 if (attr != null)
                 {
                     writer.WriteAttributeString(alignment.Name, attr.Value);
