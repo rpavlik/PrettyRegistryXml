@@ -22,21 +22,26 @@
     <PackageReference Include="CommandLineParser" Version="$(CommandLineParserVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
+  </ItemGroup>
+
   <!-- This is needed because the newest on nuget.org is 2.9.0-preview1 :( -->
   <PropertyGroup>
     <CLPRepo>https://github.com/commandlineparser/commandline</CLPRepo>
     <CLPReleaseVersion>2.9.0-preview3</CLPReleaseVersion>
-    <CLPUrl>$(CLPRepo)/releases/download/v$(CLPReleaseVersion)/CommandLineParser.$(CLPReleaseVersion).nupkg</CLPUrl>
+    <CLPFileName>CommandLineParser.$(CLPReleaseVersion).nupkg</CLPFileName>
+    <CLPUrl>$(CLPRepo)/releases/download/v$(CLPReleaseVersion)/$(CLPFileName)</CLPUrl>
+    <CLPDestDir>$(SolutionDir)/deps</CLPDestDir>
   </PropertyGroup>
 
-  <Target Name="DownloadCommandLineParser" BeforeTargets="Build">
-    <DownloadFile SourceUrl="$(CLPUrl)" DestinationFolder="$(MSBuildProjectDirectory)/../deps">
+  <Target Name="DownloadCommandLineParser" BeforeTargets="CollectPackageReferences" Outputs="$(CLPDestDir)$(CLPFileName)">
+    <DownloadFile SourceUrl="$(CLPUrl)" DestinationFolder="$(CLPDestDir)" Condition="!Exists('$(CLPDestDir)$(CLPFileName)')">
       <Output TaskParameter="DownloadedFile" ItemName="Content" />
     </DownloadFile>
   </Target>
-
-  <ItemGroup>
-    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
-  </ItemGroup>
+  <Target Name="BeforeClean" BeforeTargets="Clean">
+    <Delete Files="$(CLPDestDir)$(CLPFileName)" />
+  </Target>
 
 </Project>
