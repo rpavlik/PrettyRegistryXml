@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Core", "core\PrettyRegistryXml.Core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Core", "src\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR", "openxr\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR", "src\PrettyRegistryXml.OpenXR\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "openxr.Tests", "openxr.Tests\openxr.Tests.csproj", "{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR.Tests", "src\PrettyRegistryXml.OpenXR.Tests\PrettyRegistryXml.OpenXR.Tests.csproj", "{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment", "PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj", "{1CE2ED2A-13C6-4A07-A566-B6B7CFBC890F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment", "src\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj", "{1CE2ED2A-13C6-4A07-A566-B6B7CFBC890F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment.Tests", "PrettyRegistryXml.GroupedAlignment.Tests\PrettyRegistryXml.GroupedAlignment.Tests.csproj", "{746C0352-AF98-4E03-A3FB-9E019BDC893B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment.Tests", "src\PrettyRegistryXml.GroupedAlignment.Tests\PrettyRegistryXml.GroupedAlignment.Tests.csproj", "{746C0352-AF98-4E03-A3FB-9E019BDC893B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

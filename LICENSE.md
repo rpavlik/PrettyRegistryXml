@@ -14,8 +14,8 @@ the Expat license). Some miscellaneous files in the source repo have other
 
 This software does use dependencies, brought in via NuGet:
 
-- [MoreLinq][]: Used in multiple places. Licensed [MIT][]
-- [CommandLineParser][]: Used in the OpenXR frontend. Licensed [Apache-2.0][]
+- [MoreLinq][]: Used in multiple places. Licensed [Apache-2.0][]
+- [CommandLineParser][]: Used in the OpenXR frontend. Licensed [MIT][]
 
 [MIT]: https://spdx.org/licenses/MIT.html
 [Apache-2.0]: https://spdx.org/licenses/Apache-2.0.html

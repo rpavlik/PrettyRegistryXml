@@ -13,14 +13,10 @@ on:
       - docs/**
       - .github/**
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build-docs:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
@@ -33,11 +29,13 @@ jobs:
           dotnet tool restore
       - name: Build and publish locally
         run: dotnet publish -c Release -o out --no-restore
-      - name: Build Docs
+      - name: Build docs
+        shell: pwsh
         run: |
-          dotnet tool run xmldocmd out/PrettyRegistryXml.Core.dll docs --source ../core --clean
-          dotnet tool run xmldocmd out/PrettyRegistryXml.OpenXR.dll docs --source ../openxr --clean
-
+          $assemblies = Get-ChildItem out -Filter "PrettyRegistryXml.*.dll"
+          foreach ($assembly in $assemblies) {
+              dotnet tool run xmldocmd (Resolve-Path -Relative $assembly) docs --source ../src/$assembly.BaseName --clean
+          }
       - name: Commit and push if applicable
         run: |
           git add docs

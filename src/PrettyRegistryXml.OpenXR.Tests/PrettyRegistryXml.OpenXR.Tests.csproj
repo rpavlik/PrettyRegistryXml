@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\openxr\PrettyRegistryXml.OpenXR.csproj" />
-    <ProjectReference Include="..\core\PrettyRegistryXml.Core.csproj" />
+    <ProjectReference Include="..\PrettyRegistryXml.OpenXR\PrettyRegistryXml.OpenXR.csproj" />
+    <ProjectReference Include="..\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj" />
   </ItemGroup>
 </Project>
