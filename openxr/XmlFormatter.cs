@@ -117,21 +117,11 @@ namespace PrettyRegistryXml.OpenXR
             }
             else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "extension")
             {
-                // fancy alignment of the enums in extensions.
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, extensionEnumAlignment, node =>
-                    {
-                        if (node is XElement element && element.Name == "enum")
-                        {
-                            if (element.Attribute("name") is XAttribute name)
-                            {
-                                // don't align these two
-                                return !name.Value.EndsWith("SPEC_VERSION") && !name.Value.EndsWith("EXTENSION_NAME");
-                            };
-                            return true;
-                        }
-                        return false;
-                    }
-                    );
+                // Beautiful alignment of the enums in extensions.
+                WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                          e,
+                                                          extensionEnumAlignment,
+                                                          node => node is XElement element && element.Name == "enum");
             }
             else if (e.Name == "tags" && e.HasElements)
             {
@@ -140,7 +130,7 @@ namespace PrettyRegistryXml.OpenXR
             else if (e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
-                WriteElementWithAlignedChildElts(writer, e, simpleAlignmentWithExtraValueWidth);
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, simpleAlignmentWithExtraValueWidth, node => node is XElement element && element.Name == "enum");
             }
             else if (e.Name == "types")
             {
