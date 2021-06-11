@@ -1,6 +1,6 @@
 # AttributeAlignment.FullWidth property
 
-The width for the full attribute: name, equals sign, quotes, and value.
+The width for the full attribute: name, equals sign, quotes, value, and trailing space.
 
 ```csharp
 public int FullWidth { get; }
@@ -8,7 +8,7 @@ public int FullWidth { get; }
 
 ## Remarks
 
-Used when filling in for a missing attribute with blanks. Same as [`AlignWidth`](AlignWidth.md) when [`IsPaddingOnly`](IsPaddingOnly.md) is true.
+Used only when filling in for a missing attribute with blanks. Invalid if [`ShouldAlign`](ShouldAlign.md) is `false`. Same as [`AlignWidth`](AlignWidth.md) when [`IsPaddingOnly`](IsPaddingOnly.md) is true, since the whole thing is trailing spaces then and there's never an actual attribute.
 
 ## See Also
 

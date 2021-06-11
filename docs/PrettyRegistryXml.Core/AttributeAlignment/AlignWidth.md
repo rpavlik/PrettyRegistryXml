@@ -1,6 +1,6 @@
 # AttributeAlignment.AlignWidth property
 
-Number of characters to allow for this attribute's string value. 0 is a sentinel that means "do not align"
+Number of characters to allow for this attribute's name, equals sign, quotes, and value. 0 is a sentinel that means "do not align"
 
 ```csharp
 public int AlignWidth { get; set; }
