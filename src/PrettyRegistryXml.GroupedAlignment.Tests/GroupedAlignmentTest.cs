@@ -20,6 +20,13 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
         private static GroupedAttributeAlignment OpenXREnumAlignment =>
                         new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
                                                                       new AttributeGroup("offset", "dir", "extends")));
+        private static GroupedAttributeAlignment VulkanEnumAlignment =>
+                        new GroupedAttributeAlignment(
+                            new GroupChoice(
+                                new AttributeGroup("value"),
+                                new AttributeGroup("extends", "extnumber", "offset", "dir"),
+                                new AttributeGroup("bitpos", "extends")),
+                            new AlignedTrailer());
         public static object[] ExtensionEnums => new object[]{
             // OpenXR data that got goofed up
             new object[]{
@@ -55,7 +62,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                                 new XAttribute("extends", "VkSwapchainCreateFlagBitsKHR"),
                                 new XAttribute("name", "VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR"),
                                 new XAttribute("comment", "Allow images with VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT"))),
-                OpenXREnumAlignment,
+                VulkanEnumAlignment,
                 new string[]{"offset", "name"},
             },
 
