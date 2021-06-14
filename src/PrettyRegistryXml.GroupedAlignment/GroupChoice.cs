@@ -33,6 +33,19 @@ namespace PrettyRegistryXml.GroupedAlignment
                               select KeyValuePair.Create(attrName, g));
         }
 
+        private (AttributeGroup, int) FindBestMatchingGroup(IEnumerable<string> elementAttrNames)
+        {
+            // find the option that handles the most.
+            var q = from g in Groups
+                    let numHandled = g.CountHandledAttributes(elementAttrNames)
+                    orderby numHandled descending
+                    select (g, numHandled);
+            return q.First();
+        }
+
+        /// <inheritdoc />
+        public override int CountHandledAttributes(IEnumerable<string> elementAttrNames) => FindBestMatchingGroup(elementAttrNames).Item2;
+
         /// <inheritdoc />
         public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this, Groups);
     }

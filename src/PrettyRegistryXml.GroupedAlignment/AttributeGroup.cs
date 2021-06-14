@@ -32,12 +32,11 @@ namespace PrettyRegistryXml.GroupedAlignment
             AttributeNameSet = AttributeNames.ToHashSet();
         }
 
-        // public bool AppliesToElement(IEnumerable<string> elementAttrNames)
-        // {
-        //     return (from attrName in elementAttrNames
-        //             where AttributeNameSet.Contains(attrName)
-        //             select true).Any();
-        // }
+
+        /// <inheritdoc />
+        public override int CountHandledAttributes(IEnumerable<string> elementAttrNames) => (from attrName in elementAttrNames
+                                                                                             where AttributeNameSet.Contains(attrName)
+                                                                                             select true).Count();
 
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
