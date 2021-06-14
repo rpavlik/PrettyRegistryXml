@@ -1,8 +1,15 @@
 # XmlFormatter.WriteElement method
 
+This is the recursive part that contains most of the "policy"
+
 ```csharp
 protected override void WriteElement(XmlWriter writer, XElement e)
 ```
+
+| parameter | description |
+| --- | --- |
+| writer | Your writer |
+| e | The element to write |
 
 ## See Also
 

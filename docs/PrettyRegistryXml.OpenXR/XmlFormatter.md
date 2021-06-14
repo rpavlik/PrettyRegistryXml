@@ -1,5 +1,7 @@
 # XmlFormatter class
 
+OpenXR-specific policy for formatting XML.
+
 ```csharp
 public class XmlFormatter : XmlFormatterBase
 ```
@@ -8,7 +10,7 @@ public class XmlFormatter : XmlFormatterBase
 
 | name | description |
 | --- | --- |
-| [XmlFormatter](XmlFormatter/XmlFormatter.md)(…) |  |
+| [XmlFormatter](XmlFormatter/XmlFormatter.md)(…) | Constructor |
 | override [IndentChars](XmlFormatter/IndentChars.md) { get; } |  |
 | override [IndentLevelWidth](XmlFormatter/IndentLevelWidth.md) { get; } |  |
 | override [ComputeLevelAdjust](XmlFormatter/ComputeLevelAdjust.md)(…) |  |
@@ -18,7 +20,7 @@ public class XmlFormatter : XmlFormatterBase
 | name | description |
 | --- | --- |
 | override [CleanWhitespaceNode](XmlFormatter/CleanWhitespaceNode.md)(…) |  |
-| override [WriteElement](XmlFormatter/WriteElement.md)(…) |  |
+| override [WriteElement](XmlFormatter/WriteElement.md)(…) | This is the recursive part that contains most of the "policy" |
 
 ## See Also
 

@@ -1,8 +1,14 @@
 # XmlFormatter constructor
 
+Constructor
+
 ```csharp
 public XmlFormatter(Options options)
 ```
+
+| parameter | description |
+| --- | --- |
+| options | Formatting options, typically from command line. |
 
 ## See Also
 
