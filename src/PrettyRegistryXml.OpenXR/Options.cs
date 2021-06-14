@@ -32,9 +32,6 @@ namespace PrettyRegistryXml.OpenXR
         [Option("wrap-extensions", Default = (bool)false, HelpText = "Whether to wrap attributes of <extension> tags.")]
         public bool WrapExtensions { get; init; }
 
-        [Option("sort-codes", Default = (bool)false, HelpText = "Whether to sort success and error codes.")]
-        public bool SortCodes { get; init; }
-
         // Automatically used by CommandLineParser for help.
 
         [Usage(ApplicationAlias = "PrettyRegistryXml.OpenXR")]
@@ -60,7 +57,6 @@ namespace PrettyRegistryXml.OpenXR
             sb.AppendLine($"- Input file: {InputFile}");
             sb.AppendLine($"- Output file: {ActualOutputFile}");
             sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine($"- Sort return codes: {SortCodes}");
             return sb.ToString();
         }
     }
