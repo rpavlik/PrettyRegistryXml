@@ -8,8 +8,9 @@
 
     <!-- our meta-data details -->
     <PropertyGroup>
+        <!-- this is a must-match value - only the major should be changed. -->
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
-        <Version>2.0.0.0</Version>
+        <Version>2.1.0.0</Version>
         <Company>Collabora, Ltd.</Company>
         <!-- augment this with license data in individual projects -->
         <Copyright>Copyright 2021, $(Company)</Copyright>
