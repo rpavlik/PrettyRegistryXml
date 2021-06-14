@@ -11,6 +11,7 @@ public abstract class AttributeSequenceTrailerBase : IAttributeSequenceItem
 | name | description |
 | --- | --- |
 | [IsTrailer](AttributeSequenceTrailerBase/IsTrailer.md) { get; } | This is always a trailer. |
+| [CountHandledAttributes](AttributeSequenceTrailerBase/CountHandledAttributes.md)(…) | Computes the number of attributes in this list of names that we can handle. |
 | abstract [CreateWidthComputer](AttributeSequenceTrailerBase/CreateWidthComputer.md)() | Create the object needed to process a collection of elements to determine alignment widths. |
 
 ## Protected Members

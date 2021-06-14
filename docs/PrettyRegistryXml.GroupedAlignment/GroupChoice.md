@@ -11,7 +11,9 @@ public class GroupChoice : AttributeSequenceItemBase
 | name | description |
 | --- | --- |
 | [GroupChoice](GroupChoice/GroupChoice.md)(…) | Create a group choice. |
+| override [CountHandledAttributes](GroupChoice/CountHandledAttributes.md)(…) |  |
 | override [CreateWidthComputer](GroupChoice/CreateWidthComputer.md)() |  |
+| override [ToString](GroupChoice/ToString.md)() | Convert to string |
 
 ## See Also
 

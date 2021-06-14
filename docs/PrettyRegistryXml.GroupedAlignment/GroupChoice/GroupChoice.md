@@ -8,7 +8,7 @@ public GroupChoice(params AttributeGroup[] groups)
 
 | parameter | description |
 | --- | --- |
-| groups | Two or more [`AttributeGroup`](../AttributeGroup.md) objects, with disjoint attribute names, to alternate between. |
+| groups | Two or more [`AttributeGroup`](../AttributeGroup.md) objects, to alternate between. |
 
 ## See Also
 

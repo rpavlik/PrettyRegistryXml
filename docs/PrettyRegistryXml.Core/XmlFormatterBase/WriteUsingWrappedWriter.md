@@ -1,10 +1,35 @@
-# XmlFormatterBase.WriteUsingWrappedWriter method
+# XmlFormatterBase.WriteUsingWrappedWriter method (1 of 2)
 
 Perform some writing to a custom XmlWriter, which is then written as "raw" to *outerWriter*
 
 ```csharp
-protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings? settings, 
-    WrappedWrite wrapped)
+public static void WriteUsingWrappedWriter(XmlWriter outerWriter, 
+    Action<XmlWriter, StringBuilder> wrapped)
+```
+
+| parameter | description |
+| --- | --- |
+| outerWriter | The current XmlWriter in the correct state |
+| wrapped | Your action to invoke on the wrapped writer |
+
+## Remarks
+
+If you need to manually modify the StringBuilder, be sure to do `writer.Flush();` first.
+
+## See Also
+
+* class [XmlFormatterBase](../XmlFormatterBase.md)
+* namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
+
+---
+
+# XmlFormatterBase.WriteUsingWrappedWriter method (2 of 2)
+
+Perform some writing to a custom XmlWriter, which is then written as "raw" to *outerWriter*
+
+```csharp
+public static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSettings? settings, 
+    Action<XmlWriter, StringBuilder> wrapped)
 ```
 
 | parameter | description |
@@ -13,9 +38,12 @@ protected static void WriteUsingWrappedWriter(XmlWriter outerWriter, XmlWriterSe
 | settings | The XmlWriterSettings which will be used (with slight modification) for the wrapped call |
 | wrapped | Your action to invoke on the wrapped writer |
 
+## Remarks
+
+If you need to manually modify the StringBuilder, be sure to do `writer.Flush();` first.
+
 ## See Also
 
-* delegate [WrappedWrite](../XmlFormatterBase.WrappedWrite.md)
 * class [XmlFormatterBase](../XmlFormatterBase.md)
 * namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
 

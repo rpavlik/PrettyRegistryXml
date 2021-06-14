@@ -13,7 +13,9 @@ public class AttributeGroup : AttributeSequenceItemBase
 | [AttributeGroup](AttributeGroup/AttributeGroup.md)(…) | Create a group of attributes that will all be aligned (or replaced with placeholder spaces) |
 | [AttributeNames](AttributeGroup/AttributeNames.md) { get; set; } |  |
 | [AttributeNameSet](AttributeGroup/AttributeNameSet.md) { get; } |  |
+| override [CountHandledAttributes](AttributeGroup/CountHandledAttributes.md)(…) |  |
 | override [CreateWidthComputer](AttributeGroup/CreateWidthComputer.md)() |  |
+| override [ToString](AttributeGroup/ToString.md)() | Convert to string |
 
 ## See Also
 

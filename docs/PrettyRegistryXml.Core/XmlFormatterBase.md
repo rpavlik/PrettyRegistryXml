@@ -15,7 +15,8 @@ public abstract class XmlFormatterBase
 | virtual [ComputeLevelAdjust](XmlFormatterBase/ComputeLevelAdjust.md)(…) | Compute how much our indent level should differ from expected for a given node. |
 | [MakeIndent](XmlFormatterBase/MakeIndent.md)(…) | Return the indentation we'd expect from the nesting level (number of ancestors) of *node*. (2 methods) |
 | [Process](XmlFormatterBase/Process.md)(…) | Main entry point: process a root element into a formatted string. |
-| delegate [WrappedWrite](XmlFormatterBase.WrappedWrite.md) | A delegate type for [`WriteUsingWrappedWriter`](XmlFormatterBase/WriteUsingWrappedWriter.md) |
+| static [WriteAlignedAttrs](XmlFormatterBase/WriteAlignedAttrs.md)(…) | Write attributes, aligned as indicated, to the writer with the associated StringBuilder. (2 methods) |
+| static [WriteUsingWrappedWriter](XmlFormatterBase/WriteUsingWrappedWriter.md)(…) | Perform some writing to a custom XmlWriter, which is then written as "raw" to *outerWriter* (2 methods) |
 
 ## Protected Members
 
@@ -36,7 +37,6 @@ public abstract class XmlFormatterBase
 | [WriteNodesWithEltsAligned](XmlFormatterBase/WriteNodesWithEltsAligned.md)(…) | Write nodes, aligning element names and attributes of those that are elements. |
 | [WriteSingleLineElement](XmlFormatterBase/WriteSingleLineElement.md)(…) | Write an element, keeping the opening and closing tags plus all its children on a single line. |
 | virtual [WriteStartElement](XmlFormatterBase/WriteStartElement.md)(…) | Wraps String). |
-| static [WriteUsingWrappedWriter](XmlFormatterBase/WriteUsingWrappedWriter.md)(…) | Perform some writing to a custom XmlWriter, which is then written as "raw" to *outerWriter* |
 
 ## Remarks
 

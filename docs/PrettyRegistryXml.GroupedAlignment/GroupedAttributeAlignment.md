@@ -12,6 +12,7 @@ public class GroupedAttributeAlignment : IAlignmentFinder
 | --- | --- |
 | [GroupedAttributeAlignment](GroupedAttributeAlignment/GroupedAttributeAlignment.md)(…) | Create an alignment of this type. |
 | [FindAlignment](GroupedAttributeAlignment/FindAlignment.md)(…) | Find the alignment state for a collection of elements. |
+| override [ToString](GroupedAttributeAlignment/ToString.md)() | Convert to string |
 
 ## See Also
 

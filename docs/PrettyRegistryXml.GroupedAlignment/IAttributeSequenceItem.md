@@ -11,6 +11,7 @@ public interface IAttributeSequenceItem
 | name | description |
 | --- | --- |
 | [IsTrailer](IAttributeSequenceItem/IsTrailer.md) { get; } |  |
+| [CountHandledAttributes](IAttributeSequenceItem/CountHandledAttributes.md)(…) | Computes the number of attributes in this list of names that we can handle. |
 | [CreateWidthComputer](IAttributeSequenceItem/CreateWidthComputer.md)() | Create the object needed to process a collection of elements to determine alignment widths. |
 
 ## See Also
