@@ -391,8 +391,8 @@ namespace PrettyRegistryXml.Core
                        && n.NextNode != null
                        && groupingPredicate(n.PreviousNode)
                        && groupingPredicate(n.NextNode);
-            }
-                );
+            });
+
             foreach (var g in grouped)
             {
                 if (g.Key)

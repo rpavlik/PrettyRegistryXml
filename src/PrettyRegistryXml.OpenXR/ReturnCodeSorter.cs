@@ -33,6 +33,7 @@ namespace PrettyRegistryXml.OpenXR
                 "XR_ERROR_SIZE_INSUFFICIENT",
             };
 
+        /// <inheritdoc />
         public override IEnumerable<string> PresortedSpecialCodes => _specialPresorted;
     }
 }
