@@ -79,6 +79,66 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
         [Theory]
         public void EnumsAlignNames(XElement requireElement, GroupedAttributeAlignment alignment, string[] alignedAttrs)
         {
+            var lines = ToAlignedLines(requireElement, alignment);
+
+            foreach (var attrName in alignedAttrs)
+            {
+                var q = from line in lines
+                        let pos = line.IndexOf(attrName)
+                        // skip lines without this attribute.
+                        where pos != -1
+                        select pos;
+                var uniqueColumns = q.Distinct().ToArray();
+                Assert.Single(uniqueColumns);
+            }
+
+        }
+
+        public static object[] PreviousFailures => new object[]{
+        // Vulkan data that triggered a "duplicate attribute"
+            new object[]{
+                new XElement("require",
+                    new XElement("enum",
+                                new XAttribute("value", "3"),
+                                new XAttribute("name", "VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION")),
+                    new XElement("enum",
+                                new XAttribute("value", "\"VK_KHR_sampler_mirror_clamp_to_edge\""),
+                                new XAttribute("name", "VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME")),
+                    new XElement("enum",
+                                new XAttribute("value", "4"),
+                                new XAttribute("extends", "VkSamplerAddressMode"),
+                                new XAttribute("name", "VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE"),
+                                new XAttribute("comment", "Note that this defines what was previously a core enum, and so uses the 'value' attribute rather than 'offset', and does not have a suffix. This is a special case, and should not be repeated")),
+                    new XElement("enum",
+                                new XAttribute("extends", "VkSamplerAddressMode"),
+                                new XAttribute("name", "VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR"),
+                                new XAttribute("alias", "VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE"),
+                                new XAttribute("comment", "Alias introduced for consistency with extension suffixing rules"))),
+                OpenXREnumAlignment,
+            },
+        };
+
+        /// <summary>
+        /// Use a provided config to align varied attributes, without any particular assertions about the output.
+        /// </summary>
+        /// <param name="requireElement">The parent "require" element</param>
+        /// <param name="alignment">The GroupedAttributeAlignment to format with.</param>
+        [MemberData(nameof(PreviousFailures))]
+        [Theory]
+        public void CheckPreviousFailures(XElement requireElement, GroupedAttributeAlignment alignment)
+        {
+            var lines = ToAlignedLines(requireElement, alignment);
+            Assert.Equal(requireElement.Elements().Count(), lines.Count());
+        }
+
+        /// <summary>
+        /// Use a provided config to align varied attributes.
+        /// </summary>
+        /// <param name="requireElement">The parent "require" element</param>
+        /// <param name="alignment">The GroupedAttributeAlignment to format with.</param>
+        /// <returns>A collection of lines, each one with an element on it.</return>
+        public IEnumerable<string> ToAlignedLines(XElement requireElement, GroupedAttributeAlignment alignment)
+        {
             var alignState = alignment.FindAlignment(requireElement.Elements());
             var lines = new List<string>();
             var sb = new StringBuilder();
@@ -97,18 +157,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                     sb.Clear();
                 }
             }
-
-            foreach (var attrName in alignedAttrs)
-            {
-                var q = from line in lines
-                        let pos = line.IndexOf(attrName)
-                        // skip lines without this attribute.
-                        where pos != -1
-                        select pos;
-                var uniqueColumns = q.Distinct().ToArray();
-                Assert.Single(uniqueColumns);
-            }
-
+            return lines;
         }
 
     }
