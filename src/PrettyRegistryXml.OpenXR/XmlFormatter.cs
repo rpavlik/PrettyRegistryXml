@@ -15,9 +15,15 @@ using System;
 
 namespace PrettyRegistryXml.OpenXR
 {
+    /// <summary>
+    /// OpenXR-specific policy for formatting XML.
+    /// </summary>
     public class XmlFormatter : XmlFormatterBase
     {
+        /// <inheritdoc />
         public override int IndentLevelWidth { get => 4; }
+
+        /// <inheritdoc />
         public override string IndentChars { get => "    "; }
 
         private readonly Predicate<XElement> childrenShouldBeSingleLine;
@@ -27,6 +33,10 @@ namespace PrettyRegistryXml.OpenXR
 
         private ReturnCodeSorter CodeSorter = new();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="options">Formatting options, typically from command line.</param>
         public XmlFormatter(Options options)
         {
             WrapExtensions = options.WrapExtensions;
@@ -68,6 +78,7 @@ namespace PrettyRegistryXml.OpenXR
                    && attr.Value == "bitmask";
         };
 
+        /// <inheritdoc />
         public override int ComputeLevelAdjust(XNode node)
         {
             var extensionsInAncestors = (from el in node.Ancestors()
@@ -90,7 +101,11 @@ namespace PrettyRegistryXml.OpenXR
                                                             new AttributeGroup("offset", "dir", "extends"),
                                                             new AttributeGroup("bitpos", "extends")));
 
-        // This is the recursive part
+        /// <summary>
+        /// This is the recursive part that contains most of the "policy"
+        /// </summary>
+        /// <param name="writer">Your writer</param>
+        /// <param name="e">The element to write</param>
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
             if (e.Name == "command" && SortReturnVals)
@@ -154,6 +169,7 @@ namespace PrettyRegistryXml.OpenXR
 
         }
 
+        /// <inheritdoc />
         protected override XText CleanWhitespaceNode(XText whitespaceText)
             => FormatterUtilities.RegenerateIndentation(this, whitespaceText);
     }
