@@ -37,6 +37,27 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                 OpenXREnumAlignment,
                 new string[]{"value", "name"},
             },
+            // Vulkan data that triggered a crash
+            new object[]{
+                new XElement("require",
+                    new XElement("enum",
+                                new XAttribute("extends", "VkStructureType"),
+                                new XAttribute("extnumber", "61"),
+                                new XAttribute("offset", "11"),
+                                new XAttribute("name", "VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR")),
+                    new XElement("enum",
+                                new XAttribute("extends", "VkStructureType"),
+                                new XAttribute("extnumber", "61"),
+                                new XAttribute("offset", "12"),
+                                new XAttribute("name", "VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR")),
+                    new XElement("enum",
+                                new XAttribute("bitpos", "0"),
+                                new XAttribute("extends", "VkSwapchainCreateFlagBitsKHR"),
+                                new XAttribute("name", "VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR"),
+                                new XAttribute("comment", "Allow images with VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT"))),
+                OpenXREnumAlignment,
+                new string[]{"offset", "name"},
+            },
 
         };
 
