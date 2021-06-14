@@ -60,28 +60,31 @@ namespace PrettyRegistryXml.GroupedAlignment
                 this.groupChoice = groupChoice;
             }
 
-            private bool TryGetAlignerForName(string name,
-                                              [MaybeNullWhen(false)] out IAttributeSequenceItemAligner aligner)
-            {
-                if (groupChoice.nameToGroup.TryGetValue(name, out var attributeGroup))
-                {
-                    return groupAligners.TryGetValue(attributeGroup, out aligner);
-                }
-                aligner = null;
-                return false;
-            }
-
             public bool TakeAndHandleAttributes(IEnumerable<string> attributeNames,
                                                 [MaybeNullWhen(false)] out IEnumerable<Core.AttributeAlignment> alignments,
                                                 out IEnumerable<string> remainingNames)
             {
-                var firstName = attributeNames.First();
-                if (TryGetAlignerForName(firstName, out var aligner))
+                // find the option that handles the most.
+                var (bestGroup, bestNumHandled) = groupChoice.FindBestMatchingGroup(attributeNames);
+                if (bestNumHandled > 0)
                 {
-                    return aligner.HandleAttributesWithGlobalWidth(FullWidth,
-                                                                   attributeNames,
-                                                                   out alignments,
-                                                                   out remainingNames);
+                    var bestAligner = groupAligners[bestGroup];
+                    if (bestAligner.TakeAndHandleAttributes(attributeNames,
+                                                            out var ourAlignments,
+                                                            out remainingNames))
+                    {
+                        if (bestAligner.FullWidth < FullWidth)
+                        {
+                            alignments = ourAlignments.Append(
+                                Core.AttributeAlignment.MakePaddingOnly(FullWidth - bestAligner.FullWidth));
+                        }
+                        else
+                        {
+
+                            alignments = ourAlignments;
+                        }
+                        return true;
+                    }
                 }
                 remainingNames = attributeNames;
                 alignments = null;

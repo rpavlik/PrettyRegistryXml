@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PrettyRegistryXml.Core;
+using static MoreLinq.Extensions.PartitionExtension;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {
@@ -47,10 +48,9 @@ namespace PrettyRegistryXml.GroupedAlignment
             private List<NameLengthPair> observedLengths = new();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
-                // TODO might need to adjust - this only looks for adjacent items, across unlimited sets
-                var mine = attributes.TakeWhile(NameLengthPair => attrGroup.AttributeNameSet.Contains(NameLengthPair.Name));
-                observedLengths.AddRange(mine);
-                return attributes.TakeLast(attributes.Count() - mine.Count());
+                var (selected, notSelected) = attributes.Partition(attr => attrGroup.AttributeNameSet.Contains(attr.Name));
+                observedLengths.AddRange(selected);
+                return notSelected;
             }
 
             public IAttributeSequenceItemAligner Finish()
