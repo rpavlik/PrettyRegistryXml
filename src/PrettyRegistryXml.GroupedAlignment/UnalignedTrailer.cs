@@ -15,6 +15,9 @@ namespace PrettyRegistryXml.GroupedAlignment
     public class UnalignedTrailer : AttributeSequenceTrailerBase
     {
 
+        /// <inheritdoc />
+        public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this);
+
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
             private UnalignedTrailer attrGroup;
@@ -54,7 +57,5 @@ namespace PrettyRegistryXml.GroupedAlignment
             }
         }
 
-        /// <inheritdoc />
-        public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this);
     }
 }
