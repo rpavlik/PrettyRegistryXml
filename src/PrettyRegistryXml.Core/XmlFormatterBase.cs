@@ -145,13 +145,27 @@ namespace PrettyRegistryXml.Core
             WriteEndElement(writer, e);
         }
 
-        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, IAlignmentState alignment, StringBuilder sb)
+        /// <summary>
+        /// Write attributes, aligned as indicated, to the writer with the associated StringBuilder.
+        /// </summary>
+        /// <param name="writer">Your writer</param>
+        /// <param name="e">Element whose attributes we should write</param>
+        /// <param name="alignment">Your alignment state</param>
+        /// <param name="sb">The StringBuilder that <paramref name="writer"/> writes to</param>
+        public static void WriteAlignedAttrs(XmlWriter writer, XElement e, IAlignmentState alignment, StringBuilder sb)
             => WriteAlignedAttrs(writer,
                                  e,
                                  alignment.DetermineAlignment(from attr in e.Attributes() select attr.Name.ToString()),
                                  sb);
 
-        private static void WriteAlignedAttrs(XmlWriter writer, XElement e, IEnumerable<AttributeAlignment> alignments, StringBuilder sb)
+        /// <summary>
+        /// Write attributes, aligned as indicated, to the writer with the associated StringBuilder.
+        /// </summary>
+        /// <param name="writer">Your writer</param>
+        /// <param name="e">Element whose attributes we should write</param>
+        /// <param name="alignments">Array of alignments</param>
+        /// <param name="sb">The StringBuilder that <paramref name="writer"/> writes to</param>
+        public static void WriteAlignedAttrs(XmlWriter writer, XElement e, IEnumerable<AttributeAlignment> alignments, StringBuilder sb)
         {
             foreach (var alignment in alignments)
             {
@@ -166,25 +180,27 @@ namespace PrettyRegistryXml.Core
         }
 
         /// <summary>
-        /// A delegate type for <see cref="XmlFormatterBase.WriteUsingWrappedWriter(XmlWriter, XmlWriterSettings?, WrappedWrite)"/>
+        /// Perform some writing to a custom <see cref="XmlWriter"/>, which is then written as "raw" to <paramref name="outerWriter"/>
         /// </summary>
         /// <remarks>
-        /// If you need to manually modify <paramref name="stringBuilder"/>, be sure to do <c>writer.Flush();</c> first.
+        /// If you need to manually modify the StringBuilder, be sure to do <c>writer.Flush();</c> first.
         /// </remarks>
-        /// <param name="writer">The new <see cref="XmlWriter"/> created for this call</param>
-        /// <param name="stringBuilder">The StringBuilder that <paramref name="writer"/> is outputting to</param>
-        public delegate void WrappedWrite(XmlWriter writer, StringBuilder stringBuilder);
-
+        /// <param name="outerWriter">The current <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="wrapped">Your action to invoke on the wrapped writer</param>
+        public static void WriteUsingWrappedWriter(XmlWriter outerWriter,
+                                                   Action<XmlWriter, StringBuilder> wrapped) => WriteUsingWrappedWriter(outerWriter, null, wrapped);
         /// <summary>
         /// Perform some writing to a custom <see cref="XmlWriter"/>, which is then written as "raw" to <paramref name="outerWriter"/>
         /// </summary>
+        /// <remarks>
+        /// If you need to manually modify the StringBuilder, be sure to do <c>writer.Flush();</c> first.
+        /// </remarks>
         /// <param name="outerWriter">The current <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="settings">The <see cref="XmlWriterSettings"/> which will be used (with slight modification) for the wrapped call</param>
         /// <param name="wrapped">Your action to invoke on the wrapped writer</param>
-        /// <seealso cref="XmlFormatterBase.WrappedWrite"/>
-        protected static void WriteUsingWrappedWriter(XmlWriter outerWriter,
-                                                      XmlWriterSettings? settings,
-                                                      WrappedWrite wrapped)
+        public static void WriteUsingWrappedWriter(XmlWriter outerWriter,
+                                                   XmlWriterSettings? settings,
+                                                   Action<XmlWriter, StringBuilder> wrapped)
         {
             XmlWriterSettings mySettings = (settings == null) ? new XmlWriterSettings() : settings.Clone();
 

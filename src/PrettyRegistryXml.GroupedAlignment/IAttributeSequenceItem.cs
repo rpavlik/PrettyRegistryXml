@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 #nullable enable
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
@@ -91,6 +91,13 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Create the object needed to process a collection of elements to determine alignment widths.
         /// </summary>
         IAttributeSequenceItemWidthComputer CreateWidthComputer();
+
+        /// <summary>
+        /// Computes the number of attributes in this list of names that we can handle.
+        /// </summary>
+        /// <param name="elementAttrNames">Attribute names</param>
+        /// <returns>Number handled</returns>
+        int CountHandledAttributes(IEnumerable<string> elementAttrNames);
     }
 
     /// <summary>
@@ -107,6 +114,13 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Create the object needed to process a collection of elements to determine alignment widths.
         /// </summary>
         public abstract IAttributeSequenceItemWidthComputer CreateWidthComputer();
+
+        /// <summary>
+        /// Computes the number of attributes in this list of names that we can handle.
+        /// </summary>
+        /// <param name="elementAttrNames">Attribute names</param>
+        /// <returns>Number handled</returns>
+        public abstract int CountHandledAttributes(IEnumerable<string> elementAttrNames);
     }
 
     /// <summary>
@@ -123,5 +137,12 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Create the object needed to process a collection of elements to determine alignment widths.
         /// </summary>
         public abstract IAttributeSequenceItemWidthComputer CreateWidthComputer();
+
+        /// <summary>
+        /// Computes the number of attributes in this list of names that we can handle.
+        /// </summary>
+        /// <param name="elementAttrNames">Attribute names</param>
+        /// <returns>Number handled</returns>
+        public int CountHandledAttributes(IEnumerable<string> elementAttrNames) => elementAttrNames.Count();
     }
 }

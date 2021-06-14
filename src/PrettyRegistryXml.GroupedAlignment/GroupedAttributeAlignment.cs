@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using PrettyRegistryXml.Core;
@@ -92,6 +93,15 @@ namespace PrettyRegistryXml.GroupedAlignment
             }
         }
 
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("GroupedAttributeAlignment( {0} )",
+                                                            string.Join(", ",
+                                                                        from sequenceItem in attributeSequenceItems
+                                                                        select sequenceItem.ToString()));
+
         private class State : IAlignmentState
         {
             private readonly int ElementNameAlignment;
@@ -124,13 +134,28 @@ namespace PrettyRegistryXml.GroupedAlignment
             public IEnumerable<AttributeAlignment> DetermineAlignment(IEnumerable<string> attributeNames)
             {
                 // flatten
-                return from inner in HandleAttribute(attributeNames)
-                       from value in inner
-                       select value;
+                var flattenedAlignments = from inner in HandleAttribute(attributeNames)
+                                          from value in inner
+                                          select value;
+#if DEBUG
+                var alignments = flattenedAlignments.ToArray();
+                var q = from a in alignments
+                        group a by a.Name into g
+                        let count = g.Count()
+                        orderby count descending
+                        select (g.Key, count);
+
+                var top = q.First();
+                Debug.Assert(top.count < 2);
+                return alignments;
+#else
+                return flattenedAlignments;
+#endif
             }
 
             public int ComputeElementPaddingWidth(XElement element)
                 => ElementAlignment.ComputeElementPaddingWidth(ElementNameAlignment, element);
+
         }
     }
 }

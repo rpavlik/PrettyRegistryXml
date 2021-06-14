@@ -19,17 +19,6 @@ namespace PrettyRegistryXml.GroupedAlignment
             private GroupChoice groupChoice;
             private Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer> groupWidthComputers;
 
-            private bool TryGetWidthComputerForName(string attributeName,
-                                                    [MaybeNullWhen(false)] out IAttributeSequenceItemWidthComputer widthComputer)
-            {
-                if (groupChoice.nameToGroup.TryGetValue(attributeName, out var attributeGroup))
-                {
-                    return groupWidthComputers.TryGetValue(attributeGroup, out widthComputer);
-                }
-                widthComputer = null;
-                return false;
-            }
-
             public WidthComputer(GroupChoice groupChoice, AttributeGroup[] groups)
             {
                 this.groupChoice = groupChoice;
@@ -39,10 +28,13 @@ namespace PrettyRegistryXml.GroupedAlignment
 
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
-                var firstName = attributes.First().Name;
-                if (TryGetWidthComputerForName(firstName, out var widthComputer))
+                var attrNames = (from attr in attributes
+                                 select attr.Name).ToList();
+                // find the option that handles the most.
+                var (bestGroup, bestNumHandled) = groupChoice.FindBestMatchingGroup(attrNames);
+                if (bestNumHandled > 0)
                 {
-                    return widthComputer.TakeAndHandleAttributes(attributes);
+                    return groupWidthComputers[bestGroup].TakeAndHandleAttributes(attributes);
                 }
                 // nothing for us here.
                 return attributes;

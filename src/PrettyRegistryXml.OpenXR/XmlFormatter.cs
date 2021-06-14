@@ -87,7 +87,8 @@ namespace PrettyRegistryXml.OpenXR
 
         private IAlignmentFinder extensionEnumAlignment
             = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
-                                                            new AttributeGroup("offset", "dir", "extends")));
+                                                            new AttributeGroup("offset", "dir", "extends"),
+                                                            new AttributeGroup("bitpos", "extends")));
 
         // This is the recursive part
         protected override void WriteElement(XmlWriter writer, XElement e)

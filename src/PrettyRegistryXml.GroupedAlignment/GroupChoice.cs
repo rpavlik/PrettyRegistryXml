@@ -18,22 +18,39 @@ namespace PrettyRegistryXml.GroupedAlignment
     {
         private AttributeGroup[] Groups { get; init; }
 
-        private readonly Dictionary<string, AttributeGroup> nameToGroup;
-
         /// <summary>
         /// Create a group choice.
         /// </summary>
         /// <param name="groups">Two or more <see cref="AttributeGroup"/> objects,
-        /// with disjoint attribute names, to alternate between.</param>
+        /// to alternate between.</param>
         public GroupChoice(params AttributeGroup[] groups)
         {
             Groups = groups;
-            nameToGroup = new(from g in Groups
-                              from attrName in g.AttributeNames
-                              select KeyValuePair.Create(attrName, g));
+        }
+
+        private (AttributeGroup, int) FindBestMatchingGroup(IEnumerable<string> elementAttrNames)
+        {
+            // find the option that handles the most.
+            var q = from g in Groups
+                    let numHandled = g.CountHandledAttributes(elementAttrNames)
+                    orderby numHandled descending
+                    select (g, numHandled);
+            return q.First();
         }
 
         /// <inheritdoc />
+        public override int CountHandledAttributes(IEnumerable<string> elementAttrNames) => FindBestMatchingGroup(elementAttrNames).Item2;
+
+        /// <inheritdoc />
         public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this, Groups);
+
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("GroupChoice( {0} )",
+                                                            string.Join(", ",
+                                                                        from g in Groups
+                                                                        select g.ToString()));
     }
 }

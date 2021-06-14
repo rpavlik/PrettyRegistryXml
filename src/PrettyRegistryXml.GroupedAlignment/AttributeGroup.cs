@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using PrettyRegistryXml.Core;
+using static MoreLinq.Extensions.PartitionExtension;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {
@@ -32,12 +33,19 @@ namespace PrettyRegistryXml.GroupedAlignment
             AttributeNameSet = AttributeNames.ToHashSet();
         }
 
-        // public bool AppliesToElement(IEnumerable<string> elementAttrNames)
-        // {
-        //     return (from attrName in elementAttrNames
-        //             where AttributeNameSet.Contains(attrName)
-        //             select true).Any();
-        // }
+
+        /// <inheritdoc />
+        public override int CountHandledAttributes(IEnumerable<string> elementAttrNames) => (from attrName in elementAttrNames
+                                                                                             where AttributeNameSet.Contains(attrName)
+                                                                                             select true).Count();
+
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("AttributeGroup( {0} )",
+                                                            string.Join(", ", from name in AttributeNames
+                                                                              select $"\"{name}\""));
 
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
@@ -48,10 +56,9 @@ namespace PrettyRegistryXml.GroupedAlignment
             private List<NameLengthPair> observedLengths = new();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
-                // TODO might need to adjust - this only looks for adjacent items, across unlimited sets
-                var mine = attributes.TakeWhile(NameLengthPair => attrGroup.AttributeNameSet.Contains(NameLengthPair.Name));
-                observedLengths.AddRange(mine);
-                return attributes.TakeLast(attributes.Count() - mine.Count());
+                var (selected, notSelected) = attributes.Partition(attr => attrGroup.AttributeNameSet.Contains(attr.Name));
+                observedLengths.AddRange(selected);
+                return notSelected;
             }
 
             public IAttributeSequenceItemAligner Finish()
