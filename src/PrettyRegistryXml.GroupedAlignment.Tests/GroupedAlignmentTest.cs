@@ -65,8 +65,29 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                 VulkanEnumAlignment,
                 new string[]{"offset", "name"},
             },
-
+            // Complicated mix of attributes in Vulkan data
+            new object[]{
+                new XElement("require",
+                    new XElement("enum",
+                                new XAttribute("offset", "4"),
+                                new XAttribute("extends", "VkStructureType"),
+                                new XAttribute("extnumber", "162"),
+                                new XAttribute("name", "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT")),
+                    new XElement("enum",
+                                new XAttribute("bitpos", "1"),
+                                new XAttribute("extends", "VkDescriptorPoolCreateFlagBits"),
+                                new XAttribute("name", "VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT")),
+                    new XElement("enum",
+                                new XAttribute("offset", "0"),
+                                new XAttribute("dir", "-"),
+                                new XAttribute("extends", "VkResult"),
+                                new XAttribute("extnumber", "162"),
+                                new XAttribute("name", "VK_ERROR_FRAGMENTATION"))),
+                VulkanEnumAlignment,
+                new string[]{"offset", "name"},
+            },
         };
+
 
         /// <summary>
         /// Test a provided config, aligning varied attributes,
