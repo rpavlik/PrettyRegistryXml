@@ -39,6 +39,14 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                                                              where AttributeNameSet.Contains(attrName)
                                                                                              select true).Count();
 
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("AttributeGroup( {0} )",
+                                                            string.Join(", ", from name in AttributeNames
+                                                                              select $"\"{name}\""));
+
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
             private AttributeGroup attrGroup;

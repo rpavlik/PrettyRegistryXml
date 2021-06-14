@@ -93,6 +93,15 @@ namespace PrettyRegistryXml.GroupedAlignment
             }
         }
 
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("GroupedAttributeAlignment( {0} )",
+                                                            string.Join(", ",
+                                                                        from sequenceItem in attributeSequenceItems
+                                                                        select sequenceItem.ToString()));
+
         private class State : IAlignmentState
         {
             private readonly int ElementNameAlignment;
@@ -146,6 +155,7 @@ namespace PrettyRegistryXml.GroupedAlignment
 
             public int ComputeElementPaddingWidth(XElement element)
                 => ElementAlignment.ComputeElementPaddingWidth(ElementNameAlignment, element);
+
         }
     }
 }

@@ -43,5 +43,14 @@ namespace PrettyRegistryXml.GroupedAlignment
 
         /// <inheritdoc />
         public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this, Groups);
+
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns>Representation mostly for debugging</returns>
+        public override string? ToString() => string.Format("GroupChoice( {0} )",
+                                                            string.Join(", ",
+                                                                        from g in Groups
+                                                                        select g.ToString()));
     }
 }
