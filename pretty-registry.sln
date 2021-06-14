@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment.Tests", "src\PrettyRegistryXml.GroupedAlignment.Tests\PrettyRegistryXml.GroupedAlignment.Tests.csproj", "{746C0352-AF98-4E03-A3FB-9E019BDC893B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Vulkan", "src\PrettyRegistryXml.Vulkan\PrettyRegistryXml.Vulkan.csproj", "{D959DF7D-2322-4721-81B3-36AEE5CA2145}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{746C0352-AF98-4E03-A3FB-9E019BDC893B}.Release|x64.Build.0 = Release|Any CPU
 		{746C0352-AF98-4E03-A3FB-9E019BDC893B}.Release|x86.ActiveCfg = Release|Any CPU
 		{746C0352-AF98-4E03-A3FB-9E019BDC893B}.Release|x86.Build.0 = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|x64.Build.0 = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Debug|x86.Build.0 = Debug|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x64.ActiveCfg = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x64.Build.0 = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x86.ActiveCfg = Release|Any CPU
+		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

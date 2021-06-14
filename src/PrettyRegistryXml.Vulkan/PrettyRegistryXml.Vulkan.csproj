@@ -6,13 +6,12 @@
 
     SPDX-License-Identifier: MIT
   -->
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>PrettyRegistryXml.OpenXR</RootNamespace>
-    <Product>PrettyRegistryXml.OpenXR</Product>
-    <AssemblyTitle>PrettyRegistryXml for OpenXR Formatter Tool</AssemblyTitle>
-    <Description>A tool to perform some limited automated re-formatting of the OpenXR xr.xml file.</Description>
+    <RootNamespace>PrettyRegistryXml.Vulkan</RootNamespace>
+    <Product>PrettyRegistryXml.Vulkan</Product>
+    <AssemblyTitle>PrettyRegistryXml for Vulkan Formatter Tool</AssemblyTitle>
+    <Description>A tool to perform some limited automated re-formatting of the Vulkan vk.xml file.</Description>
 
     <!-- only need to add license info in this file - the copyright notice is centralized -->
     <Copyright>$(Copyright) - Published under MIT, with dependencies under Apache-2.0 and MIT.</Copyright>
@@ -26,5 +25,4 @@
     <ProjectReference Include="..\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj" />
     <ProjectReference Include="..\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj" />
   </ItemGroup>
-
 </Project>
