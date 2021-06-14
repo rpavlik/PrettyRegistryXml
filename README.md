@@ -6,6 +6,8 @@ Copyright 2021 Collabora, Ltd
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
+[![.NET](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml)[![Update docs](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/update-docs.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/tree/main/docs)
+
 A tool to perform (supervised!) formatting of the OpenXR registry XML, and
 potentially other registry XML in the future.
 
