@@ -113,15 +113,37 @@ namespace PrettyRegistryXml.GroupedAlignment
                 this.aligners = aligners.ToArray();
             }
 
-            private IEnumerable<IEnumerable<AttributeAlignment>> HandleAttribute(IEnumerable<string> attributeNames)
+            private IEnumerable<AttributeAlignment> HandleAttribute(IEnumerable<string> attributeNames)
             {
+                HashSet<string> known = new();
                 IEnumerable<string> remaining = attributeNames;
 
                 foreach (var aligner in aligners)
                 {
                     if (aligner.TakeAndHandleAttributes(remaining, out var alignments, out var newRemaining))
                     {
-                        yield return alignments;
+                        foreach (var alignment in alignments)
+                        {
+                            if (alignment.IsPaddingOnly)
+                            {
+                                yield return alignment;
+                                continue;
+                            }
+                            bool isNew = known.Add(alignment.Name);
+                            if (isNew)
+                            {
+                                yield return alignment;
+                                continue;
+                            }
+                            // If we get here, we've seen this attribute before.
+                            if (!alignment.ShouldAlign)
+                            {
+                                // shouldn't align, we can just skip it.
+                                continue;
+                            }
+                            // we should replace with padding.
+                            yield return AttributeAlignment.MakePaddingOnly(alignment.FullWidth);
+                        }
                         remaining = newRemaining;
                     }
                 }
@@ -134,12 +156,11 @@ namespace PrettyRegistryXml.GroupedAlignment
             public IEnumerable<AttributeAlignment> DetermineAlignment(IEnumerable<string> attributeNames)
             {
                 // flatten
-                var flattenedAlignments = from inner in HandleAttribute(attributeNames)
-                                          from value in inner
-                                          select value;
+                var flattenedAlignments = HandleAttribute(attributeNames);
 #if DEBUG
                 var alignments = flattenedAlignments.ToArray();
                 var q = from a in alignments
+                        where !a.IsPaddingOnly
                         group a by a.Name into g
                         let count = g.Count()
                         orderby count descending
