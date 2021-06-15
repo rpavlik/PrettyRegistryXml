@@ -1,17 +1,17 @@
-# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (1 of 2)
+# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (1 of 3)
 
 Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*.
 
 ```csharp
 protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElement e, 
-    Predicate<XNode> groupingPredicate, bool includeEmptyTextNodesBetween = true)
+    Predicate<XElement> groupingPredicate, bool includeEmptyTextNodesBetween = true)
 ```
 
 | parameter | description |
 | --- | --- |
 | writer | Your XmlWriter in the correct state |
 | e | An element |
-| groupingPredicate | A predicate determining if a given node is one to align attributes for. |
+| groupingPredicate | A predicate determining if a given element is one to align attributes for. |
 | includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
 
 ## See Also
@@ -21,13 +21,13 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 
 ---
 
-# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (2 of 2)
+# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (2 of 3)
 
 Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*.
 
 ```csharp
 protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElement e, 
-    IAlignmentFinder alignmentFinder, Predicate<XNode> groupingPredicate, 
+    IAlignmentFinder alignmentFinder, Predicate<XElement> groupingPredicate, 
     bool includeEmptyTextNodesBetween = true)
 ```
 
@@ -38,6 +38,32 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 | alignmentFinder | Your alignment finder |
 | groupingPredicate | A predicate determining if a given node is one to align attributes for. |
 | includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
+
+## See Also
+
+* interface [IAlignmentFinder](../IAlignmentFinder.md)
+* class [XmlFormatterBase](../XmlFormatterBase.md)
+* namespace [PrettyRegistryXml.Core](../../PrettyRegistryXml.Core.md)
+
+---
+
+# XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups method (3 of 3)
+
+Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*.
+
+```csharp
+protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElement e, 
+    IAlignmentFinder alignmentFinder, Predicate<XElement> groupingPredicate, 
+    Predicate<XNode> ignoreNodePredicate)
+```
+
+| parameter | description |
+| --- | --- |
+| writer | Your XmlWriter in the correct state |
+| e | An element |
+| alignmentFinder | Your alignment finder |
+| groupingPredicate | A predicate determining if a given element is one to align attributes for. |
+| ignoreNodePredicate | A predicate identifying non-element nodes that should be ignored if between aligned elements |
 
 ## See Also
 

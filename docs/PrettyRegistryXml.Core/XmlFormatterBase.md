@@ -28,7 +28,7 @@ public abstract class XmlFormatterBase
 | [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
 | virtual [WriteElement](XmlFormatterBase/WriteElement.md)(…) | The main recursive function. |
 | [WriteElementWithAlignedChildAttrs](XmlFormatterBase/WriteElementWithAlignedChildAttrs.md)(…) | Write an element, and write its children aligning attributes across all of them. |
-| [WriteElementWithAlignedChildAttrsInGroups](XmlFormatterBase/WriteElementWithAlignedChildAttrsInGroups.md)(…) | Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*. (2 methods) |
+| [WriteElementWithAlignedChildAttrsInGroups](XmlFormatterBase/WriteElementWithAlignedChildAttrsInGroups.md)(…) | Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*. (3 methods) |
 | [WriteElementWithAlignedChildElts](XmlFormatterBase/WriteElementWithAlignedChildElts.md)(…) | Write an element, and write its children aligning attributes across all of them, taking into consideration the width of the element name itself. (2 methods) |
 | [WriteElementWithAttrNewlines](XmlFormatterBase/WriteElementWithAttrNewlines.md)(…) | Write an element, wrapping each attribute onto its own line, then writing its children. |
 | virtual [WriteEndElement](XmlFormatterBase/WriteEndElement.md)(…) | Wraps WriteEndElement. |
