@@ -73,6 +73,8 @@ namespace PrettyRegistryXml.OpenXR
                    && attr.Value == "bitmask";
         }
 
+        private static bool IsEnum(XElement element) => element.Name == "enum";
+
         /// <inheritdoc />
         public override int ComputeLevelAdjust(XNode node)
         {
@@ -141,7 +143,12 @@ namespace PrettyRegistryXml.OpenXR
             else if (e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, simpleAlignmentWithExtraValueWidth, (XElement element) => element.Name == "enum");
+                // and don't let comments break up our alignment groups.
+                WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                          e,
+                                                          simpleAlignmentWithExtraValueWidth,
+                                                          IsEnum,
+                                                          n => XmlUtilities.IsWhitespaceOrCommentBetweenSelectedElements(n, IsEnum));
             }
             else if (e.Name == "types")
             {
