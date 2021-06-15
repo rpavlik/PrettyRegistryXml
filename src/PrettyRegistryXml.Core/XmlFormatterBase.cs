@@ -188,7 +188,9 @@ namespace PrettyRegistryXml.Core
         /// <param name="outerWriter">The current <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="wrapped">Your action to invoke on the wrapped writer</param>
         public static void WriteUsingWrappedWriter(XmlWriter outerWriter,
-                                                   Action<XmlWriter, StringBuilder> wrapped) => WriteUsingWrappedWriter(outerWriter, null, wrapped);
+                                                   Action<XmlWriter, StringBuilder> wrapped)
+                => WriteUsingWrappedWriter(outerWriter, null, wrapped);
+
         /// <summary>
         /// Perform some writing to a custom <see cref="XmlWriter"/>, which is then written as "raw" to <paramref name="outerWriter"/>
         /// </summary>
@@ -273,7 +275,7 @@ namespace PrettyRegistryXml.Core
             }
             var alignment = alignmentFinder.FindAlignment(elements);
 
-            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
+            WriteUsingWrappedWriter(writer, (newWriter, sb) =>
             {
                 foreach (XNode node in nodeArray)
                 {
@@ -472,7 +474,7 @@ namespace PrettyRegistryXml.Core
                                                     int levelAdjust = 0)
         {
 
-            WriteUsingWrappedWriter(writer, writer.Settings, (newWriter, sb) =>
+            WriteUsingWrappedWriter(writer, (newWriter, sb) =>
             {
                 WriteStartElement(newWriter, e);
                 newWriter.Flush();
