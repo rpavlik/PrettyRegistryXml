@@ -348,15 +348,16 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
-        /// <param name="groupingPredicate">A predicate determining if a given node is one to align attributes for.</param>
+        /// <param name="groupingPredicate">A predicate determining if a given element is one to align attributes for.</param>
         /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
         /// between nodes that satisfy <paramref name="groupingPredicate"/> will not interrupt a group of aligning elements</param>
         protected void WriteElementWithAlignedChildAttrsInGroups(
             XmlWriter writer,
             XElement e,
-            System.Predicate<XNode> groupingPredicate,
+            System.Predicate<XElement> groupingPredicate,
             bool includeEmptyTextNodesBetween = true)
             => WriteElementWithAlignedChildAttrsInGroups(writer, e, defaultAlignmentFinder, groupingPredicate, includeEmptyTextNodesBetween);
+
 
         /// <summary>
         /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
@@ -364,34 +365,18 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="alignmentFinder">Your alignment finder</param>
-        /// <param name="groupingPredicate">A predicate determining if a given node is one to align attributes for.</param>
-        /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
-        /// between nodes that satisfy <paramref name="groupingPredicate"/> will not interrupt a group of aligning elements</param>
+        /// <param name="groupingPredicate">A predicate determining if a given element is one to align attributes for.</param>
+        /// <param name="ignoreNodePredicate">A predicate identifying non-element nodes that should be ignored if between aligned elements</param>
         protected void WriteElementWithAlignedChildAttrsInGroups(
             XmlWriter writer,
             XElement e,
             IAlignmentFinder alignmentFinder,
-            System.Predicate<XNode> groupingPredicate,
-            bool includeEmptyTextNodesBetween = true)
+            System.Predicate<XElement> groupingPredicate,
+            System.Predicate<XNode> ignoreNodePredicate)
         {
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
-            var grouped = e.Nodes().GroupAdjacent(n =>
-            {
-                if (groupingPredicate(n))
-                {
-                    return true;
-                }
-                var text = n as XText;
-                return includeEmptyTextNodesBetween
-                       && n.NodeType == XmlNodeType.Text
-                       && text != null
-                       && string.IsNullOrWhiteSpace(text.Value)
-                       && n.PreviousNode != null
-                       && n.NextNode != null
-                       && groupingPredicate(n.PreviousNode)
-                       && groupingPredicate(n.NextNode);
-            });
+            var grouped = e.Nodes().GroupAdjacent(n => n is XElement element ? groupingPredicate(element) : ignoreNodePredicate(n));
 
             foreach (var g in grouped)
             {
@@ -408,6 +393,28 @@ namespace PrettyRegistryXml.Core
             }
             WriteEndElement(writer, e);
         }
+
+        /// <summary>
+        /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
+        /// </summary>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="e">An element</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
+        /// <param name="groupingPredicate">A predicate determining if a given node is one to align attributes for.</param>
+        /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
+        /// between nodes that satisfy <paramref name="groupingPredicate"/> will not interrupt a group of aligning elements</param>
+        protected void WriteElementWithAlignedChildAttrsInGroups(
+            XmlWriter writer,
+            XElement e,
+            IAlignmentFinder alignmentFinder,
+            System.Predicate<XElement> groupingPredicate,
+            bool includeEmptyTextNodesBetween = true)
+            => WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                         e,
+                                                         alignmentFinder,
+                                                         groupingPredicate,
+                                                         n => includeEmptyTextNodesBetween
+                                                              && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, groupingPredicate));
 
         /// <summary>
         /// Write an element, and write its children aligning attributes across all of them.
