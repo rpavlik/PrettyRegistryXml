@@ -65,18 +65,15 @@ namespace PrettyRegistryXml.OpenXR
             };
         }
 
-        private System.Predicate<XNode> isBitmask = node =>
+        private static bool IsBitmask(XElement element)
         {
-            if (node.NodeType != XmlNodeType.Element)
-            {
-                return false;
-            }
-            var element = node as XElement;
-            var attr = element?.Attribute("category");
-            return element?.Name == "type"
+            var attr = element.Attribute("category");
+            return element.Name == "type"
                    && attr != null
                    && attr.Value == "bitmask";
-        };
+        }
+
+        private static bool IsEnum(XElement element) => element.Name == "enum";
 
         /// <inheritdoc />
         public override int ComputeLevelAdjust(XNode node)
@@ -137,7 +134,7 @@ namespace PrettyRegistryXml.OpenXR
                 WriteElementWithAlignedChildAttrsInGroups(writer,
                                                           e,
                                                           extensionEnumAlignment,
-                                                          node => node is XElement element && element.Name == "enum");
+                                                          (XElement element) => element.Name == "enum");
             }
             else if (e.Name == "tags" && e.HasElements)
             {
@@ -146,15 +143,20 @@ namespace PrettyRegistryXml.OpenXR
             else if (e.Name == "enums" && e.HasElements)
             {
                 // Give some extra width to the value field
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, simpleAlignmentWithExtraValueWidth, node => node is XElement element && element.Name == "enum");
+                // and don't let comments break up our alignment groups.
+                WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                          e,
+                                                          simpleAlignmentWithExtraValueWidth,
+                                                          IsEnum,
+                                                          n => XmlUtilities.IsWhitespaceOrCommentBetweenSelectedElements(n, IsEnum));
             }
             else if (e.Name == "types")
             {
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, isBitmask);
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, IsBitmask);
             }
             else if (e.Name == "interaction_profile")
             {
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, node => node is XElement element && element.Name == "component");
+                WriteElementWithAlignedChildAttrsInGroups(writer, e, (XElement element) => element.Name == "component");
             }
             else if (WrapExtensions && e.Name == "extension")
             {
