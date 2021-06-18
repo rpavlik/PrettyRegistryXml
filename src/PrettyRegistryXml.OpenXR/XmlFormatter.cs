@@ -29,7 +29,7 @@ namespace PrettyRegistryXml.OpenXR
         private readonly Predicate<XElement> childrenShouldBeSingleLine;
 
         private bool WrapExtensions { get; init; }
-        private bool SortReturnVals { get; init; }
+        private bool WrapCommands { get; init; }
 
         private ReturnCodeSorter CodeSorter = new();
 
@@ -40,7 +40,7 @@ namespace PrettyRegistryXml.OpenXR
         public XmlFormatter(Options options)
         {
             WrapExtensions = options.WrapExtensions;
-            SortReturnVals = options.SortCodes;
+            WrapCommands = options.WrapCommands;
 
             var singleLineContainers = new HashSet<string> { "member", "param", "proto" };
 
@@ -105,7 +105,7 @@ namespace PrettyRegistryXml.OpenXR
         /// <param name="e">The element to write</param>
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
-            if (e.Name == "command" && SortReturnVals)
+            if (e.Name == "command")
             {
                 var success = e.Attribute("successcodes");
                 if (success != null)
@@ -119,6 +119,7 @@ namespace PrettyRegistryXml.OpenXR
                     error.Value = CodeSorter.SortReturnCodeString(error.Value);
                 }
             }
+
             if (childrenShouldBeSingleLine(e))
             {
                 WriteSingleLineElement(writer, e);
@@ -157,6 +158,11 @@ namespace PrettyRegistryXml.OpenXR
             else if (e.Name == "interaction_profile")
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, e, (XElement element) => element.Name == "component");
+            }
+            else if (WrapCommands && e.Name == "command" && e.Parent != null && e.Parent.Name == "commands")
+            {
+                // This will change the format! (for the better, probably, though)
+                WriteElementWithAttrNewlines(writer, e);
             }
             else if (WrapExtensions && e.Name == "extension")
             {
