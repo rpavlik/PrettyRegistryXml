@@ -358,6 +358,8 @@ namespace PrettyRegistryXml.Core
         /// This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to
         /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
         /// which is the most generic of this collection.
+        /// If you want more than one group, each with its own alignment, use
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>.
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
@@ -379,6 +381,10 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
         /// </summary>
+        /// <remarks>
+        /// If you want more than one group, each with its own alignment, use
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>
+        /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="alignmentFinder">Your alignment finder</param>
@@ -418,6 +424,8 @@ namespace PrettyRegistryXml.Core
         /// This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to
         /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
         /// which is the most generic of this collection.
+        /// If you want more than one group, each with its own alignment, use
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
@@ -437,6 +445,70 @@ namespace PrettyRegistryXml.Core
                                                          groupingPredicate: groupingPredicate,
                                                          ignoreNodePredicate: n => includeEmptyTextNodesBetween
                                                                                    && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, groupingPredicate));
+
+        /// <summary>
+        /// Write an element, and write its children aligning attributes across (multiple) contiguous groups of elements that match <paramref name="alignmentPredicate"/>.
+        /// </summary>
+        /// <remarks>
+        /// If you only have one type of group, use the simpler
+        /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, bool)"/>
+        /// or one of its overloads
+        /// </remarks>
+        /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
+        /// <param name="e">An element</param>
+        /// <param name="alignmentFinder">Your alignment finder</param>
+        /// <param name="alignmentPredicate">A predicate determining if a given node is one to align attributes for.</param>
+        /// <param name="groupingFunc">A function returning a value to group elements on. (This allows multiple groups, instead of just one with the predicate in related functions.)</param>
+        /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
+        /// between nodes that satisfy <paramref name="alignmentPredicate"/> will not interrupt a group of aligning elements</param>
+        protected void WriteElementWithAlignedChildAttrsInMultipleGroups<TKey>(
+            XmlWriter writer,
+            XElement e,
+            IAlignmentFinder alignmentFinder,
+            Predicate<XNode> alignmentPredicate,
+            Func<XElement, TKey> groupingFunc,
+            bool includeEmptyTextNodesBetween = true)
+        {
+            WriteStartElement(writer, e);
+            WriteAttributes(writer, e);
+
+            TKey? wrappedGroupingFunc(XNode? n) => n is XElement element ? groupingFunc(element) : default;
+            ValueTuple<bool, TKey?> completeGrouping(XNode n)
+            {
+                if (alignmentPredicate(n))
+                {
+                    return (true, wrappedGroupingFunc(n));
+                }
+                var isEmptyTextNodeBetween = includeEmptyTextNodesBetween
+                        && n is XText text
+                        && string.IsNullOrWhiteSpace(text.Value)
+                        && n.PreviousNode != null
+                        && n.NextNode != null
+                        && alignmentPredicate(n.PreviousNode)
+                        && alignmentPredicate(n.NextNode);
+                if (isEmptyTextNodeBetween)
+                {
+                    return (true, wrappedGroupingFunc(n.PreviousNode));
+                }
+                return (false, default(TKey));
+            }
+
+            var grouped = e.Nodes().GroupAdjacent(completeGrouping);
+            foreach (var g in grouped)
+            {
+                if (g.Key.Item1)
+                {
+                    // These should be aligned.
+                    WriteNodesWithEltsAligned(writer, g, alignmentFinder);
+                }
+                else
+                {
+                    // These are not aligned.
+                    WriteNodes(writer, g);
+                }
+            }
+            WriteEndElement(writer, e);
+        }
 
         /// <summary>
         /// Write an element, and write its children aligning attributes across all of them.
