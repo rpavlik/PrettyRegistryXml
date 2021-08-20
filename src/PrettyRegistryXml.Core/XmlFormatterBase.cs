@@ -23,7 +23,7 @@ namespace PrettyRegistryXml.Core
     /// </summary>
     /// <remarks>
     /// This class should already provide many if not all of the "primitives" you need to perform the desired formatting.
-    /// Your derived class (specifically the override of <see cref="XmlFormatterBase.WriteElement(XmlWriter, XElement)"/>)
+    /// Your derived class (specifically the override of <see cref="WriteElement(XmlWriter, XElement)"/>)
     /// is responsible for the project-specific "policy" that controls the output.
     /// </remarks>
     public abstract class XmlFormatterBase
@@ -54,7 +54,7 @@ namespace PrettyRegistryXml.Core
 
         /// <summary>
         /// Return the indentation we'd expect from the nesting level (number of ancestors) of <paramref name="node"/>
-        /// with adjustments based on <see cref="XmlFormatterBase.ComputeLevelAdjust(XNode)"/>.
+        /// with adjustments based on <see cref="ComputeLevelAdjust(XNode)"/>.
         /// </summary>
         /// <param name="node">The node</param>
         /// <returns>A string of whitespace</returns>
@@ -155,8 +155,8 @@ namespace PrettyRegistryXml.Core
         public static void WriteAlignedAttrs(XmlWriter writer, XElement e, IAlignmentState alignment, StringBuilder sb)
             => WriteAlignedAttrs(writer,
                                  e,
-                                 alignment.DetermineAlignment(from attr in e.Attributes() select attr.Name.ToString()),
-                                 sb);
+                                 alignments: alignment.DetermineAlignment(from attr in e.Attributes() select attr.Name.ToString()),
+                                 sb: sb);
 
         /// <summary>
         /// Write attributes, aligned as indicated, to the writer with the associated StringBuilder.
@@ -189,7 +189,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="wrapped">Your action to invoke on the wrapped writer</param>
         public static void WriteUsingWrappedWriter(XmlWriter outerWriter,
                                                    Action<XmlWriter, StringBuilder> wrapped)
-                => WriteUsingWrappedWriter(outerWriter, null, wrapped);
+                => WriteUsingWrappedWriter(outerWriter, settings: null, wrapped: wrapped);
 
         /// <summary>
         /// Perform some writing to a custom <see cref="XmlWriter"/>, which is then written as "raw" to <paramref name="outerWriter"/>
@@ -301,8 +301,8 @@ namespace PrettyRegistryXml.Core
         /// Write a node.
         /// </summary>
         /// <remark>
-        /// Delegates to <see cref="XmlFormatterBase.WriteElement(XmlWriter, XElement)"/> for nodes that are elements.
-        /// For nodes that are text with a whitespace value, checks <see cref="XmlFormatterBase.PreserveWhitespace(XText)"/> before writing.
+        /// Delegates to <see cref="WriteElement(XmlWriter, XElement)"/> for nodes that are elements.
+        /// For nodes that are text with a whitespace value, checks <see cref="PreserveWhitespace(XText)"/> before writing.
         /// Otherwise just calls <see cref="XNode.WriteTo(XmlWriter)"/>.
         /// </remark>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
@@ -339,7 +339,7 @@ namespace PrettyRegistryXml.Core
         /// Write the provided nodes.
         /// </summary>
         /// <remarks>
-        /// For <see cref="XElement"/> nodes, <see cref="XmlFormatterBase.WriteElement(XmlWriter, XElement)"/> will be called to recursively apply your custom formatting policy.
+        /// For <see cref="XElement"/> nodes, <see cref="WriteElement(XmlWriter, XElement)"/> will be called to recursively apply your custom formatting policy.
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="nodes">A collection of nodes</param>
@@ -354,6 +354,11 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
         /// </summary>
+        /// <remarks>
+        /// This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to
+        /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
+        /// which is the most generic of this collection.
+        /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="groupingPredicate">A predicate determining if a given element is one to align attributes for.</param>
@@ -362,9 +367,13 @@ namespace PrettyRegistryXml.Core
         protected void WriteElementWithAlignedChildAttrsInGroups(
             XmlWriter writer,
             XElement e,
-            System.Predicate<XElement> groupingPredicate,
+            Predicate<XElement> groupingPredicate,
             bool includeEmptyTextNodesBetween = true)
-            => WriteElementWithAlignedChildAttrsInGroups(writer, e, defaultAlignmentFinder, groupingPredicate, includeEmptyTextNodesBetween);
+            => WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                         e,
+                                                         alignmentFinder: defaultAlignmentFinder,
+                                                         groupingPredicate: groupingPredicate,
+                                                         includeEmptyTextNodesBetween: includeEmptyTextNodesBetween);
 
 
         /// <summary>
@@ -379,8 +388,8 @@ namespace PrettyRegistryXml.Core
             XmlWriter writer,
             XElement e,
             IAlignmentFinder alignmentFinder,
-            System.Predicate<XElement> groupingPredicate,
-            System.Predicate<XNode> ignoreNodePredicate)
+            Predicate<XElement> groupingPredicate,
+            Predicate<XNode> ignoreNodePredicate)
         {
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
@@ -405,6 +414,11 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Write an element, and write its children aligning attributes across contiguous groups of elements that match <paramref name="groupingPredicate"/>.
         /// </summary>
+        /// <remarks>
+        /// This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to
+        /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
+        /// which is the most generic of this collection.
+        /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="alignmentFinder">Your alignment finder</param>
@@ -419,10 +433,10 @@ namespace PrettyRegistryXml.Core
             bool includeEmptyTextNodesBetween = true)
             => WriteElementWithAlignedChildAttrsInGroups(writer,
                                                          e,
-                                                         alignmentFinder,
-                                                         groupingPredicate,
-                                                         n => includeEmptyTextNodesBetween
-                                                              && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, groupingPredicate));
+                                                         alignmentFinder: alignmentFinder,
+                                                         groupingPredicate: groupingPredicate,
+                                                         ignoreNodePredicate: n => includeEmptyTextNodesBetween
+                                                                                   && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, groupingPredicate));
 
         /// <summary>
         /// Write an element, and write its children aligning attributes across all of them.
