@@ -1,4 +1,4 @@
-# Pretty Registry (for OpenXR)
+# Pretty Registry (for OpenXR and other Khronos standards)
 
 <!--
 Copyright 2021 Collabora, Ltd
@@ -9,7 +9,8 @@ SPDX-License-Identifier: CC-BY-4.0
 [![.NET](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml)[![Update docs](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/update-docs.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/tree/main/docs)
 
 A tool to perform (supervised!) formatting of the OpenXR registry XML, and
-potentially other registry XML in the future.
+potentially other registry XML in the future. (Experimental Vulkan support is
+included.)
 
 It is split into `core`, which provides utilities and base classes, and `openxr`
 which includes the "policy"-related code parts for OpenXR, as well as the entry
@@ -21,6 +22,18 @@ This uses the [.NET 5.0 SDK][dotnet5] (formerly known as .NET Core - the
 cross-platform open source one) SDK to build. That link has instructions to
 download and install it.
 
+Releases include binaries which only require the .NET 5.0 runtime, not the SDK,
+and can be invoked just like any other command -- no need for the `dotnet`
+commands below. Running either the OpenXR or Vulkan tools with no arguments will
+show you help text.
+
+**NOTE**: You do not want to just directly commit the modifications made by the
+tool: please be selective in what you stage vs revert, using something like
+`git gui`, `git add -p`, or other interactive/graphical/patch-based interface.
+Some of the hand-formatted XML is better than the automated stuff.
+
+If you want to improve the tool, keep following these instructions.
+
 If you're on Windows or Mac, Visual Studio can handle this presumably, but I
 wrote it on Linux using the CLI, so that's the instructions I'll provide.
 
@@ -30,21 +43,24 @@ In a terminal in the root directory of this repo:
 dotnet build
 ```
 
-will compile it. To run from the build tree, you need to specify the project you
-want to execute (the solution file in this root doesn't know which one can be
-executed):
+will compile it. To run the OpenXR version of the tool from the build tree, you
+need to specify the project you want to execute (the solution file in this root
+doesn't know which ones can be executed, nor which one you want):
 
 ```sh
 # Add any arguments after the csproj
 dotnet run --project src/PrettyRegistryXml.OpenXR/PrettyRegistryXml.OpenXR.csproj
 ```
 
-By default, with no arguments you'll see help/usage.
+Similarly, to run the experimental Vulkan version of the tool from the
+source/build tree, run:
 
-**NOTE**: You do not want to just directly commit the modifications made by the
-tool: please be selective in what you stage vs revert, using something like
-`git gui`, `git add -p`, or other interactive/graphical/patch-based interface.
-Some of the hand-formatted XML is better than the automated stuff.
+```sh
+# Add any arguments after the csproj
+dotnet run --project src/PrettyRegistryXml.Vulkan/PrettyRegistryXml.Vulkan.csproj
+```
+
+By default, with no arguments you'll see help/usage.
 
 [dotnet5]: https://dotnet.microsoft.com/download/dotnet/5.0
 
@@ -84,7 +100,7 @@ files are CC0-1.0.
 Dependencies downloaded from NuGet include:
 
 - [MoreLINQ][]: Apache-2.0
-- [CommandLineParser][]: MIT (used only in the OpenXR entry point)
+- [CommandLineParser][]: MIT
 
 [MoreLINQ]: https://www.nuget.org/packages/morelinq/3.3.2
 [CommandLineParser]: https://www.nuget.org/packages/CommandLineParser/2.9.0-preview1
