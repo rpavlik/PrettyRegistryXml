@@ -95,7 +95,8 @@ namespace PrettyRegistryXml.Core
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
-            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException("AlignWidth cannot be negative");
+            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException(paramName: nameof(value),
+                                                                                 "cannot be negative");
             return value;
         }
 
