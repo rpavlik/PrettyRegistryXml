@@ -359,7 +359,7 @@ namespace PrettyRegistryXml.Core
         /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
         /// which is the most generic of this collection.
         /// If you want more than one group, each with its own alignment, use
-        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>.
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Func{XElement, TKey}, bool)"/>.
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
@@ -383,7 +383,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <remarks>
         /// If you want more than one group, each with its own alignment, use
-        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Func{XElement, TKey}, bool)"/>
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
@@ -425,7 +425,7 @@ namespace PrettyRegistryXml.Core
         /// <see cref="WriteElementWithAlignedChildAttrsInGroups(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>,
         /// which is the most generic of this collection.
         /// If you want more than one group, each with its own alignment, use
-        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XNode}, Func{XElement, TKey}, bool)"/>
+        /// <see cref="WriteElementWithAlignedChildAttrsInMultipleGroups{TKey}(XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Func{XElement, TKey}, bool)"/>
         /// </remarks>
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
@@ -457,7 +457,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="writer">Your <see cref="XmlWriter"/> in the correct state</param>
         /// <param name="e">An element</param>
         /// <param name="alignmentFinder">Your alignment finder</param>
-        /// <param name="alignmentPredicate">A predicate determining if a given node is one to align attributes for.</param>
+        /// <param name="alignmentPredicate">A predicate determining if a given element is one to align attributes for.</param>
         /// <param name="groupingFunc">A function returning a value to group elements on. (This allows multiple groups, instead of just one with the predicate in related functions.)</param>
         /// <param name="includeEmptyTextNodesBetween">If true (default), any whitespace-only <see cref="XText"/>
         /// between nodes that satisfy <paramref name="alignmentPredicate"/> will not interrupt a group of aligning elements</param>
@@ -465,38 +465,37 @@ namespace PrettyRegistryXml.Core
             XmlWriter writer,
             XElement e,
             IAlignmentFinder alignmentFinder,
-            Predicate<XNode> alignmentPredicate,
+            Predicate<XElement> alignmentPredicate,
             Func<XElement, TKey> groupingFunc,
             bool includeEmptyTextNodesBetween = true)
         {
             WriteStartElement(writer, e);
             WriteAttributes(writer, e);
 
-            TKey? wrappedGroupingFunc(XNode? n) => n is XElement element ? groupingFunc(element) : default;
-            ValueTuple<bool, TKey?> completeGrouping(XNode n)
+
+            // This wraps the element alignment predicate and and groupingFunc,
+            // to make a function that returns a bool (whether to align, using predicate) and the group key type (using groupingFunc).
+            // Also handles the whole "whitespace in between elements" business.
+            (bool ShouldAlign, TKey? GroupKey) completeGrouping(XNode n)
             {
-                if (alignmentPredicate(n))
+                if (n is XElement element && alignmentPredicate(element))
                 {
-                    return (true, wrappedGroupingFunc(n));
+                    return (ShouldAlign: true, GroupKey: groupingFunc(element));
                 }
-                var isEmptyTextNodeBetween = includeEmptyTextNodesBetween
-                        && n is XText text
-                        && string.IsNullOrWhiteSpace(text.Value)
-                        && n.PreviousNode != null
-                        && n.NextNode != null
-                        && alignmentPredicate(n.PreviousNode)
-                        && alignmentPredicate(n.NextNode);
-                if (isEmptyTextNodeBetween)
+                if (includeEmptyTextNodesBetween && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, alignmentPredicate))
                 {
-                    return (true, wrappedGroupingFunc(n.PreviousNode));
+                    // Empty text gets the group key of the previous node.
+                    TKey? prevKey = n.PreviousNode is XElement prevElement ? groupingFunc(prevElement) : default;
+                    return (ShouldAlign: true, GroupKey: prevKey);
                 }
-                return (false, default(TKey));
+                return (ShouldAlign: false, GroupKey: default(TKey));
             }
 
+            // Now, group the nodes, and iterate through the groups.
             var grouped = e.Nodes().GroupAdjacent(completeGrouping);
             foreach (var g in grouped)
             {
-                if (g.Key.Item1)
+                if (g.Key.ShouldAlign)
                 {
                     // These should be aligned.
                     WriteNodesWithEltsAligned(writer, g, alignmentFinder);

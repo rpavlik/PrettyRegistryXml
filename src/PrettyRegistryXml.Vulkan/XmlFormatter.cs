@@ -208,10 +208,10 @@ namespace PrettyRegistryXml.Vulkan
             {
                 WriteElementWithAlignedChildAttrsInMultipleGroups(writer,
                                                                   e,
-                                                                  typeAlignment,
-                                                                  alignmentPredicate: node =>
+                                                                  alignmentFinder: typeAlignment,
+                                                                  alignmentPredicate: (XElement element) =>
                                                                   {
-                                                                      if (node is XElement element && element.Name == "type")
+                                                                      if (element.Name == "type")
                                                                       {
                                                                           var cat = element.Attribute("category");
                                                                           if (cat == null) return false;
@@ -221,6 +221,7 @@ namespace PrettyRegistryXml.Vulkan
                                                                               // We can align these.
                                                                               return true;
                                                                           }
+                                                                          // These categories look weird when aligned, so don't align them.
                                                                           return catName is not "define"
                                                                                  and not "funcpointer"
                                                                                  and not "struct"
