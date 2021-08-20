@@ -95,7 +95,8 @@ namespace PrettyRegistryXml.Core
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
-            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException("AlignWidth cannot be negative");
+            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException(paramName: nameof(value),
+                                                                                 "cannot be negative");
             return value;
         }
 
@@ -133,13 +134,13 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="name">Attribute name</param>
         /// <returns>A new unaligned AttributeAlignment</returns>
-        public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
+        public static AttributeAlignment MakeUnaligned(string name) => new(name, 0);
         /// <summary>
         /// Make an AttributeAlignment that is padding only.
         /// </summary>
         /// <param name="alignWidth">Value width for alignment</param>
         /// <returns>A new padding-only AttributeAlignment</returns>
-        public static AttributeAlignment MakePaddingOnly(int alignWidth) => new AttributeAlignment("", alignWidth);
+        public static AttributeAlignment MakePaddingOnly(int alignWidth) => new("", alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but different width from the old one.
@@ -147,7 +148,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="old">An old attributeAlignment to use name from</param>
         /// <param name="alignWidth">New width</param>
         /// <returns>A new AttributeAlignment with name from old.Name but with new width</returns>
-        public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new AttributeAlignment(old.Name, alignWidth);
+        public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new(old.Name, alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but marked as unaligned.

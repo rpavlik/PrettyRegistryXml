@@ -26,7 +26,7 @@ namespace PrettyRegistryXml.OpenXR
         /// <value></value>
         public string ActualOutputFile
         {
-            get => OutputFile == null ? InputFile : OutputFile;
+            get => OutputFile ?? InputFile;
         }
 
         [Option("wrap-extensions", Default = (bool)false, HelpText = "Whether to wrap attributes of <extension> tags.")]

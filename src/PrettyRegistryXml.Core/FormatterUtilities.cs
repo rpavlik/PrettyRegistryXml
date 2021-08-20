@@ -58,7 +58,8 @@ namespace PrettyRegistryXml.Core
         {
             if (width < 0)
             {
-                throw new ArgumentOutOfRangeException("Cannot make negative spaces");
+                throw new ArgumentOutOfRangeException(paramName: nameof(width),
+                                                      "Cannot make negative spaces");
             }
             if (width == 0)
             {

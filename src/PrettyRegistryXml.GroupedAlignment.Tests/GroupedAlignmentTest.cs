@@ -18,14 +18,13 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
     public class GroupedAlignmentTest
     {
         private static GroupedAttributeAlignment OpenXREnumAlignment =>
-                        new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
-                                                                      new AttributeGroup("offset", "dir", "extends")));
+                        new(new GroupChoice(new AttributeGroup("value"),
+                                            new AttributeGroup("offset", "dir", "extends")));
         private static GroupedAttributeAlignment VulkanEnumAlignment =>
-                        new GroupedAttributeAlignment(
-                            new GroupChoice(
-                                new AttributeGroup("value"),
-                                new AttributeGroup("extends", "extnumber", "offset", "dir"),
-                                new AttributeGroup("bitpos", "extends")),
+                        new(
+                            new GroupChoice(new AttributeGroup("value"),
+                                            new AttributeGroup("extends", "extnumber", "offset", "dir"),
+                                            new AttributeGroup("bitpos", "extends")),
                             new AlignedTrailer());
         public static object[] ExtensionEnums => new object[]{
             // OpenXR data that got goofed up
@@ -158,7 +157,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
         /// <param name="requireElement">The parent "require" element</param>
         /// <param name="alignment">The GroupedAttributeAlignment to format with.</param>
         /// <returns>A collection of lines, each one with an element on it.</return>
-        public IEnumerable<string> ToAlignedLines(XElement requireElement, GroupedAttributeAlignment alignment)
+        public static IEnumerable<string> ToAlignedLines(XElement requireElement, GroupedAttributeAlignment alignment)
         {
             var alignState = alignment.FindAlignment(requireElement.Elements());
             var lines = new List<string>();

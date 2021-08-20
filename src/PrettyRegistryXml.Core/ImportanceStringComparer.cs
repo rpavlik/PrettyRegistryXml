@@ -10,10 +10,13 @@ using System;
 namespace PrettyRegistryXml.Core
 {
 
+    /// <summary>
+    /// Implementation of <see cref="IComparer{T}"/> for pairs of integer importance and string.
+    /// </summary>
     internal class ImportanceStringComparer : Comparer<Tuple<int, string>>
     {
-        private Comparer<int> intComparer = Comparer<int>.Default;
-        private StringComparer stringComparer = StringComparer.Ordinal;
+        private readonly Comparer<int> intComparer = Comparer<int>.Default;
+        private readonly StringComparer stringComparer = StringComparer.Ordinal;
 
         public override int Compare(Tuple<int, string>? x, Tuple<int, string>? y)
         {

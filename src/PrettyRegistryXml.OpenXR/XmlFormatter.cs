@@ -26,12 +26,17 @@ namespace PrettyRegistryXml.OpenXR
         /// <inheritdoc />
         public override string IndentChars { get => "    "; }
 
-        private readonly Predicate<XElement> childrenShouldBeSingleLine;
-
+        /// <summary>
+        /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
+        /// </summary>
         private bool WrapExtensions { get; init; }
+
+        /// <summary>
+        /// Whether we should sort the return values, a runtime preference set by the command line, on by default.
+        /// </summary>
         private bool SortReturnVals { get; init; }
 
-        private ReturnCodeSorter CodeSorter = new();
+        private readonly ReturnCodeSorter CodeSorter = new();
 
         /// <summary>
         /// Constructor
@@ -41,30 +46,50 @@ namespace PrettyRegistryXml.OpenXR
         {
             WrapExtensions = options.WrapExtensions;
             SortReturnVals = options.SortCodes;
-
-            var singleLineContainers = new HashSet<string> { "member", "param", "proto" };
-
-            Predicate<XElement> isCategoryNonSingleLine = element =>
-            {
-                var category = element.Attribute("category");
-                return category != null
-                       && (category.Value == "define" || category.Value == "struct");
-            };
-
-            childrenShouldBeSingleLine = e =>
-            {
-                // some containers should always have their children on a single line.
-                if (singleLineContainers.Contains(e.Name.LocalName)) return true;
-
-                // some elements should only have their children on a single line when they're a specific usage:
-                // lots of elts named "type" but they aren't all the same.
-                return (e.Name.LocalName == "type"
-                        && e.Parent != null
-                        && e.Parent.Name.LocalName == "types"
-                        && !isCategoryNonSingleLine(e));
-            };
         }
 
+        /// <summary>
+        /// Checks an element category attribute to tell if it's a known "not single line" element.
+        /// See also <see cref="ChildrenShouldBeSingleLine(XElement)"/> where this is used.
+        /// </summary>
+        /// <param name="element">An element</param>
+        /// <returns>true if the element has a "category" attribute and the value is known to be one we don't want to single-line.</returns>
+        private static bool IsCategoryNonSingleLine(XElement element)
+        {
+            var category = element.Attribute("category");
+            return category != null
+                   && (category.Value == "define" || category.Value == "struct");
+        }
+
+        /// <summary>
+        /// A set of element names who always act as single-line containers.
+        /// See also <see cref="ChildrenShouldBeSingleLine(XElement)"/> where this is used.
+        /// </summary>
+        private static readonly HashSet<string> singleLineContainers = new() { "member", "param", "proto" };
+
+        /// <summary>
+        /// Determine whether an element and its children should all be on a single line.
+        /// </summary>
+        /// <param name="e">An element</param>
+        /// <returns>true if the element and its children should all be on a single line.</returns>
+        private static bool ChildrenShouldBeSingleLine(XElement e)
+        {
+            // some containers should always have their children on a single line.
+            if (singleLineContainers.Contains(e.Name.LocalName)) return true;
+
+            // some elements should only have their children on a single line when they're a specific usage:
+            // lots of elts named "type" but they aren't all the same.
+            return e.Name.LocalName == "type"
+                   && e.Parent != null
+                   && e.Parent.Name.LocalName == "types"
+                   && !IsCategoryNonSingleLine(e);
+        }
+
+        /// <summary>
+        /// Checks an element category attribute to tell if it's a bitmask.
+        /// </summary>
+        /// <param name="element">An element</param>
+        /// <returns>true if the element defines a bitmask</returns>
         private static bool IsBitmask(XElement element)
         {
             var attr = element.Attribute("category");
@@ -88,12 +113,18 @@ namespace PrettyRegistryXml.OpenXR
             return 0;
         }
 
-        private IAlignmentFinder simpleAlignmentWithExtraValueWidth =
+        /// <summary>
+        /// Our normal alignment, which just adds 2 extra spaces to value attribute widths.
+        /// </summary>
+        private readonly IAlignmentFinder simpleAlignmentWithExtraValueWidth =
             new SimpleAlignment(new Dictionary<string, int>{
                 {"value", 2}
             });
 
-        private IAlignmentFinder extensionEnumAlignment
+        /// <summary>
+        /// Our slightly sophisticated way of grouping attributes for alignment in extensions.
+        /// </summary>
+        private readonly IAlignmentFinder extensionEnumAlignment
             = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
                                                             new AttributeGroup("offset", "dir", "extends"),
                                                             new AttributeGroup("bitpos", "extends")));
@@ -105,6 +136,7 @@ namespace PrettyRegistryXml.OpenXR
         /// <param name="e">The element to write</param>
         protected override void WriteElement(XmlWriter writer, XElement e)
         {
+            // Setup work: Sort return values if desired.
             if (e.Name == "command" && SortReturnVals)
             {
                 var success = e.Attribute("successcodes");
@@ -119,7 +151,9 @@ namespace PrettyRegistryXml.OpenXR
                     error.Value = CodeSorter.SortReturnCodeString(error.Value);
                 }
             }
-            if (childrenShouldBeSingleLine(e))
+
+            // Now, only one of these paths should execute.
+            if (ChildrenShouldBeSingleLine(e))
             {
                 WriteSingleLineElement(writer, e);
             }

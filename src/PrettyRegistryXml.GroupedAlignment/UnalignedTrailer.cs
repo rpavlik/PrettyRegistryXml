@@ -16,16 +16,13 @@ namespace PrettyRegistryXml.GroupedAlignment
     {
 
         /// <inheritdoc />
-        public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer(this);
+        public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer();
 
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
-            private UnalignedTrailer attrGroup;
 
-            public WidthComputer(UnalignedTrailer attrGroup) => this.attrGroup = attrGroup;
-
-            private List<string[]> attributeNameOrders = new();
-            private List<NameLengthPair> observedLengths = new();
+            private readonly List<string[]> attributeNameOrders = new();
+            private readonly List<NameLengthPair> observedLengths = new();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
                 // takes all remaining
@@ -38,7 +35,7 @@ namespace PrettyRegistryXml.GroupedAlignment
             public IAttributeSequenceItemAligner Finish()
             {
                 string[] biggestAttrList = (from attrList in attributeNameOrders
-                                            orderby attrList.Count() descending
+                                            orderby attrList.Length descending
                                             select attrList).First();
                 var alignedNamesSet = biggestAttrList.ToHashSet();
                 Dictionary<string, int> lengthDictionary = new(from pair in observedLengths
@@ -48,11 +45,11 @@ namespace PrettyRegistryXml.GroupedAlignment
                     from a in lengthDictionary
                     where !alignedNamesSet.Contains(a.Key)
                     select a.Key;
-                var alignments = (from name in biggestAttrList
-                                  let length = lengthDictionary.GetValueOrDefault(name, 0)
-                                  select new Core.AttributeAlignment(name, length));
-                var leftoverNonAlignments = (from name in leftoverNames
-                                             select Core.AttributeAlignment.MakeUnaligned(name));
+                var alignments = from name in biggestAttrList
+                                 let length = lengthDictionary.GetValueOrDefault(name, 0)
+                                 select new Core.AttributeAlignment(name, length);
+                var leftoverNonAlignments = from name in leftoverNames
+                                            select Core.AttributeAlignment.MakeUnaligned(name);
                 return new BaseAligner(alignments.Concat(leftoverNonAlignments).ToArray());
             }
         }

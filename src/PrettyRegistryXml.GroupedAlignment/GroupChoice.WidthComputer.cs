@@ -16,8 +16,8 @@ namespace PrettyRegistryXml.GroupedAlignment
     {
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
-            private GroupChoice groupChoice;
-            private Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer> groupWidthComputers;
+            private readonly GroupChoice groupChoice;
+            private readonly Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer> groupWidthComputers;
 
             public WidthComputer(GroupChoice groupChoice, AttributeGroup[] groups)
             {

@@ -19,7 +19,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// </summary>
     public class GroupedAttributeAlignment : IAlignmentFinder
     {
-        private IAttributeSequenceItem MakeDefaultTrailer() => new AlignedTrailer();
+        private static IAttributeSequenceItem MakeDefaultTrailer() => new AlignedTrailer();
         private readonly IAttributeSequenceItem[] attributeSequenceItems;
 
         /// <summary>
@@ -37,7 +37,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         {
             if (!attributeSequenceItems.Any())
             {
-                throw new ArgumentOutOfRangeException("Need at least one attribute sequence item");
+                throw new ArgumentOutOfRangeException(paramName: nameof(attributeSequenceItems),
+                                                      "Need at least one attribute sequence item");
             }
             if (attributeSequenceItems.Last().IsTrailer)
             {
