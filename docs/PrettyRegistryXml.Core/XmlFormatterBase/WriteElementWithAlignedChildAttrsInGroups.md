@@ -14,6 +14,10 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 | groupingPredicate | A predicate determining if a given element is one to align attributes for. |
 | includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
 
+## Remarks
+
+This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md).
+
 ## See Also
 
 * class [XmlFormatterBase](../XmlFormatterBase.md)
@@ -38,6 +42,10 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 | alignmentFinder | Your alignment finder |
 | groupingPredicate | A predicate determining if a given node is one to align attributes for. |
 | includeEmptyTextNodesBetween | If true (default), any whitespace-only XText between nodes that satisfy *groupingPredicate* will not interrupt a group of aligning elements |
+
+## Remarks
+
+This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md)
 
 ## See Also
 
@@ -64,6 +72,10 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 | alignmentFinder | Your alignment finder |
 | groupingPredicate | A predicate determining if a given element is one to align attributes for. |
 | ignoreNodePredicate | A predicate identifying non-element nodes that should be ignored if between aligned elements |
+
+## Remarks
+
+If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md)
 
 ## See Also
 
