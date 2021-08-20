@@ -30,10 +30,8 @@ namespace PrettyRegistryXml.OpenXR
             var result = formatter.Process(document);
 
             Console.WriteLine($"Writing processed registry to {options.ActualOutputFile}");
-            using (var writer = new StreamWriter(options.ActualOutputFile, false, Encoding.UTF8))
-            {
-                writer.WriteLine(result);
-            }
+            using var writer = new StreamWriter(options.ActualOutputFile, false, Encoding.UTF8);
+            writer.WriteLine(result);
         }
 
         static void Main(string[] args)

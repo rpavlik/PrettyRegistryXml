@@ -49,11 +49,11 @@ namespace PrettyRegistryXml.GroupedAlignment
 
         private class WidthComputer : IAttributeSequenceItemWidthComputer
         {
-            private AttributeGroup attrGroup;
+            private readonly AttributeGroup attrGroup;
 
             public WidthComputer(AttributeGroup attrGroup) => this.attrGroup = attrGroup;
 
-            private List<NameLengthPair> observedLengths = new();
+            private readonly List<NameLengthPair> observedLengths = new();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
                 var (selected, notSelected) = attributes.Partition(attr => attrGroup.AttributeNameSet.Contains(attr.Name));

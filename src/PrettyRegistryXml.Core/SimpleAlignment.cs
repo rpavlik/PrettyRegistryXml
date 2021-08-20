@@ -17,7 +17,7 @@ namespace PrettyRegistryXml.Core
     public class SimpleAlignment : IAlignmentFinder
     {
 
-        private IDictionary<string, int>? extraWidth;
+        private readonly IDictionary<string, int>? extraWidth;
 
 
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
@@ -31,7 +31,7 @@ namespace PrettyRegistryXml.Core
 
         private class State : IAlignmentState
         {
-            private ElementAlignment alignment;
+            private readonly ElementAlignment alignment;
 
             internal State(ElementAlignment alignment_) { alignment = alignment_; }
             public IEnumerable<AttributeAlignment> DetermineAlignment(IEnumerable<string> attributeNames)

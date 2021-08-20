@@ -18,7 +18,7 @@ namespace PrettyRegistryXml.OpenXR
     /// </remarks>
     public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodesAndReverse
     {
-        private static string[] _specialPresorted = new string[]{
+        private static readonly string[] _specialPresorted = new string[]{
                 // These codes will be sorted first, in this order.
                 "XR_SUCCESS",
                 "XR_SESSION_LOSS_PENDING",

@@ -48,7 +48,7 @@ namespace PrettyRegistryXml.GroupedAlignment
                                             out IEnumerable<AttributeAlignment> alignments,
                                             out IEnumerable<string> remainingNames)
         {
-            SplitAttributeNamesKeepingOrder(attributeNames, out var selected, out var notSelected);
+            SplitAttributeNamesKeepingOrder(attributeNames, out _, out var notSelected);
             alignments = this.alignments;
             remainingNames = notSelected;
             return true;

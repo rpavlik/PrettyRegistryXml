@@ -13,8 +13,8 @@ namespace PrettyRegistryXml.OpenXR.Tests
 {
     public class ReturnCodeSorterTest
     {
-        public static ReturnCodeSorter Sorter = new ReturnCodeSorter();
-        public static string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
+        private static readonly ReturnCodeSorter Sorter = new();
+        private static readonly string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
 
         public static IEnumerable<object[]> SmallData => new List<object[]>{
             // not special, underscore sorting

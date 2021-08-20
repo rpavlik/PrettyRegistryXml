@@ -240,9 +240,14 @@ namespace PrettyRegistryXml.Core
             WriteEndElement(writer, e);
         }
 
+        // Suppressing because this is non-static to allow overriding.
+#pragma warning disable CA1822
         /// <summary>
         /// Write all attributes of <paramref name="e"/> to <paramref name="writer"/>.
         /// </summary>
+        /// <remarks>
+        /// Not static despite analyzer suggestions, so it can be overridden.
+        /// </remarks>
         /// <param name="writer">An XmlWriter in the correct state (has had <see cref="XmlFormatterBase.WriteStartElement(XmlWriter, XElement)"/> called)</param>
         /// <param name="e">An element that may have attributes.</param>
         protected void WriteAttributes(XmlWriter writer, XElement e)
@@ -252,6 +257,7 @@ namespace PrettyRegistryXml.Core
                 writer.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, attr.Value);
             }
         }
+#pragma warning restore CA1822
 
         /// <summary>
         /// Write nodes, aligning element names and attributes of those that are elements.
@@ -409,7 +415,7 @@ namespace PrettyRegistryXml.Core
             XmlWriter writer,
             XElement e,
             IAlignmentFinder alignmentFinder,
-            System.Predicate<XElement> groupingPredicate,
+            Predicate<XElement> groupingPredicate,
             bool includeEmptyTextNodesBetween = true)
             => WriteElementWithAlignedChildAttrsInGroups(writer,
                                                          e,
