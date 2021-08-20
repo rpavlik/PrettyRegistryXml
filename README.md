@@ -89,6 +89,17 @@ You can re-generate these locally for you own reference, however, using
 ./Build-Docs.ps1
 ```
 
+## Release Process
+
+- Make sure all changes have been merged to main and GitHub has completed the
+  automated docs update.
+- Bump the version number in the `<version>` tag of `Directory.Build.props`.
+- Commit this version bump.
+- Create a signed tag at this commit: the tag message will be used to create the
+  release.
+- Push the branch and the signed tag to GitHub and let GitHub actions create
+  your release!
+
 ## License
 
 [REUSE](https://reuse.software) 3.0 compliant - use the `reuse` tool to get a
