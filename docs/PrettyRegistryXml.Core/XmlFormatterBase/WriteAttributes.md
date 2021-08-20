@@ -11,6 +11,10 @@ protected void WriteAttributes(XmlWriter writer, XElement e)
 | writer | An XmlWriter in the correct state (has had [`WriteStartElement`](WriteStartElement.md) called) |
 | e | An element that may have attributes. |
 
+## Remarks
+
+Not static despite analyzer suggestions, so it can be overridden.
+
 ## See Also
 
 * class [XmlFormatterBase](../XmlFormatterBase.md)
