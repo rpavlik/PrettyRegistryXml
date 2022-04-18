@@ -1,7 +1,7 @@
 # Pretty Registry (for OpenXR and other Khronos standards)
 
 <!--
-Copyright 2021 Collabora, Ltd
+Copyright 2021-2022, Collabora, Ltd
 
 SPDX-License-Identifier: CC-BY-4.0
 -->
@@ -18,7 +18,7 @@ point.
 
 ## Building and Running
 
-This uses the [.NET 6.0 SDK][dotnet6] (formerly known as .NET Core - the
+This uses the [.NET 6.0 SDK][dotnet] (formerly known as .NET Core - the
 cross-platform open source one) SDK to build. That link has instructions to
 download and install it.
 
@@ -62,7 +62,7 @@ dotnet run --project src/PrettyRegistryXml.Vulkan/PrettyRegistryXml.Vulkan.cspro
 
 By default, with no arguments you'll see help/usage.
 
-[dotnet5]: https://dotnet.microsoft.com/download/dotnet/6.0
+[dotnet]: https://dotnet.microsoft.com/download/dotnet/6.0
 
 ## API Docs
 
@@ -81,7 +81,7 @@ All assemblies and docs are within `PrettyRegistryXml`:
 When changes are merged into the main branch, these docs are automatically
 updated and committed, if applicable, so no need to update them yourself.
 
-You can re-generate these locally for you own reference, however, using
+You can re-generate these locally for your own reference, however, using
 [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/) by doing the following:
 
 ```sh
