@@ -3,13 +3,13 @@
   "isRoot": true,
   "tools": {
     "xmldocmd": {
-      "version": "2.5.2",
+      "version": "2.8.0",
       "commands": [
         "xmldocmd"
       ]
     },
     "dotnet-format": {
-      "version": "5.1.225507",
+      "version": "5.1.250801",
       "commands": [
         "dotnet-format"
       ]
