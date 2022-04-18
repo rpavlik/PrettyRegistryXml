@@ -81,7 +81,7 @@ All assemblies and docs are within `PrettyRegistryXml`:
 When changes are merged into the main branch, these docs are automatically
 updated and committed, if applicable, so no need to update them yourself.
 
-You can re-generate these locally for you own reference, however, using
+You can re-generate these locally for your own reference, however, using
 [XmlDocMarkdown](https://ejball.com/XmlDocMarkdown/) by doing the following:
 
 ```sh
