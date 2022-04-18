@@ -71,7 +71,7 @@ namespace PrettyRegistryXml.Core
         /// <see cref="XElement"/> and succeed in <paramref name="elementPredicate"/>
         /// </returns>
         /// <remarks>
-        /// Intended for use with 
+        /// Intended for use with
         /// <see cref="XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups(System.Xml.XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>
         /// </remarks>
         public static bool IsWhitespaceBetweenSelectedElements(XNode node,
@@ -91,7 +91,7 @@ namespace PrettyRegistryXml.Core
         /// <see cref="XElement"/> both exist and pass <paramref name="elementPredicate"/>
         /// </returns>
         /// <remarks>
-        /// Intended for use with 
+        /// Intended for use with
         /// <see cref="XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups(System.Xml.XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>
         /// </remarks>
         public static bool IsWhitespaceOrCommentBetweenSelectedElements(XNode node,

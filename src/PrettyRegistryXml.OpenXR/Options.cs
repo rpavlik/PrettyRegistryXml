@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using CommandLine;
 using CommandLine.Text;
 
@@ -29,10 +30,10 @@ namespace PrettyRegistryXml.OpenXR
             get => OutputFile ?? InputFile;
         }
 
-        [Option("wrap-extensions", Default = (bool)false, HelpText = "Whether to wrap attributes of <extension> tags.")]
+        [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
         public bool WrapExtensions { get; init; }
 
-        [Option("sort-codes", Default = (bool)false, HelpText = "Whether to sort success and error codes.")]
+        [Option("sort-codes", Default = false, HelpText = "Whether to sort success and error codes.")]
         public bool SortCodes { get; init; }
 
         // Automatically used by CommandLineParser for help.
@@ -57,10 +58,10 @@ namespace PrettyRegistryXml.OpenXR
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"- Input file: {InputFile}");
-            sb.AppendLine($"- Output file: {ActualOutputFile}");
-            sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine($"- Sort return codes: {SortCodes}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Sort return codes: {SortCodes}");
             return sb.ToString();
         }
     }

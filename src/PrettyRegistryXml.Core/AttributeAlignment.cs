@@ -10,15 +10,13 @@ using System.Text;
 using System.Xml.Linq;
 using System;
 
-using AttributeName = System.String;
-
 namespace PrettyRegistryXml.Core
 {
     /// <summary>
     /// A structure storing the name of an attribute and a value width that it should be aligned/padded to.
     /// </summary>
     /// <remarks>
-    /// Typically created in an array by <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{string, int}?)"/>
+    /// Typically created in an array by <see cref="FindAttributeAlignments(IEnumerable{XElement}, IDictionary{string, int}?)"/>
     /// </remarks>
     public struct AttributeAlignment
     {
@@ -34,7 +32,7 @@ namespace PrettyRegistryXml.Core
         public string Name { get; init; }
 
         /// <value>true if <see cref="Name"/> is empty and thus this should be considered padding only.</value>
-        public bool IsPaddingOnly => String.IsNullOrEmpty(Name);
+        public bool IsPaddingOnly => string.IsNullOrEmpty(Name);
 
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         public bool ShouldAlign
         {
-            get => (AlignWidth != NO_ALIGN_SENTINEL);
+            get => AlignWidth != NO_ALIGN_SENTINEL;
         }
 
         /// <summary>
@@ -91,7 +89,7 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Helper for throwing exceptions on invalid widths.
         /// </summary>
-        /// <param name="value">User-proposed value for <see cref="AttributeAlignment.AlignWidth" /></param>
+        /// <param name="value">User-proposed value for <see cref="AlignWidth" /></param>
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
@@ -112,9 +110,9 @@ namespace PrettyRegistryXml.Core
         public override string ToString() => ShouldAlign ? $"Alignment({Name} [{AlignWidth}])" : $"Unaligned({Name})";
 
         /// <summary>
-        /// Format a collection of AttributeAlignment values as a string.
+        /// Format a collection of <see cref="AttributeAlignment"/> values as a string.
         /// </summary>
-        /// <param name="alignments">A collection of AttributeAlignment values</param>
+        /// <param name="alignments">A collection of <see cref="AttributeAlignment"/> values</param>
         /// <returns>A string suitable for human reading during debugging/testing.</returns>
         public static string FormatEnumerable(IEnumerable<AttributeAlignment> alignments) => string.Join(",", from a in alignments select a.ToString());
 
@@ -231,13 +229,13 @@ namespace PrettyRegistryXml.Core
             var lastIndex = aligned.Length - 1;
             if (extraWidth == null || !extraWidth.ContainsKey(aligned[lastIndex].Name))
             {
-                aligned[lastIndex] = AttributeAlignment.ReplaceWithUnaligned(aligned[lastIndex]);
+                aligned[lastIndex] = ReplaceWithUnaligned(aligned[lastIndex]);
             }
 
             // Combine the aligned ones with unaligned leftovers.
             return aligned.Concat(from name in leftovers
-                                  select AttributeAlignment.MakeUnaligned(name))
-                                  .ToArray();
+                                  select MakeUnaligned(name))
+                          .ToArray();
         }
 
         /// <summary>

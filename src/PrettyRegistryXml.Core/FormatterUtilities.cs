@@ -26,14 +26,14 @@ namespace PrettyRegistryXml.Core
         public static XText RegenerateIndentation(XmlFormatterBase formatter, XText whitespaceText)
         {
             // Don't bother modifying a whitespace-only node without a newline: won't affect indent.
-            if (!whitespaceText.Value.Contains("\n")) { return whitespaceText; }
+            if (!whitespaceText.Value.Contains('\n')) { return whitespaceText; }
 
             // Completely replace whitespace-only nodes that do contain a newline:
             // keep total number of newlines the same, but re-construct with correct indent.
 
-            var cleanNewlines = string.Join(null, (from c in whitespaceText.Value
-                                                   where c == '\n'
-                                                   select Environment.NewLine));
+            var cleanNewlines = string.Join(null, from c in whitespaceText.Value
+                                                  where c == '\n'
+                                                  select Environment.NewLine);
 
             // this is a heuristic but seems to work.
             bool followedByClosingTag = whitespaceText.NextNode == null;

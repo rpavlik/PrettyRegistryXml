@@ -140,14 +140,6 @@ namespace PrettyRegistryXml.Vulkan
                                                             new AttributeGroup("bitpos", "extends")));
 
         /// <summary>
-        /// Our alignment for attributes in enums.
-        /// </summary>
-        private readonly IAlignmentFinder enumAlignment
-            = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("type", "value"),
-                                                            new AttributeGroup("bitpos")),
-                                            new AttributeGroup("name", "alias", "comment"));
-
-        /// <summary>
         /// Our alignment for attributes in type elements.
         /// </summary>
         private readonly IAlignmentFinder typeAlignment
@@ -162,40 +154,40 @@ namespace PrettyRegistryXml.Vulkan
         /// This is the recursive part that contains most of the "policy"
         /// </summary>
         /// <param name="writer">Your writer</param>
-        /// <param name="e">The element to write</param>
-        protected override void WriteElement(XmlWriter writer, XElement e)
+        /// <param name="element">The element to write</param>
+        protected override void WriteElement(XmlWriter writer, XElement element)
         {
             // Now, only one of these paths should execute.
-            if (ChildrenShouldBeSingleLine(e))
+            if (ChildrenShouldBeSingleLine(element))
             {
-                WriteSingleLineElement(writer, e);
+                WriteSingleLineElement(writer, element);
             }
-            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
+            else if (element.Name == "require" && element.Parent != null && element.Parent.Name == "feature")
             {
                 // Simple alignment in feature requirements (core)
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "extension")
+            else if (element.Name == "require" && element.Parent != null && element.Parent.Name == "extension")
             {
                 // Beautiful alignment of the enums in extensions.
                 WriteElementWithAlignedChildAttrsInGroups(writer,
-                                                          e,
+                                                          element,
                                                           alignmentFinder: extensionEnumAlignment,
                                                           groupingPredicate: (XElement element) => element.Name == "enum");
             }
-            else if (e.Name == "tags" && e.HasElements)
+            else if (element.Name == "tags" && element.HasElements)
             {
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (e.Name == "platforms" && e.HasElements)
+            else if (element.Name == "platforms" && element.HasElements)
             {
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (e.Name == "enums" && e.HasElements)
+            else if (element.Name == "enums" && element.HasElements)
             {
                 // Give some extra width to the value field
                 WriteElementWithAlignedChildAttrsInGroups(writer,
-                                                          e,
+                                                          element,
                                                           // Previous used this instead of simpleAlignmentWithExtraValueWidth, don't remember why
                                                           // maybe because of VkDebugReportObjectTypeEXT ?
                                                           // alignmentFinder: enumAlignment,
@@ -204,10 +196,10 @@ namespace PrettyRegistryXml.Vulkan
                                                           // Don't let comments break up our alignment groups.
                                                           ignoreNodePredicate: n => XmlUtilities.IsWhitespaceOrCommentBetweenSelectedElements(n, IsEnum));
             }
-            else if (e.Name == "types")
+            else if (element.Name == "types")
             {
                 WriteElementWithAlignedChildAttrsInMultipleGroups(writer,
-                                                                  e,
+                                                                  element,
                                                                   alignmentFinder: typeAlignment,
                                                                   alignmentPredicate: (XElement element) =>
                                                                   {
@@ -232,25 +224,25 @@ namespace PrettyRegistryXml.Vulkan
                                                                   },
                                                                   groupingFunc: element => element.Attribute("category")?.Value);
             }
-            else if (AlignSPIRV && e.Name == "spirvextension" && e.HasElements)
+            else if (AlignSPIRV && element.Name == "spirvextension" && element.HasElements)
             {
                 // Having this in here does change things, but for the better.
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (AlignSPIRV && e.Name == "spirvcapability" && e.HasElements)
+            else if (AlignSPIRV && element.Name == "spirvcapability" && element.HasElements)
             {
                 // Having this in here does change things, but for the better.
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (WrapExtensions && e.Name == "extension")
+            else if (WrapExtensions && element.Name == "extension")
             {
                 // This will change the format! (for the better, probably, though)
                 // Also, missing indent at level "extensions" so we adjust by -1
-                WriteElementWithAttrNewlines(writer, e, -1);
+                WriteElementWithAttrNewlines(writer, element, -1);
             }
             else
             {
-                base.WriteElement(writer, e);
+                base.WriteElement(writer, element);
             }
 
         }

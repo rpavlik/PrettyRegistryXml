@@ -104,7 +104,6 @@ namespace PrettyRegistryXml.Core
             return Regex.Replace(sb.ToString(), @"\s*/>", "/>");
         }
 
-
         /// <summary>
         /// The main recursive function.
         /// </summary>

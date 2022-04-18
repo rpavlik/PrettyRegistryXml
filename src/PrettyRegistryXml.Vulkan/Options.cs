@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using CommandLine;
 using CommandLine.Text;
 
@@ -21,7 +22,7 @@ namespace PrettyRegistryXml.Vulkan
         public string OutputFile { get; init; }
 
         /// <summary>
-        /// This will be <see cref="Options.OutputFile"/>, if set, otherwise <see cref="Options.InputFile"/>
+        /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
         /// </summary>
         /// <value></value>
         public string ActualOutputFile
@@ -57,10 +58,10 @@ namespace PrettyRegistryXml.Vulkan
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"- Input file: {InputFile}");
-            sb.AppendLine($"- Output file: {ActualOutputFile}");
-            sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine($"- Align attributes of children of SPIR-V tags: {AlignSPIRV}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Align attributes of children of SPIR-V tags: {AlignSPIRV}");
             return sb.ToString();
         }
     }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml;
-using System;
 
 
 namespace PrettyRegistryXml.OpenXR
@@ -133,19 +132,19 @@ namespace PrettyRegistryXml.OpenXR
         /// This is the recursive part that contains most of the "policy"
         /// </summary>
         /// <param name="writer">Your writer</param>
-        /// <param name="e">The element to write</param>
-        protected override void WriteElement(XmlWriter writer, XElement e)
+        /// <param name="element">The element to write</param>
+        protected override void WriteElement(XmlWriter writer, XElement element)
         {
             // Setup work: Sort return values if desired.
-            if (e.Name == "command" && SortReturnVals)
+            if (element.Name == "command" && SortReturnVals)
             {
-                var success = e.Attribute("successcodes");
+                var success = element.Attribute("successcodes");
                 if (success != null)
                 {
                     success.Value = CodeSorter.SortReturnCodeString(success.Value);
                 }
 
-                var error = e.Attribute("errorcodes");
+                var error = element.Attribute("errorcodes");
                 if (error != null)
                 {
                     error.Value = CodeSorter.SortReturnCodeString(error.Value);
@@ -153,54 +152,54 @@ namespace PrettyRegistryXml.OpenXR
             }
 
             // Now, only one of these paths should execute.
-            if (ChildrenShouldBeSingleLine(e))
+            if (ChildrenShouldBeSingleLine(element))
             {
-                WriteSingleLineElement(writer, e);
+                WriteSingleLineElement(writer, element);
             }
-            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "feature")
+            else if (element.Name == "require" && element.Parent != null && element.Parent.Name == "feature")
             {
                 // Simple alignment in feature requirements (core)
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (e.Name == "require" && e.Parent != null && e.Parent.Name == "extension")
+            else if (element.Name == "require" && element.Parent != null && element.Parent.Name == "extension")
             {
                 // Beautiful alignment of the enums in extensions.
                 WriteElementWithAlignedChildAttrsInGroups(writer,
-                                                          e,
+                                                          element,
                                                           extensionEnumAlignment,
                                                           (XElement element) => element.Name == "enum");
             }
-            else if (e.Name == "tags" && e.HasElements)
+            else if (element.Name == "tags" && element.HasElements)
             {
-                WriteElementWithAlignedChildElts(writer, e);
+                WriteElementWithAlignedChildElts(writer, element);
             }
-            else if (e.Name == "enums" && e.HasElements)
+            else if (element.Name == "enums" && element.HasElements)
             {
                 // Give some extra width to the value field
                 // and don't let comments break up our alignment groups.
                 WriteElementWithAlignedChildAttrsInGroups(writer,
-                                                          e,
+                                                          element,
                                                           simpleAlignmentWithExtraValueWidth,
                                                           IsEnum,
                                                           n => XmlUtilities.IsWhitespaceOrCommentBetweenSelectedElements(n, IsEnum));
             }
-            else if (e.Name == "types")
+            else if (element.Name == "types")
             {
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, IsBitmask);
+                WriteElementWithAlignedChildAttrsInGroups(writer, element, IsBitmask);
             }
-            else if (e.Name == "interaction_profile")
+            else if (element.Name == "interaction_profile")
             {
-                WriteElementWithAlignedChildAttrsInGroups(writer, e, (XElement element) => element.Name == "component");
+                WriteElementWithAlignedChildAttrsInGroups(writer, element, (XElement element) => element.Name == "component");
             }
-            else if (WrapExtensions && e.Name == "extension")
+            else if (WrapExtensions && element.Name == "extension")
             {
                 // This will change the format! (for the better, probably, though)
                 // Also, missing indent at level "extensions" so we adjust by -1
-                WriteElementWithAttrNewlines(writer, e, -1);
+                WriteElementWithAttrNewlines(writer, element, -1);
             }
             else
             {
-                base.WriteElement(writer, e);
+                base.WriteElement(writer, element);
             }
 
         }

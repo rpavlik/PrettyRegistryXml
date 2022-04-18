@@ -4,7 +4,6 @@
 
 #nullable enable
 
-using System;
 using System.Collections.Generic;
 using Xunit;
 using System.Linq;
@@ -104,7 +103,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
             foreach (var attrName in alignedAttrs)
             {
                 var q = from line in lines
-                        let pos = line.IndexOf(attrName)
+                        let pos = line.IndexOf(attrName, System.StringComparison.InvariantCulture)
                         // skip lines without this attribute.
                         where pos != -1
                         select pos;

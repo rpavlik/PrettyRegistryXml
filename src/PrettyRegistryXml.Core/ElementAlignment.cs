@@ -15,7 +15,7 @@ namespace PrettyRegistryXml.Core
     /// Aligment for an entire element: element name and attributes.
     /// </summary>
     /// <remarks>
-    /// Typically created with <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int}?)"/>.
+    /// Typically created with <see cref="FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int}?)"/>.
     /// Wraps an integer for element name alignment, and an array of <see cref="AttributeAlignment"/>
     /// </remarks>
     public struct ElementAlignment
@@ -49,11 +49,11 @@ namespace PrettyRegistryXml.Core
                                                                                    select len).Max();
 
         /// <summary>
-        /// Compute an ElementAlignment for a collection of elements.
+        /// Compute an <see cref="ElementAlignment"/> for a collection of elements.
         /// </summary>
         /// <remarks>
         /// This wraps both <see cref="AttributeAlignment.FindAttributeAlignments(IEnumerable{XElement}, IDictionary{string, int}?)" />
-        /// and <see cref="ElementAlignment.FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int})" />
+        /// and <see cref="FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int})" />
         /// </remarks>
         /// <param name="elements">A collection of elements</param>
         /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>

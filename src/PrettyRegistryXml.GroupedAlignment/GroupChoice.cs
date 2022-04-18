@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Globalization;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {
@@ -48,7 +48,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Convert to string
         /// </summary>
         /// <returns>Representation mostly for debugging</returns>
-        public override string? ToString() => string.Format("GroupChoice( {0} )",
+        public override string? ToString() => string.Format(CultureInfo.InvariantCulture,
+                                                            "GroupChoice( {0} )",
                                                             string.Join(", ",
                                                                         from g in Groups
                                                                         select g.ToString()));
