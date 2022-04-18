@@ -6,7 +6,7 @@ public bool IsPaddingOnly { get; }
 
 ## Property Value
 
-true if [`Name`](Name.md) is empty and thus this should be considered padding only.
+true if [`Name`](./Name.md) is empty and thus this should be considered padding only.
 
 ## See Also
 

@@ -8,7 +8,7 @@ protected void WriteAttributes(XmlWriter writer, XElement e)
 
 | parameter | description |
 | --- | --- |
-| writer | An XmlWriter in the correct state (has had [`WriteStartElement`](WriteStartElement.md) called) |
+| writer | An XmlWriter in the correct state (has had [`WriteStartElement`](./WriteStartElement.md) called) |
 | e | An element that may have attributes. |
 
 ## Remarks

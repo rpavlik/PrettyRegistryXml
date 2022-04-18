@@ -6,7 +6,7 @@ public HashSet<string> AttributeNameSet { get; }
 
 ## Property Value
 
-A HashSet of the elements of [`AttributeNames`](AttributeNames.md)
+A HashSet of the elements of [`AttributeNames`](./AttributeNames.md)
 
 ## See Also
 

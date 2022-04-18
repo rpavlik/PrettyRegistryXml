@@ -1,6 +1,6 @@
 # AttributeSequenceItemBase class
 
-Base class for non-trailer implementations of [`IAttributeSequenceItem`](IAttributeSequenceItem.md)
+Base class for non-trailer implementations of [`IAttributeSequenceItem`](./IAttributeSequenceItem.md)
 
 ```csharp
 public abstract class AttributeSequenceItemBase : IAttributeSequenceItem
@@ -22,7 +22,7 @@ public abstract class AttributeSequenceItemBase : IAttributeSequenceItem
 
 ## See Also
 
-* interface [IAttributeSequenceItem](IAttributeSequenceItem.md)
+* interface [IAttributeSequenceItem](./IAttributeSequenceItem.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../PrettyRegistryXml.GroupedAlignment.md)
 * [AttributeSequenceItemBase.cs](../../src/PrettyRegistryXml.GroupedAlignment/AttributeSequenceItemBase.cs)
 

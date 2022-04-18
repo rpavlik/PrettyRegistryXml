@@ -1,6 +1,6 @@
 # IAlignmentState interface
 
-Interface wrapping the results of [`IAlignmentFinder`](IAlignmentFinder.md)
+Interface wrapping the results of [`IAlignmentFinder`](./IAlignmentFinder.md)
 
 ```csharp
 public interface IAlignmentState

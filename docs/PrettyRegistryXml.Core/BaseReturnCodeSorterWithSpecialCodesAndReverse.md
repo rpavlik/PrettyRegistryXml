@@ -16,7 +16,7 @@ public abstract class BaseReturnCodeSorterWithSpecialCodesAndReverse : BaseRetur
 
 ## See Also
 
-* class [BaseReturnCodeSorter](BaseReturnCodeSorter.md)
+* class [BaseReturnCodeSorter](./BaseReturnCodeSorter.md)
 * namespace [PrettyRegistryXml.Core](../PrettyRegistryXml.Core.md)
 * [BaseReturnCodeSorterWithSpecialCodesAndReverse.cs](../../src/PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.cs)
 

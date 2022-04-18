@@ -1,6 +1,6 @@
 # XmlFormatterBase.MakeIndent method (1 of 2)
 
-Return the indentation we'd expect from the nesting level (number of ancestors) of *node* with adjustments based on [`ComputeLevelAdjust`](ComputeLevelAdjust.md).
+Return the indentation we'd expect from the nesting level (number of ancestors) of *node* with adjustments based on [`ComputeLevelAdjust`](./ComputeLevelAdjust.md).
 
 ```csharp
 public string MakeIndent(XNode node)

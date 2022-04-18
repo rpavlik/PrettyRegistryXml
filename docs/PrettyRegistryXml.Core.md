@@ -4,23 +4,23 @@
 
 | public type | description |
 | --- | --- |
-| struct [AttributeAlignment](PrettyRegistryXml.Core/AttributeAlignment.md) | A structure storing the name of an attribute and a value width that it should be aligned/padded to. |
-| static class [AttributeAlignmentExtensions](PrettyRegistryXml.Core/AttributeAlignmentExtensions.md) | Extensions for an enumerable of [`AttributeAlignment`](PrettyRegistryXml.Core/AttributeAlignment.md) objects. |
-| abstract class [BaseReturnCodeSorter](PrettyRegistryXml.Core/BaseReturnCodeSorter.md) | Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries. |
-| abstract class [BaseReturnCodeSorterWithSpecialCodes](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodes.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest alphabetical after that. |
-| abstract class [BaseReturnCodeSorterWithSpecialCodesAndReverse](PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest reverse (by accident, but left that way for now) alphabetical after that. |
-| struct [ElementAlignment](PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |
-| static class [FormatterUtilities](PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
-| interface [IAlignmentFinder](PrettyRegistryXml.Core/IAlignmentFinder.md) | Interface to conceal both simple and more complex ways of aligning attributes. |
-| interface [IAlignmentState](PrettyRegistryXml.Core/IAlignmentState.md) | Interface wrapping the results of [`IAlignmentFinder`](PrettyRegistryXml.Core/IAlignmentFinder.md) |
-| class [SimpleAlignment](PrettyRegistryXml.Core/SimpleAlignment.md) | Simplest alignment: The attributes of the element with most attributes are aligned, any leftovers aren't aligned. |
-| abstract class [XmlFormatterBase](PrettyRegistryXml.Core/XmlFormatterBase.md) | The base of your project-specific formatting class. |
-| static class [XmlUtilities](PrettyRegistryXml.Core/XmlUtilities.md) | Assorted utilities acting on objects from System.Xml.Linq |
+| struct [AttributeAlignment](./PrettyRegistryXml.Core/AttributeAlignment.md) | A structure storing the name of an attribute and a value width that it should be aligned/padded to. |
+| static class [AttributeAlignmentExtensions](./PrettyRegistryXml.Core/AttributeAlignmentExtensions.md) | Extensions for an enumerable of [`AttributeAlignment`](./PrettyRegistryXml.Core/AttributeAlignment.md) objects. |
+| abstract class [BaseReturnCodeSorter](./PrettyRegistryXml.Core/BaseReturnCodeSorter.md) | Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries. |
+| abstract class [BaseReturnCodeSorterWithSpecialCodes](./PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodes.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest alphabetical after that. |
+| abstract class [BaseReturnCodeSorterWithSpecialCodesAndReverse](./PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest reverse (by accident, but left that way for now) alphabetical after that. |
+| struct [ElementAlignment](./PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |
+| static class [FormatterUtilities](./PrettyRegistryXml.Core/FormatterUtilities.md) | Assorted utilities factored out from standard-specific formatters. |
+| interface [IAlignmentFinder](./PrettyRegistryXml.Core/IAlignmentFinder.md) | Interface to conceal both simple and more complex ways of aligning attributes. |
+| interface [IAlignmentState](./PrettyRegistryXml.Core/IAlignmentState.md) | Interface wrapping the results of [`IAlignmentFinder`](./PrettyRegistryXml.Core/IAlignmentFinder.md) |
+| class [SimpleAlignment](./PrettyRegistryXml.Core/SimpleAlignment.md) | Simplest alignment: The attributes of the element with most attributes are aligned, any leftovers aren't aligned. |
+| abstract class [XmlFormatterBase](./PrettyRegistryXml.Core/XmlFormatterBase.md) | The base of your project-specific formatting class. |
+| static class [XmlUtilities](./PrettyRegistryXml.Core/XmlUtilities.md) | Assorted utilities acting on objects from System.Xml.Linq |
 
 ## PrettyRegistryXml.Core.Extensions namespace
 
 | public type | description |
 | --- | --- |
-| static class [XmlWriterExtensions](PrettyRegistryXml.Core.Extensions/XmlWriterExtensions.md) | Extensions for XmlWriter |
+| static class [XmlWriterExtensions](./PrettyRegistryXml.Core.Extensions/XmlWriterExtensions.md) | Extensions for XmlWriter |
 
 <!-- DO NOT EDIT: generated by xmldocmd for PrettyRegistryXml.Core.dll -->

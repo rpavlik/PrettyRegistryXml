@@ -1,6 +1,6 @@
 # AttributeSequenceTrailerBase class
 
-Base class for trailer implementations of [`IAttributeSequenceItem`](IAttributeSequenceItem.md)
+Base class for trailer implementations of [`IAttributeSequenceItem`](./IAttributeSequenceItem.md)
 
 ```csharp
 public abstract class AttributeSequenceTrailerBase : IAttributeSequenceItem
@@ -22,7 +22,7 @@ public abstract class AttributeSequenceTrailerBase : IAttributeSequenceItem
 
 ## See Also
 
-* interface [IAttributeSequenceItem](IAttributeSequenceItem.md)
+* interface [IAttributeSequenceItem](./IAttributeSequenceItem.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../PrettyRegistryXml.GroupedAlignment.md)
 * [AttributeSequenceTrailerBase.cs](../../src/PrettyRegistryXml.GroupedAlignment/AttributeSequenceTrailerBase.cs)
 

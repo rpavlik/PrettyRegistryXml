@@ -19,7 +19,7 @@ protected void WriteElementWithAlignedChildAttrsInMultipleGroups<TKey>(XmlWriter
 
 ## Remarks
 
-If you only have one type of group, use the simpler [`WriteElementWithAlignedChildAttrsInGroups`](WriteElementWithAlignedChildAttrsInGroups.md) or one of its overloads
+If you only have one type of group, use the simpler [`WriteElementWithAlignedChildAttrsInGroups`](./WriteElementWithAlignedChildAttrsInGroups.md) or one of its overloads
 
 ## See Also
 

@@ -1,6 +1,6 @@
 # GroupChoice class
 
-A choice between some disjoint collections of attribute names represented by [`AttributeGroup`](AttributeGroup.md)
+A choice between some disjoint collections of attribute names represented by [`AttributeGroup`](./AttributeGroup.md)
 
 ```csharp
 public class GroupChoice : AttributeSequenceItemBase
@@ -17,7 +17,7 @@ public class GroupChoice : AttributeSequenceItemBase
 
 ## See Also
 
-* class [AttributeSequenceItemBase](AttributeSequenceItemBase.md)
+* class [AttributeSequenceItemBase](./AttributeSequenceItemBase.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../PrettyRegistryXml.GroupedAlignment.md)
 * [GroupChoice.cs](../../src/PrettyRegistryXml.GroupedAlignment/GroupChoice.cs)
 

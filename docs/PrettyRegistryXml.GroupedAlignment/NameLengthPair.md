@@ -1,9 +1,9 @@
-# NameLengthPair class
+# NameLengthPair record
 
 An attribute name and length
 
 ```csharp
-public class NameLengthPair : IEquatable<NameLengthPair>
+public record NameLengthPair
 ```
 
 ## Public Members
@@ -13,20 +13,6 @@ public class NameLengthPair : IEquatable<NameLengthPair>
 | [NameLengthPair](NameLengthPair/NameLengthPair.md)(…) | Constructor |
 | [Length](NameLengthPair/Length.md) { get; set; } |  |
 | [Name](NameLengthPair/Name.md) { get; set; } |  |
-| virtual [Equals](NameLengthPair/Equals.md)(…) |  |
-| override [Equals](NameLengthPair/Equals.md)(…) |  |
-| override [GetHashCode](NameLengthPair/GetHashCode.md)() |  |
-| override [ToString](NameLengthPair/ToString.md)() |  |
-| [operator ==](NameLengthPair/op_Equality.md) |  |
-| [operator !=](NameLengthPair/op_Inequality.md) |  |
-
-## Protected Members
-
-| name | description |
-| --- | --- |
-| [NameLengthPair](NameLengthPair/NameLengthPair.md)(…) |  |
-| virtual [EqualityContract](NameLengthPair/EqualityContract.md) { get; } |  |
-| virtual [PrintMembers](NameLengthPair/PrintMembers.md)(…) |  |
 
 ## See Also
 

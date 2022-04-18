@@ -1,6 +1,6 @@
 # AttributeGroup class
 
-A list of attribute names, usually combined in a [`GroupChoice`](GroupChoice.md)
+A list of attribute names, usually combined in a [`GroupChoice`](./GroupChoice.md)
 
 ```csharp
 public class AttributeGroup : AttributeSequenceItemBase
@@ -19,7 +19,7 @@ public class AttributeGroup : AttributeSequenceItemBase
 
 ## See Also
 
-* class [AttributeSequenceItemBase](AttributeSequenceItemBase.md)
+* class [AttributeSequenceItemBase](./AttributeSequenceItemBase.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../PrettyRegistryXml.GroupedAlignment.md)
 * [AttributeGroup.cs](../../src/PrettyRegistryXml.GroupedAlignment/AttributeGroup.cs)
 

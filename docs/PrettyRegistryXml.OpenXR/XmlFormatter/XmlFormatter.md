@@ -12,7 +12,7 @@ public XmlFormatter(Options options)
 
 ## See Also
 
-* class [Options](../Options.md)
+* record [Options](../Options.md)
 * class [XmlFormatter](../XmlFormatter.md)
 * namespace [PrettyRegistryXml.OpenXR](../../PrettyRegistryXml.OpenXR.md)
 

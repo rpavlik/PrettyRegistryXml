@@ -1,6 +1,6 @@
 # IAttributeSequenceItemAligner interface
 
-The result of [`IAttributeSequenceItemWidthComputer`](IAttributeSequenceItemWidthComputer.md) when it is all done and ready to actually align.
+The result of [`IAttributeSequenceItemWidthComputer`](./IAttributeSequenceItemWidthComputer.md) when it is all done and ready to actually align.
 
 ```csharp
 public interface IAttributeSequenceItemAligner

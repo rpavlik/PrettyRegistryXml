@@ -41,7 +41,7 @@ public abstract class XmlFormatterBase
 
 ## Remarks
 
-This class should already provide many if not all of the "primitives" you need to perform the desired formatting. Your derived class (specifically the override of [`WriteElement`](XmlFormatterBase/WriteElement.md)) is responsible for the project-specific "policy" that controls the output.
+This class should already provide many if not all of the "primitives" you need to perform the desired formatting. Your derived class (specifically the override of [`WriteElement`](./XmlFormatterBase/WriteElement.md)) is responsible for the project-specific "policy" that controls the output.
 
 ## See Also
 

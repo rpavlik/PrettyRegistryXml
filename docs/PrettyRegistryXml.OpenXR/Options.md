@@ -1,7 +1,7 @@
-# Options class
+# Options record
 
 ```csharp
-public class Options : IEquatable<Options>
+public record Options
 ```
 
 ## Public Members
@@ -9,26 +9,12 @@ public class Options : IEquatable<Options>
 | name | description |
 | --- | --- |
 | [Options](Options/Options.md)() | The default constructor. |
-| [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](Options/OutputFile.md), if set, otherwise [`InputFile`](Options/InputFile.md) |
+| [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](./Options/OutputFile.md), if set, otherwise [`InputFile`](./Options/InputFile.md) |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
 | [SortCodes](Options/SortCodes.md) { get; set; } |  |
 | [WrapExtensions](Options/WrapExtensions.md) { get; set; } |  |
-| override [Equals](Options/Equals.md)(…) |  |
-| virtual [Equals](Options/Equals.md)(…) |  |
-| override [GetHashCode](Options/GetHashCode.md)() |  |
-| override [ToString](Options/ToString.md)() |  |
 | static [Examples](Options/Examples.md) { get; } |  |
-| [operator ==](Options/op_Equality.md) |  |
-| [operator !=](Options/op_Inequality.md) |  |
-
-## Protected Members
-
-| name | description |
-| --- | --- |
-| [Options](Options/Options.md)(…) |  |
-| virtual [EqualityContract](Options/EqualityContract.md) { get; } |  |
-| virtual [PrintMembers](Options/PrintMembers.md)(…) |  |
 
 ## See Also
 

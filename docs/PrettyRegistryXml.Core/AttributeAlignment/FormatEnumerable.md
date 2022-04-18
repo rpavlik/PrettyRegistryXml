@@ -1,6 +1,6 @@
 # AttributeAlignment.FormatEnumerable method
 
-Format a collection of AttributeAlignment values as a string.
+Format a collection of [`AttributeAlignment`](../AttributeAlignment.md) values as a string.
 
 ```csharp
 public static string FormatEnumerable(IEnumerable<AttributeAlignment> alignments)
@@ -8,7 +8,7 @@ public static string FormatEnumerable(IEnumerable<AttributeAlignment> alignments
 
 | parameter | description |
 | --- | --- |
-| alignments | A collection of AttributeAlignment values |
+| alignments | A collection of [`AttributeAlignment`](../AttributeAlignment.md) values |
 
 ## Return Value
 

@@ -1,6 +1,6 @@
 # IAttributeSequenceItemWidthComputer interface
 
-The state of an [`IAttributeSequenceItem`](IAttributeSequenceItem.md) while it is determining the alignment widths.
+The state of an [`IAttributeSequenceItem`](./IAttributeSequenceItem.md) while it is determining the alignment widths.
 
 ```csharp
 public interface IAttributeSequenceItemWidthComputer
@@ -10,7 +10,7 @@ public interface IAttributeSequenceItemWidthComputer
 
 | name | description |
 | --- | --- |
-| [Finish](IAttributeSequenceItemWidthComputer/Finish.md)() | Call when all done calling [`TakeAndHandleAttributes`](IAttributeSequenceItemWidthComputer/TakeAndHandleAttributes.md) to get what you need to actually perform alignment. |
+| [Finish](IAttributeSequenceItemWidthComputer/Finish.md)() | Call when all done calling [`TakeAndHandleAttributes`](./IAttributeSequenceItemWidthComputer/TakeAndHandleAttributes.md) to get what you need to actually perform alignment. |
 | [TakeAndHandleAttributes](IAttributeSequenceItemWidthComputer/TakeAndHandleAttributes.md)(…) | Process what we can of one element's attributes, and remove them from consideration. |
 
 ## See Also

@@ -1,6 +1,6 @@
 # AttributeAlignmentExtensions class
 
-Extensions for an enumerable of [`AttributeAlignment`](AttributeAlignment.md) objects.
+Extensions for an enumerable of [`AttributeAlignment`](./AttributeAlignment.md) objects.
 
 ```csharp
 public static class AttributeAlignmentExtensions

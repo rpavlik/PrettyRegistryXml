@@ -11,7 +11,7 @@ public static class FormatterUtilities
 | name | description |
 | --- | --- |
 | static [MakeSpaces](FormatterUtilities/MakeSpaces.md)(…) | Generate strings of spaces of any width. |
-| static [RegenerateIndentation](FormatterUtilities/RegenerateIndentation.md)(…) | A useful implementation for [`CleanWhitespaceNode`](XmlFormatterBase/CleanWhitespaceNode.md) that replaces any whitespace-only text node that contains a newline, with an equivalent text node with the same number of newlines and the "correct" indentation. |
+| static [RegenerateIndentation](FormatterUtilities/RegenerateIndentation.md)(…) | A useful implementation for [`CleanWhitespaceNode`](./XmlFormatterBase/CleanWhitespaceNode.md) that replaces any whitespace-only text node that contains a newline, with an equivalent text node with the same number of newlines and the "correct" indentation. |
 
 ## See Also
 

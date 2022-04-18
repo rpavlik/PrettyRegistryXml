@@ -15,7 +15,7 @@ public class UnalignedTrailer : AttributeSequenceTrailerBase
 
 ## See Also
 
-* class [AttributeSequenceTrailerBase](AttributeSequenceTrailerBase.md)
+* class [AttributeSequenceTrailerBase](./AttributeSequenceTrailerBase.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../PrettyRegistryXml.GroupedAlignment.md)
 * [UnalignedTrailer.cs](../../src/PrettyRegistryXml.GroupedAlignment/UnalignedTrailer.cs)
 

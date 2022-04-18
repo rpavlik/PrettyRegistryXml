@@ -23,12 +23,12 @@ public struct AttributeAlignment
 | [AppendAttributePadding](AttributeAlignment/AppendAttributePadding.md)(…) | Append padding to a StringBuilder as appropriate for an attribute. |
 | override [ToString](AttributeAlignment/ToString.md)() | Format as a string. |
 | static [FindAttributeAlignments](AttributeAlignment/FindAttributeAlignments.md)(…) | Compute an array of AttributeAlignment for a collection of elements. |
-| static [FormatEnumerable](AttributeAlignment/FormatEnumerable.md)(…) | Format a collection of AttributeAlignment values as a string. |
+| static [FormatEnumerable](AttributeAlignment/FormatEnumerable.md)(…) | Format a collection of [`AttributeAlignment`](./AttributeAlignment.md) values as a string. |
 | static [GetAttributeAlignLength](AttributeAlignment/GetAttributeAlignLength.md)(…) | Gets the width of an attribute. |
 
 ## Remarks
 
-Typically created in an array by [`FindAttributeAlignments`](AttributeAlignment/FindAttributeAlignments.md)
+Typically created in an array by [`FindAttributeAlignments`](./AttributeAlignment/FindAttributeAlignments.md)
 
 ## See Also
 

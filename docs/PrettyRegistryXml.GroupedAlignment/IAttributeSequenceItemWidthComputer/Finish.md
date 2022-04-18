@@ -1,6 +1,6 @@
 # IAttributeSequenceItemWidthComputer.Finish method
 
-Call when all done calling [`TakeAndHandleAttributes`](TakeAndHandleAttributes.md) to get what you need to actually perform alignment.
+Call when all done calling [`TakeAndHandleAttributes`](./TakeAndHandleAttributes.md) to get what you need to actually perform alignment.
 
 ```csharp
 public IAttributeSequenceItemAligner Finish()

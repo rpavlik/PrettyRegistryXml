@@ -16,7 +16,7 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 
 ## Remarks
 
-This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md).
+This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](./WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](./WriteElementWithAlignedChildAttrsInMultipleGroups.md).
 
 ## See Also
 
@@ -45,7 +45,7 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 
 ## Remarks
 
-This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md)
+This overload of "WriteElementWithAlignedChildAttrsInGroups" forwards to [`WriteElementWithAlignedChildAttrsInGroups`](./WriteElementWithAlignedChildAttrsInGroups.md), which is the most generic of this collection. If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](./WriteElementWithAlignedChildAttrsInMultipleGroups.md)
 
 ## See Also
 
@@ -75,7 +75,7 @@ protected void WriteElementWithAlignedChildAttrsInGroups(XmlWriter writer, XElem
 
 ## Remarks
 
-If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](WriteElementWithAlignedChildAttrsInMultipleGroups.md)
+If you want more than one group, each with its own alignment, use [`WriteElementWithAlignedChildAttrsInMultipleGroups`](./WriteElementWithAlignedChildAttrsInMultipleGroups.md)
 
 ## See Also
 

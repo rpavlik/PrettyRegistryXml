@@ -1,6 +1,6 @@
 # ElementAlignment.FindElementAlignment method
 
-Compute an ElementAlignment for a collection of elements.
+Compute an [`ElementAlignment`](../ElementAlignment.md) for a collection of elements.
 
 ```csharp
 public static ElementAlignment FindElementAlignment(IEnumerable<XElement> elements, 

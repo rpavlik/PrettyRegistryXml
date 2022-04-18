@@ -11,11 +11,11 @@ public class SimpleAlignment : IAlignmentFinder
 | name | description |
 | --- | --- |
 | [SimpleAlignment](SimpleAlignment/SimpleAlignment.md)(…) |  |
-| [FindAlignment](SimpleAlignment/FindAlignment.md)(…) | Find the simple alignment, delegating to [`FindElementAlignment`](ElementAlignment/FindElementAlignment.md) |
+| [FindAlignment](SimpleAlignment/FindAlignment.md)(…) | Find the simple alignment, delegating to [`FindElementAlignment`](./ElementAlignment/FindElementAlignment.md) |
 
 ## See Also
 
-* interface [IAlignmentFinder](IAlignmentFinder.md)
+* interface [IAlignmentFinder](./IAlignmentFinder.md)
 * namespace [PrettyRegistryXml.Core](../PrettyRegistryXml.Core.md)
 * [SimpleAlignment.cs](../../src/PrettyRegistryXml.Core/SimpleAlignment.cs)
 

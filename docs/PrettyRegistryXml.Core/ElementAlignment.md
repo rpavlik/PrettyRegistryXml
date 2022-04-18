@@ -10,7 +10,7 @@ public struct ElementAlignment
 
 | name | description |
 | --- | --- |
-| static [FindElementAlignment](ElementAlignment/FindElementAlignment.md)(…) | Compute an ElementAlignment for a collection of elements. |
+| static [FindElementAlignment](ElementAlignment/FindElementAlignment.md)(…) | Compute an [`ElementAlignment`](./ElementAlignment.md) for a collection of elements. |
 | [AttributeAlignments](ElementAlignment/AttributeAlignments.md) { get; set; } | An array of alignments for attributes. |
 | [NameAlignment](ElementAlignment/NameAlignment.md) { get; set; } | Alignment for the element name |
 | [AppendElementNamePadding](ElementAlignment/AppendElementNamePadding.md)(…) | Append padding to a StringBuilder as appropriate for an element name. |
@@ -21,7 +21,7 @@ public struct ElementAlignment
 
 ## Remarks
 
-Typically created with [`FindElementAlignment`](ElementAlignment/FindElementAlignment.md). Wraps an integer for element name alignment, and an array of [`AttributeAlignment`](AttributeAlignment.md)
+Typically created with [`FindElementAlignment`](./ElementAlignment/FindElementAlignment.md). Wraps an integer for element name alignment, and an array of [`AttributeAlignment`](./AttributeAlignment.md)
 
 ## See Also
 

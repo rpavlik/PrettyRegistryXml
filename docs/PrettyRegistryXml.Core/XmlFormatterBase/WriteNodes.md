@@ -13,7 +13,7 @@ protected void WriteNodes(XmlWriter writer, IEnumerable<XNode> nodes)
 
 ## Remarks
 
-For XElement nodes, [`WriteElement`](WriteElement.md) will be called to recursively apply your custom formatting policy.
+For XElement nodes, [`WriteElement`](./WriteElement.md) will be called to recursively apply your custom formatting policy.
 
 ## See Also
 
