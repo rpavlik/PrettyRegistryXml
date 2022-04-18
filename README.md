@@ -18,11 +18,11 @@ point.
 
 ## Building and Running
 
-This uses the [.NET 5.0 SDK][dotnet5] (formerly known as .NET Core - the
+This uses the [.NET 6.0 SDK][dotnet6] (formerly known as .NET Core - the
 cross-platform open source one) SDK to build. That link has instructions to
 download and install it.
 
-Releases include binaries which only require the .NET 5.0 runtime, not the SDK,
+Releases include binaries which only require the .NET 6.0 runtime, not the SDK,
 and can be invoked just like any other command -- no need for the `dotnet`
 commands below. Running either the OpenXR or Vulkan tools with no arguments will
 show you help text.
@@ -62,7 +62,7 @@ dotnet run --project src/PrettyRegistryXml.Vulkan/PrettyRegistryXml.Vulkan.cspro
 
 By default, with no arguments you'll see help/usage.
 
-[dotnet5]: https://dotnet.microsoft.com/download/dotnet/5.0
+[dotnet5]: https://dotnet.microsoft.com/download/dotnet/6.0
 
 ## API Docs
 

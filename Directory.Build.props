@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!--
-    Copyright 2021 Collabora, Ltd
+    Copyright 2021-2022 Collabora, Ltd
 
     SPDX-License-Identifier: MIT
     -->
@@ -9,11 +9,11 @@
     <!-- our meta-data details -->
     <PropertyGroup>
         <!-- this is a must-match value - only the major should be changed. -->
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-        <Version>2.3.0.0</Version>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <Version>3.0.0.0</Version>
         <Company>Collabora, Ltd.</Company>
         <!-- augment this with license data in individual projects -->
-        <Copyright>Copyright 2021, $(Company)</Copyright>
+        <Copyright>Copyright 2021-2022, $(Company)</Copyright>
 
         <!-- augment this here or in individual projects as appropriate -->
         <Authors>Ryan Pavlik (Collabora, Ltd.)</Authors>
@@ -21,7 +21,7 @@
 
     <!-- build config -->
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>PrettyRegistryXml</RootNamespace>
     </PropertyGroup>
 

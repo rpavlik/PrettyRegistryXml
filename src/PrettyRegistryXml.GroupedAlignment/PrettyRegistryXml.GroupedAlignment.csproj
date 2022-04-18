@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
-    Copyright 2021 Collabora, Ltd
+    Copyright 2021-2022, Collabora, Ltd
 
     SPDX-License-Identifier: MIT
   -->
@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
     <!-- only need to add license info in this file - the copyright notice is centralized -->
     <Copyright>$(Copyright) - Published under MIT, with dependencies under Apache-2.0.</Copyright>
   </PropertyGroup>
