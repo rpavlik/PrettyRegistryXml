@@ -140,14 +140,6 @@ namespace PrettyRegistryXml.Vulkan
                                                             new AttributeGroup("bitpos", "extends")));
 
         /// <summary>
-        /// Our alignment for attributes in enums.
-        /// </summary>
-        private readonly IAlignmentFinder enumAlignment
-            = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("type", "value"),
-                                                            new AttributeGroup("bitpos")),
-                                            new AttributeGroup("name", "alias", "comment"));
-
-        /// <summary>
         /// Our alignment for attributes in type elements.
         /// </summary>
         private readonly IAlignmentFinder typeAlignment
