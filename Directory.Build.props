@@ -17,6 +17,8 @@
 
         <!-- augment this here or in individual projects as appropriate -->
         <Authors>Ryan Pavlik (Collabora, Ltd.)</Authors>
+
+        <AnalysisMode>Recommended</AnalysisMode>
     </PropertyGroup>
 
     <!-- build config -->
@@ -42,4 +44,3 @@
         <CommandLineParserVersion>2.9.0-preview1</CommandLineParserVersion>
     </PropertyGroup>
 </Project>
- 

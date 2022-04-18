@@ -5,9 +5,8 @@
 #nullable enable
 
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
-using PrettyRegistryXml.Core;
 using static MoreLinq.Extensions.PartitionExtension;
 
 namespace PrettyRegistryXml.GroupedAlignment
@@ -43,7 +42,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Convert to string
         /// </summary>
         /// <returns>Representation mostly for debugging</returns>
-        public override string? ToString() => string.Format("AttributeGroup( {0} )",
+        public override string? ToString() => string.Format(CultureInfo.InvariantCulture,
+                                                            "AttributeGroup( {0} )",
                                                             string.Join(", ", from name in AttributeNames
                                                                               select $"\"{name}\""));
 

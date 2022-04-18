@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using PrettyRegistryXml.Core;
@@ -96,7 +97,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// Convert to string
         /// </summary>
         /// <returns>Representation mostly for debugging</returns>
-        public override string? ToString() => string.Format("GroupedAttributeAlignment( {0} )",
+        public override string? ToString() => string.Format(CultureInfo.InvariantCulture,
+                                                            "GroupedAttributeAlignment( {0} )",
                                                             string.Join(", ",
                                                                         from sequenceItem in attributeSequenceItems
                                                                         select sequenceItem.ToString()));
