@@ -58,8 +58,6 @@ namespace PrettyRegistryXml.GroupedAlignment
             }
         }
 
-
-
         /// <summary>
         /// Find the alignment state for a collection of elements.
         /// </summary>

@@ -4,7 +4,6 @@
 
 #nullable enable
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using PrettyRegistryXml.Core;
 using static MoreLinq.Extensions.PartitionExtension;
