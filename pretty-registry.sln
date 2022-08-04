@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Core", "src\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.Core", "src\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj", "{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR", "src\PrettyRegistryXml.OpenXR\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.OpenXR", "src\PrettyRegistryXml.OpenXR\PrettyRegistryXml.OpenXR.csproj", "{E6FF6520-ABF9-4AF8-8C37-6782C00ECB74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.OpenXR.Tests", "src\PrettyRegistryXml.OpenXR.Tests\PrettyRegistryXml.OpenXR.Tests.csproj", "{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.OpenXR.Tests", "src\PrettyRegistryXml.OpenXR.Tests\PrettyRegistryXml.OpenXR.Tests.csproj", "{6634D04E-F46F-4F41-9BD0-AF22EBD7845E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment", "src\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj", "{1CE2ED2A-13C6-4A07-A566-B6B7CFBC890F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.GroupedAlignment", "src\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj", "{1CE2ED2A-13C6-4A07-A566-B6B7CFBC890F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.GroupedAlignment.Tests", "src\PrettyRegistryXml.GroupedAlignment.Tests\PrettyRegistryXml.GroupedAlignment.Tests.csproj", "{746C0352-AF98-4E03-A3FB-9E019BDC893B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.GroupedAlignment.Tests", "src\PrettyRegistryXml.GroupedAlignment.Tests\PrettyRegistryXml.GroupedAlignment.Tests.csproj", "{746C0352-AF98-4E03-A3FB-9E019BDC893B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrettyRegistryXml.Vulkan", "src\PrettyRegistryXml.Vulkan\PrettyRegistryXml.Vulkan.csproj", "{D959DF7D-2322-4721-81B3-36AEE5CA2145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrettyRegistryXml.Vulkan", "src\PrettyRegistryXml.Vulkan\PrettyRegistryXml.Vulkan.csproj", "{D959DF7D-2322-4721-81B3-36AEE5CA2145}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6A49EE2E-FF61-4488-A850-EB189AD3E8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,5 +97,11 @@ Global
 		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x64.Build.0 = Release|Any CPU
 		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x86.ActiveCfg = Release|Any CPU
 		{D959DF7D-2322-4721-81B3-36AEE5CA2145}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4D3AE87-4F04-4539-A595-63EFC19BCE41}
 	EndGlobalSection
 EndGlobal
