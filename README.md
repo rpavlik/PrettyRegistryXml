@@ -114,4 +114,4 @@ Dependencies downloaded from NuGet include:
 - [CommandLineParser][]: MIT
 
 [MoreLINQ]: https://www.nuget.org/packages/morelinq/3.3.2
-[CommandLineParser]: https://www.nuget.org/packages/CommandLineParser/2.9.0-preview1
+[CommandLineParser]: https://www.nuget.org/packages/CommandLineParser/2.9.1
