@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: MIT
 
+using CommandLine;
 using System;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
-using CommandLine;
 
 namespace PrettyRegistryXml.Vulkan
 {

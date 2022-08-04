@@ -4,11 +4,11 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using System;
 
 namespace PrettyRegistryXml.Core
 {
@@ -93,8 +93,12 @@ namespace PrettyRegistryXml.Core
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
-            if (value < NO_ALIGN_SENTINEL) throw new ArgumentOutOfRangeException(paramName: nameof(value),
-                                                                                 "cannot be negative");
+            if (value < NO_ALIGN_SENTINEL)
+            {
+                throw new ArgumentOutOfRangeException(paramName: nameof(value),
+                                                      "cannot be negative");
+            }
+
             return value;
         }
 
@@ -165,7 +169,11 @@ namespace PrettyRegistryXml.Core
         /// <param name="stringBuilder">Where to append the spaces, if required.</param>
         public void AppendAttributePadding(XAttribute? attribute, StringBuilder stringBuilder)
         {
-            if (!ShouldAlign) return;
+            if (!ShouldAlign)
+            {
+                return;
+            }
+
             if (attribute == null)
             {
                 // Substituting for a full attribute

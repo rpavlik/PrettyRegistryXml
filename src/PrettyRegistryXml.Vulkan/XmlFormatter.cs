@@ -7,10 +7,8 @@
 using PrettyRegistryXml.Core;
 using PrettyRegistryXml.GroupedAlignment;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using System.Xml;
-using System;
+using System.Xml.Linq;
 
 
 namespace PrettyRegistryXml.Vulkan
@@ -74,7 +72,10 @@ namespace PrettyRegistryXml.Vulkan
         private static bool ChildrenShouldBeSingleLine(XElement e)
         {
             // some containers should always have their children on a single line.
-            if (singleLineContainers.Contains(e.Name.LocalName)) return true;
+            if (singleLineContainers.Contains(e.Name.LocalName))
+            {
+                return true;
+            }
 
             // some elements should only have their children on a single line when they're a specific usage:
             // lots of elts named "type" but they aren't all the same.
@@ -113,11 +114,12 @@ namespace PrettyRegistryXml.Vulkan
             {
                 return 1;
             }
-            else if (node is XText text && string.IsNullOrWhiteSpace(text.Value))
+
+            if (node is XText text && string.IsNullOrWhiteSpace(text.Value))
             {
-                if (node.NextNode != null)
+                if (node.NextNode != null && IsNodeIndentableComment(node.NextNode))
                 {
-                    if (IsNodeIndentableComment(node.NextNode)) return 1;
+                    return 1;
                 }
             }
             return 0;
@@ -203,24 +205,28 @@ namespace PrettyRegistryXml.Vulkan
                                                                   alignmentFinder: typeAlignment,
                                                                   alignmentPredicate: (XElement element) =>
                                                                   {
-                                                                      if (element.Name == "type")
+                                                                      if (element.Name != "type")
                                                                       {
-                                                                          var cat = element.Attribute("category");
-                                                                          if (cat == null) return false;
-                                                                          var catName = cat.Value;
-                                                                          if (catName == "struct" && element.Attribute("alias") is not null)
-                                                                          {
-                                                                              // We can align these.
-                                                                              return true;
-                                                                          }
-                                                                          // These categories look weird when aligned, so don't align them.
-                                                                          return catName is not "define"
-                                                                                 and not "funcpointer"
-                                                                                 and not "struct"
-                                                                                 and not "union"
-                                                                                 and not "include";
+                                                                          return false;
                                                                       }
-                                                                      return false;
+                                                                      var cat = element.Attribute("category");
+                                                                      if (cat == null)
+                                                                      {
+                                                                          return false;
+                                                                      }
+
+                                                                      var catName = cat.Value;
+                                                                      if (catName == "struct" && element.Attribute("alias") is not null)
+                                                                      {
+                                                                          // We can align these.
+                                                                          return true;
+                                                                      }
+                                                                      // These categories look weird when aligned, so don't align them.
+                                                                      return catName is not "define"
+                                                                                    and not "funcpointer"
+                                                                                    and not "struct"
+                                                                                    and not "union"
+                                                                                    and not "include";
                                                                   },
                                                                   groupingFunc: element => element.Attribute("category")?.Value);
             }

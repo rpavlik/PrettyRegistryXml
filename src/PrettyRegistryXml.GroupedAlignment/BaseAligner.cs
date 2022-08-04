@@ -3,19 +3,19 @@
 // SPDX-License-Identifier: MIT
 
 #nullable enable
+using PrettyRegistryXml.Core;
 using System.Collections.Generic;
 using System.Linq;
-using PrettyRegistryXml.Core;
 using static MoreLinq.Extensions.PartitionExtension;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {
     internal class BaseAligner : IAttributeSequenceItemAligner
     {
-        public readonly Core.AttributeAlignment[] alignments;
+        public readonly AttributeAlignment[] alignments;
         private readonly HashSet<string> knownNames;
 
-        public BaseAligner(Core.AttributeAlignment[] alignments)
+        public BaseAligner(AttributeAlignment[] alignments)
         {
             this.alignments = alignments;
             knownNames = (from align in alignments

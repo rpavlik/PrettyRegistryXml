@@ -4,10 +4,10 @@
 
 #nullable enable
 
-using static PrettyRegistryXml.Core.AttributeAlignmentExtensions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using static PrettyRegistryXml.Core.AttributeAlignmentExtensions;
 
 
 namespace PrettyRegistryXml.GroupedAlignment

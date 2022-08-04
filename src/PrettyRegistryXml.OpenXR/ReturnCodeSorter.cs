@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using System.Collections.Generic;
 using PrettyRegistryXml.Core;
+using System.Collections.Generic;
 
 namespace PrettyRegistryXml.OpenXR
 {

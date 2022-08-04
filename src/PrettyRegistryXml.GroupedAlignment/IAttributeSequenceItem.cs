@@ -3,11 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 #nullable enable
-using System.Linq;
+using PrettyRegistryXml.Core;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Xml.Linq;
-using PrettyRegistryXml.Core;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {

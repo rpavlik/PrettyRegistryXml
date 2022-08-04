@@ -8,8 +8,8 @@ using PrettyRegistryXml.Core;
 using PrettyRegistryXml.GroupedAlignment;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 
 namespace PrettyRegistryXml.OpenXR
@@ -74,7 +74,10 @@ namespace PrettyRegistryXml.OpenXR
         private static bool ChildrenShouldBeSingleLine(XElement e)
         {
             // some containers should always have their children on a single line.
-            if (singleLineContainers.Contains(e.Name.LocalName)) return true;
+            if (singleLineContainers.Contains(e.Name.LocalName))
+            {
+                return true;
+            }
 
             // some elements should only have their children on a single line when they're a specific usage:
             // lots of elts named "type" but they aren't all the same.
