@@ -56,16 +56,13 @@ namespace PrettyRegistryXml.Core
         /// <returns>A string of size <paramref name="width"/> of only spaces</returns>
         public static string MakeSpaces(int width)
         {
-            if (width < 0)
+            return width switch
             {
-                throw new ArgumentOutOfRangeException(paramName: nameof(width),
-                                                      "Cannot make negative spaces");
-            }
-            if (width == 0)
-            {
-                return string.Empty;
-            }
-            return "".PadRight(width);
+                < 0 => throw new ArgumentOutOfRangeException(paramName: nameof(width),
+                                                             "Cannot make negative spaces"),
+                0 => string.Empty,
+                _ => "".PadRight(width),
+            };
         }
     }
 }

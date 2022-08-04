@@ -79,7 +79,6 @@ namespace PrettyRegistryXml.GroupedAlignment
                         }
                         else
                         {
-
                             alignments = ourAlignments;
                         }
                         return true;

@@ -6,7 +6,7 @@
   -->
 
   <PropertyGroup>
-    <RootNamespace>PrettyRegistryXml.OpenXR.Tests</RootNamespace>
+    <RootNamespace>PrettyRegistryXml.GroupedAlignment.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

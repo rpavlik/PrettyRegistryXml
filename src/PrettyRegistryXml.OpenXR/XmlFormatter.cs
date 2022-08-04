@@ -108,11 +108,7 @@ namespace PrettyRegistryXml.OpenXR
             var extensionsInAncestors = (from el in node.Ancestors()
                                          where el.Name == "extensions"
                                          select el).Any();
-            if (extensionsInAncestors)
-            {
-                return -1;
-            }
-            return 0;
+            return extensionsInAncestors ? -1 : 0;
         }
 
         /// <summary>
