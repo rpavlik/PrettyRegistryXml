@@ -5,6 +5,7 @@
 | public type | description |
 | --- | --- |
 | record [Options](./PrettyRegistryXml.OpenXR/Options.md) |  |
+| class [Program](./PrettyRegistryXml.OpenXR/Program.md) | The main entry point class for the OpenXR registry formatter |
 | class [ReturnCodeSorter](./PrettyRegistryXml.OpenXR/ReturnCodeSorter.md) | A utility class for OpenXR's policy for sorting return codes. |
 | class [XmlFormatter](./PrettyRegistryXml.OpenXR/XmlFormatter.md) | OpenXR-specific policy for formatting XML. |
 
