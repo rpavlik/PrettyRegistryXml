@@ -4,20 +4,19 @@
 
 #nullable enable
 
+using PrettyRegistryXml.Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.Xml.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
-using System;
+using System.Xml.Linq;
 using static MoreLinq.Extensions.GroupAdjacentExtension;
 
 
 namespace PrettyRegistryXml.Core
 {
-    using Extensions;
-
     /// <summary>
     /// The base of your project-specific formatting class.
     /// </summary>
@@ -88,7 +87,7 @@ namespace PrettyRegistryXml.Core
             var settings = new XmlWriterSettings()
             {
                 Indent = true,
-                IndentChars = this.IndentChars,
+                IndentChars = IndentChars,
                 Encoding = Encoding.UTF8,
                 OmitXmlDeclaration = true,
 
@@ -247,7 +246,7 @@ namespace PrettyRegistryXml.Core
         /// <remarks>
         /// Not static despite analyzer suggestions, so it can be overridden.
         /// </remarks>
-        /// <param name="writer">An XmlWriter in the correct state (has had <see cref="XmlFormatterBase.WriteStartElement(XmlWriter, XElement)"/> called)</param>
+        /// <param name="writer">An XmlWriter in the correct state (has had <see cref="WriteStartElement(XmlWriter, XElement)"/> called)</param>
         /// <param name="e">An element that may have attributes.</param>
         protected void WriteAttributes(XmlWriter writer, XElement e)
         {

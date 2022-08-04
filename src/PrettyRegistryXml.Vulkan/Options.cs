@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: MIT
 
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
 using CommandLine;
 using CommandLine.Text;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 // Disabling in this file because there's help text for each, lack of XML docs doesn't both me here.
 #pragma warning disable CS1591

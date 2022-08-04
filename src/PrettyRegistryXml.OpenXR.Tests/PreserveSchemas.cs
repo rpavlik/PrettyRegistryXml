@@ -4,12 +4,11 @@
 
 #nullable enable
 
-using System.Linq;
-using System.Collections.Generic;
-using Xunit;
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using Xunit;
 
 
 namespace PrettyRegistryXml.OpenXR.Tests
@@ -18,7 +17,7 @@ namespace PrettyRegistryXml.OpenXR.Tests
     {
         private static string GetTestFileDir()
         {
-            var assemblyPath = Uri.UnescapeDataString((new Uri(Assembly.GetExecutingAssembly().Location)).AbsolutePath);
+            var assemblyPath = Uri.UnescapeDataString(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath);
             return Path.Join(Path.GetDirectoryName(assemblyPath), "TestFiles");
         }
         private static string NormalizeText(string s)

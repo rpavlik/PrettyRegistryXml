@@ -4,10 +4,10 @@
 
 #nullable enable
 
-using System.Linq;
-using System.Collections.Generic;
-using Xunit;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace PrettyRegistryXml.OpenXR.Tests
 {

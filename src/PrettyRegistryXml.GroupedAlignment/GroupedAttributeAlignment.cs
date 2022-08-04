@@ -4,13 +4,13 @@
 
 #nullable enable
 
+using PrettyRegistryXml.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
-using PrettyRegistryXml.Core;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {

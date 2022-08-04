@@ -4,10 +4,10 @@
 
 #nullable enable
 
-using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace PrettyRegistryXml.Core
 {
@@ -75,7 +75,7 @@ namespace PrettyRegistryXml.Core
         /// <see cref="XmlFormatterBase.WriteElementWithAlignedChildAttrsInGroups(System.Xml.XmlWriter, XElement, IAlignmentFinder, Predicate{XElement}, Predicate{XNode})"/>
         /// </remarks>
         public static bool IsWhitespaceBetweenSelectedElements(XNode node,
-                                                               System.Predicate<XElement> elementPredicate)
+                                                               Predicate<XElement> elementPredicate)
                => NodeIsWhitespaceText(node)
                   && NeighboringNodesAreElementsMeetingPredicate(node, elementPredicate);
 

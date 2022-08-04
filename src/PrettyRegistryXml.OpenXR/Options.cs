@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
 using CommandLine;
 using CommandLine.Text;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
-// Disabling in this file because there's help text for each, lack of XML docs doesn't both me here.
+// Disabling in this file because there's help text for each, lack of XML docs doesn't bother me here.
 #pragma warning disable CS1591
 
 namespace PrettyRegistryXml.OpenXR
@@ -22,7 +22,7 @@ namespace PrettyRegistryXml.OpenXR
         public string OutputFile { get; init; }
 
         /// <summary>
-        /// This will be <see cref="Options.OutputFile"/>, if set, otherwise <see cref="Options.InputFile"/>
+        /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
         /// </summary>
         /// <value></value>
         public string ActualOutputFile
