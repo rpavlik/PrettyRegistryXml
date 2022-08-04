@@ -11,6 +11,8 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml;
 
+using static PrettyRegistryXml.GroupedAlignment.ConfigDslExtensions;
+
 
 namespace PrettyRegistryXml.OpenXR
 {
@@ -124,9 +126,9 @@ namespace PrettyRegistryXml.OpenXR
         /// Our slightly sophisticated way of grouping attributes for alignment in extensions.
         /// </summary>
         private readonly IAlignmentFinder extensionEnumAlignment
-            = new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
-                                                            new AttributeGroup("offset", "dir", "extends"),
-                                                            new AttributeGroup("bitpos", "extends")));
+            = new GroupedAttributeAlignment((GroupChoice)Column.Containing("value")
+                                                               .Or("offset", "dir", "extends")
+                                                               .Or("bitpos", "extends"));
 
         /// <summary>
         /// This is the recursive part that contains most of the "policy"
