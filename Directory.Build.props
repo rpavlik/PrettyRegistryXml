@@ -41,6 +41,14 @@
     <!-- dependency versions -->
     <PropertyGroup>
         <MoreLinqVersion>3.3.2</MoreLinqVersion>
-        <CommandLineParserVersion>2.9.0-preview1</CommandLineParserVersion>
+        <CommandLineParserVersion>2.9.1</CommandLineParserVersion>
+    </PropertyGroup>
+
+    <!-- test dependency versions -->
+    <PropertyGroup>
+        <XunitVersion>2.4.2</XunitVersion>
+        <XunitRunnerVSVersion>2.4.5</XunitRunnerVSVersion>
+        <TestSdkVersion>17.2.0</TestSdkVersion>
+        <CoverletCollectorVersion>1.3.0</CoverletCollectorVersion>
     </PropertyGroup>
 </Project>
