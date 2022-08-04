@@ -25,7 +25,8 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                                             new AttributeGroup("extends", "extnumber", "offset", "dir"),
                                             new AttributeGroup("bitpos", "extends")),
                             new AlignedTrailer());
-        public static object[] ExtensionEnums => new object[]{
+
+        public static IEnumerable<object[]> ExtensionEnums => new List<object[]>{
             // OpenXR data that got goofed up
             new object[]{
                 new XElement("require",
@@ -113,7 +114,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
 
         }
 
-        public static object[] PreviousFailures => new object[]{
+        public static IEnumerable<object[]> PreviousFailures => new List<object[]>{
         // Vulkan data that triggered a "duplicate attribute"
             new object[]{
                 new XElement("require",
