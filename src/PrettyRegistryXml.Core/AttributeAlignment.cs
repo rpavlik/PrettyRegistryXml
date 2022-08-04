@@ -69,12 +69,7 @@ namespace PrettyRegistryXml.Core
                 {
                     throw new InvalidOperationException("Makes no sense to access FullWidth when we should not align this attribute");
                 };
-                if (IsPaddingOnly)
-                {
-                    return AlignWidth;
-                }
-
-                return AlignWidth + 1;
+                return AlignWidth + (IsPaddingOnly ? 0 : 1);
             }
         }
 
@@ -93,13 +88,10 @@ namespace PrettyRegistryXml.Core
         /// <returns><paramref name="value" /></returns>
         private static int CheckPossibleWidth(int value)
         {
-            if (value < NO_ALIGN_SENTINEL)
-            {
-                throw new ArgumentOutOfRangeException(paramName: nameof(value),
-                                                      "cannot be negative");
-            }
-
-            return value;
+            return value < NO_ALIGN_SENTINEL
+                ? throw new ArgumentOutOfRangeException(paramName: nameof(value),
+                                                      "cannot be negative")
+                : value;
         }
 
         #endregion

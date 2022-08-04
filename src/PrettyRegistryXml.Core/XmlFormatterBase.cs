@@ -61,11 +61,7 @@ namespace PrettyRegistryXml.Core
 
         private static bool IsWhitespace(XNode node)
         {
-            if (node is XText text)
-            {
-                return string.IsNullOrWhiteSpace(text.Value);
-            }
-            return false;
+            return node is XText text && string.IsNullOrWhiteSpace(text.Value);
         }
 
         /// <summary>
