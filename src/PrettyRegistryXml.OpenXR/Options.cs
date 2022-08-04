@@ -33,7 +33,7 @@ namespace PrettyRegistryXml.OpenXR
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
         public bool WrapExtensions { get; init; }
 
-        [Option("sort-codes", Default = false, HelpText = "Whether to sort success and error codes.")]
+        [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
         public bool SortCodes { get; init; }
 
         // Automatically used by CommandLineParser for help.
