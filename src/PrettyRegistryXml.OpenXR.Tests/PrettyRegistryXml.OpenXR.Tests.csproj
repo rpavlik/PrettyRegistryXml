@@ -23,6 +23,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <!-- copy sample data for tests to use -->
+  <ItemGroup>
+    <None Include="TestFiles\**" CopyToOutputDirectory="PreserveNewest" LinkBase="TestFiles\" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\PrettyRegistryXml.OpenXR\PrettyRegistryXml.OpenXR.csproj" />
     <ProjectReference Include="..\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj" />

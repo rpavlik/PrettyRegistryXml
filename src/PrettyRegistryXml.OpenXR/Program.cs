@@ -11,10 +11,10 @@ using CommandLine;
 namespace PrettyRegistryXml.OpenXR
 {
 
-    class Program
+    public class Program
     {
 
-        static void Run(Options options)
+        public static void Run(Options options)
         {
             Console.WriteLine("Configuration:");
             Console.WriteLine(options.ToString());
