@@ -2,36 +2,39 @@
 //
 // SPDX-License-Identifier: MIT
 
+using CommandLine;
+using PrettyRegistryXml.Core;
 using System;
 using System.IO;
-using System.Text;
 using System.Xml.Linq;
-using CommandLine;
 
 namespace PrettyRegistryXml.OpenXR
 {
-
+    /// <summary>
+    /// The main entry point class for the OpenXR registry formatter
+    /// </summary>
     public class Program
     {
 
+        /// <summary>
+        /// The inner method used to do the formatting once we have the options parsed.
+        /// </summary>
+        /// <param name="options"></param>
         public static void Run(Options options)
         {
             Console.WriteLine("Configuration:");
             Console.WriteLine(options.ToString());
             Console.WriteLine($"Reading registry from {options.InputFile}");
-            XDocument document;
-            using (var reader = new StreamReader(options.InputFile))
-            {
-                document = XDocument.Load(reader, LoadOptions.PreserveWhitespace);
-            }
+
+            var roundtripper = XmlRoundtripper.ParseAndLoad(options.InputFile, out XDocument document);
 
             Console.WriteLine("Processing with formatter");
             var formatter = new XmlFormatter(options);
             var result = formatter.Process(document);
 
             Console.WriteLine($"Writing processed registry to {options.ActualOutputFile}");
-            using var writer = new StreamWriter(options.ActualOutputFile, false, Encoding.UTF8);
-            writer.WriteLine(result);
+            using var outStream = new FileStream(options.ActualOutputFile, FileMode.Create, FileAccess.Write);
+            roundtripper.Write(result, outStream);
         }
 
         static void Main(string[] args)
