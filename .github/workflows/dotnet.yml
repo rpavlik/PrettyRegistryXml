@@ -42,7 +42,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal
 
       - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v1.1
+        uses: fsfe/reuse-action@v1
 
       # On main, let's build at least single-platform binaries.
       - name: Build artifacts
