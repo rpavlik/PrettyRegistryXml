@@ -33,7 +33,10 @@ namespace PrettyRegistryXml.Vulkan
 
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
+            new Parser(with =>
+             {
+                 with.GetoptMode = true;
+             }).ParseArguments<Options>(args)
                           .WithParsed(Run);
         }
     }
