@@ -10,6 +10,7 @@ public record Options
 | --- | --- |
 | [Options](Options/Options.md)() | The default constructor. |
 | [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](./Options/OutputFile.md), if set, otherwise [`InputFile`](./Options/InputFile.md) |
+| [DeindentExtensions](Options/DeindentExtensions.md) { get; set; } |  |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
 | [SortCodes](Options/SortCodes.md) { get; set; } |  |
