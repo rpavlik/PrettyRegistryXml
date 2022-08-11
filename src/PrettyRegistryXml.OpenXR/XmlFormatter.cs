@@ -35,6 +35,11 @@ namespace PrettyRegistryXml.OpenXR
         /// </summary>
         private bool SortReturnVals { get; init; }
 
+        /// <summary>
+        /// Whether to artificially de-indent extensions by one level - legacy behavior, on by default.
+        /// </summary>
+        private bool DeindentExtensions { get; init; }
+
         private readonly ReturnCodeSorter CodeSorter = new();
 
         /// <summary>
@@ -45,6 +50,7 @@ namespace PrettyRegistryXml.OpenXR
         {
             WrapExtensions = options.WrapExtensions;
             SortReturnVals = options.SortCodes;
+            DeindentExtensions = options.DeindentExtensions;
         }
 
         /// <summary>
@@ -105,6 +111,10 @@ namespace PrettyRegistryXml.OpenXR
         /// <inheritdoc />
         public override int ComputeLevelAdjust(XNode node)
         {
+            if (!DeindentExtensions)
+            {
+                return 0;
+            }
             var extensionsInAncestors = (from el in node.Ancestors()
                                          where el.Name == "extensions"
                                          select el).Any();

@@ -36,6 +36,9 @@ namespace PrettyRegistryXml.OpenXR
         [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
         public bool SortCodes { get; init; }
 
+        [Option("deindent-extensions", Default = true, HelpText = "Whether to artificially de-indent extensions by one level.")]
+        public bool DeindentExtensions { get; init; }
+
         // Automatically used by CommandLineParser for help.
 
         [Usage(ApplicationAlias = "PrettyRegistryXml.OpenXR")]
@@ -61,6 +64,7 @@ namespace PrettyRegistryXml.OpenXR
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- De-indent extensions: {DeindentExtensions}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Sort return codes: {SortCodes}");
             return sb.ToString();
         }
