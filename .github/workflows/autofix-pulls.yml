@@ -1,0 +1,73 @@
+# Copyright 2021-2022 Collabora, Ltd
+#
+# SPDX-License-Identifier: MIT
+
+name: Auto-fix pull requests
+
+# Controls when the action will run.
+on:
+  pull_request:
+    paths-ignore:
+      - docs/**
+      - .github/**
+    branches: [main]
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+          dotnet tool restore
+      - name: Setup git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      # Format code
+      - name: Format code
+        run: dotnet format
+      - name: Commit formatted code if applicable
+        run: |
+          git add -u
+          if ! git diff HEAD --quiet; then
+            echo "::notice title=Formatted::dotnet format applied changes"
+            echo "xmldocmd applied changes, which were committed." >> $GITHUB_STEP_SUMMARY
+            git commit -m "Automatic dotnet format"
+          fi
+
+      # Docs
+      - name: Build and publish locally
+        run: dotnet publish -c Release -o out --no-restore
+      - name: Build docs
+        shell: pwsh
+        run: |
+          $assemblies = Get-ChildItem out -Filter "PrettyRegistryXml.*.dll"
+          foreach ($assembly in $assemblies) {
+            $assemblyName = $assembly.BaseName
+            dotnet tool run xmldocmd (Resolve-Path -Relative $assembly) docs --source ../src/$assemblyName --clean
+          }
+      - name: Commit docs if applicable
+        run: |
+          git add docs
+          if ! git diff HEAD --quiet; then
+            echo "::notice title=Docs updated::xmldocmd applied changes"
+            echo "xmldocmd applied changes, which were committed." >> $GITHUB_STEP_SUMMARY
+            git commit -m "Automatic docs update"
+          fi
+
+      # Push
+      - name: Push changes
+        run: git push
