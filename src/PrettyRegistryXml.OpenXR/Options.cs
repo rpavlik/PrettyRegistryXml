@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2023 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -33,6 +33,12 @@ namespace PrettyRegistryXml.OpenXR
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
         public bool WrapExtensions { get; init; }
 
+        [Option("trim-attributes", Default = true, HelpText = "Whether to trim the values of attributes.")]
+        public bool TrimAttributes { get; init; }
+
+        [Option("normalize-attribute-spaces", Default = true, HelpText = "Whether to normalize spaces in the values of attributes.")]
+        public bool NormalizeAttributeSpaces { get; init; }
+
         [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
         public bool SortCodes { get; init; }
 
@@ -64,6 +70,8 @@ namespace PrettyRegistryXml.OpenXR
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Trim attribute values: {TrimAttributes}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Normalize spaces in attribute values: {NormalizeAttributeSpaces}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- De-indent extensions: {DeindentExtensions}");
             sb.AppendLine(CultureInfo.InvariantCulture, $"- Sort return codes: {SortCodes}");
             return sb.ToString();

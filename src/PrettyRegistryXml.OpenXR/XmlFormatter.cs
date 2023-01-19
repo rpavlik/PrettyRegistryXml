@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2023 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -31,6 +31,16 @@ namespace PrettyRegistryXml.OpenXR
         private bool WrapExtensions { get; init; }
 
         /// <summary>
+        /// Whether we should trim the values of attributes, a runtime preference set by the command line, on by default.
+        /// </summary>
+        private bool TrimAttributes { get; init; }
+
+        /// <summary>
+        /// Whether we should normalize spaces in the values of attributes, a runtime preference set by the command line, on by default.
+        /// </summary>
+        private bool NormalizeAttributeSpaces { get; init; }
+
+        /// <summary>
         /// Whether we should sort the return values, a runtime preference set by the command line, on by default.
         /// </summary>
         private bool SortReturnVals { get; init; }
@@ -49,6 +59,8 @@ namespace PrettyRegistryXml.OpenXR
         public XmlFormatter(Options options)
         {
             WrapExtensions = options.WrapExtensions;
+            TrimAttributes = options.TrimAttributes;
+            NormalizeAttributeSpaces = options.NormalizeAttributeSpaces;
             SortReturnVals = options.SortCodes;
             DeindentExtensions = options.DeindentExtensions;
         }
