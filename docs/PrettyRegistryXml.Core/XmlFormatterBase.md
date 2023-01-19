@@ -25,7 +25,7 @@ public abstract class XmlFormatterBase
 | [XmlFormatterBase](XmlFormatterBase/XmlFormatterBase.md)() | The default constructor. |
 | virtual [CleanWhitespaceNode](XmlFormatterBase/CleanWhitespaceNode.md)(…) | Allows use of a modified version of a whitespace-only node. |
 | virtual [PreserveWhitespace](XmlFormatterBase/PreserveWhitespace.md)(…) | Whether this whitespace node should be preserved. Can be overridden |
-| [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
+| virtual [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
 | virtual [WriteElement](XmlFormatterBase/WriteElement.md)(…) | The main recursive function. |
 | [WriteElementWithAlignedChildAttrs](XmlFormatterBase/WriteElementWithAlignedChildAttrs.md)(…) | Write an element, and write its children aligning attributes across all of them. |
 | [WriteElementWithAlignedChildAttrsInGroups](XmlFormatterBase/WriteElementWithAlignedChildAttrsInGroups.md)(…) | Write an element, and write its children aligning attributes across contiguous groups of elements that match *groupingPredicate*. (3 methods) |

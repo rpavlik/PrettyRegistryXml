@@ -3,7 +3,7 @@
 Write all attributes of *e* to *writer*.
 
 ```csharp
-protected void WriteAttributes(XmlWriter writer, XElement e)
+protected virtual void WriteAttributes(XmlWriter writer, XElement e)
 ```
 
 | parameter | description |

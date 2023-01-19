@@ -12,8 +12,10 @@ public record Options
 | [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](./Options/OutputFile.md), if set, otherwise [`InputFile`](./Options/InputFile.md) |
 | [DeindentExtensions](Options/DeindentExtensions.md) { get; set; } |  |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
+| [NormalizeAttributeSpaces](Options/NormalizeAttributeSpaces.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
 | [SortCodes](Options/SortCodes.md) { get; set; } |  |
+| [TrimAttributes](Options/TrimAttributes.md) { get; set; } |  |
 | [WrapExtensions](Options/WrapExtensions.md) { get; set; } |  |
 | static [Examples](Options/Examples.md) { get; } |  |
 
