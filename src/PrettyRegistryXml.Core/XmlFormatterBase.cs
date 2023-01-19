@@ -244,7 +244,7 @@ namespace PrettyRegistryXml.Core
         /// </remarks>
         /// <param name="writer">An XmlWriter in the correct state (has had <see cref="WriteStartElement(XmlWriter, XElement)"/> called)</param>
         /// <param name="e">An element that may have attributes.</param>
-        protected void WriteAttributes(XmlWriter writer, XElement e)
+        protected virtual void WriteAttributes(XmlWriter writer, XElement e)
         {
             foreach (var attr in e.Attributes())
             {
