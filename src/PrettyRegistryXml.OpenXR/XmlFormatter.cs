@@ -130,6 +130,15 @@ namespace PrettyRegistryXml.OpenXR
             });
 
         /// <summary>
+        /// Our alignment for interaction profile related things, which adds 2 extra spaces to user_path subpath attribute widths
+        /// </summary>
+        private readonly IAlignmentFinder interactionProfileComponentAlignment
+            = new SimpleAlignment(new Dictionary<string, int>{
+                {"user_path", 2},
+                {"subpath", 2},
+            });
+
+        /// <summary>
         /// Our slightly sophisticated way of grouping attributes for alignment in extensions.
         /// </summary>
         private readonly IAlignmentFinder extensionEnumAlignment
@@ -196,9 +205,18 @@ namespace PrettyRegistryXml.OpenXR
             {
                 WriteElementWithAlignedChildAttrsInGroups(writer, element, IsBitmask);
             }
-            else if (element.Name == "interaction_profile")
+            else if (element.Name == "interaction_profile" && element.HasElements)
             {
-                WriteElementWithAlignedChildAttrsInGroups(writer, element, (XElement element) => element.Name == "component");
+                // These are interaction profile declarations - grouping because there are two child tag names
+                WriteElementWithAlignedChildAttrsInGroups(writer,
+                                                          element,
+                                                          interactionProfileComponentAlignment,
+                                                          (XElement element) => element.Name == "component");
+            }
+            else if (element.Name == "extend" && element.Attribute("interaction_profile_path") != null)
+            {
+                // These are extensions to an interaction profile.
+                WriteElementWithAlignedChildElts(writer, element, interactionProfileComponentAlignment);
             }
             else if (WrapExtensions && element.Name == "extension")
             {
