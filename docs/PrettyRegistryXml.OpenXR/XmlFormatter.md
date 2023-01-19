@@ -20,6 +20,7 @@ public class XmlFormatter : XmlFormatterBase
 | name | description |
 | --- | --- |
 | override [CleanWhitespaceNode](XmlFormatter/CleanWhitespaceNode.md)(…) |  |
+| override [WriteAttributes](XmlFormatter/WriteAttributes.md)(…) |  |
 | override [WriteElement](XmlFormatter/WriteElement.md)(…) | This is the recursive part that contains most of the "policy" |
 
 ## See Also
