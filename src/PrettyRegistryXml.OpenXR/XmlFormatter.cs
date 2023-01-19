@@ -8,6 +8,7 @@ using PrettyRegistryXml.Core;
 using PrettyRegistryXml.GroupedAlignment;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -241,6 +242,24 @@ namespace PrettyRegistryXml.OpenXR
                 base.WriteElement(writer, element);
             }
 
+        }
+
+        /// <inheritdoc />
+        protected override void WriteAttributes(XmlWriter writer, XElement e)
+        {
+            foreach (var attr in e.Attributes())
+            {
+                var value = attr.Value;
+                if (TrimAttributes)
+                {
+                    value = value.Trim();
+                }
+                if (NormalizeAttributeSpaces)
+                {
+                    value = Regex.Replace(value, "\\s+", " ");
+                }
+                writer.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, value);
+            }
         }
 
         /// <inheritdoc />
