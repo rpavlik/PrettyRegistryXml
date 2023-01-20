@@ -1,16 +1,15 @@
 # Pretty Registry (for OpenXR and other Khronos standards)
 
 <!--
-Copyright 2021-2022, Collabora, Ltd
+Copyright 2021-2023, Collabora, Ltd
 
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
 [![.NET](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/dotnet.yml)[![Update docs](https://github.com/rpavlik/PrettyRegistryXml/actions/workflows/update-docs.yml/badge.svg)](https://github.com/rpavlik/PrettyRegistryXml/tree/main/docs)
 
-A tool to perform (supervised!) formatting of the OpenXR registry XML, and
-potentially other registry XML in the future. (Experimental Vulkan support is
-included.)
+A tool to perform formatting of the OpenXR registry XML, and potentially other
+registry XML in the future. (Experimental Vulkan support is included.)
 
 It is split into `core`, which provides utilities and base classes, and `openxr`
 which includes the "policy"-related code parts for OpenXR, as well as the entry
@@ -27,10 +26,12 @@ and can be invoked just like any other command -- no need for the `dotnet`
 commands below. Running either the OpenXR or Vulkan tools with no arguments will
 show you help text.
 
-**NOTE**: You do not want to just directly commit the modifications made by the
-tool: please be selective in what you stage vs revert, using something like
-`git gui`, `git add -p`, or other interactive/graphical/patch-based interface.
-Some of the hand-formatted XML is better than the automated stuff.
+**NOTE**: At least for Vulkan, you do not want to just directly commit the
+modifications made by the tool: please be selective in what you stage vs revert,
+using something like `git gui`, `git add -p`, or other
+interactive/graphical/patch-based interface. Some of the hand-formatted XML is
+better than the automated stuff. OpenXR has now standardized on using the full
+automated formatting, however.
 
 If you want to improve the tool, keep following these instructions.
 
