@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!--
-    Copyright 2021-2022 Collabora, Ltd
+    Copyright 2021-2023 Collabora, Ltd
 
     SPDX-License-Identifier: MIT
     -->
@@ -10,10 +10,10 @@
     <PropertyGroup>
         <!-- this is a must-match value - only the major should be changed. -->
         <AssemblyVersion>3.0.0.0</AssemblyVersion>
-        <Version>3.2.0.0</Version>
+        <Version>3.3.0.0</Version>
         <Company>Collabora, Ltd.</Company>
         <!-- augment this with license data in individual projects -->
-        <Copyright>Copyright 2021-2022, $(Company)</Copyright>
+        <Copyright>Copyright 2021-2023, $(Company)</Copyright>
 
         <!-- augment this here or in individual projects as appropriate -->
         <Authors>Ryan Pavlik (Collabora, Ltd.)</Authors>
