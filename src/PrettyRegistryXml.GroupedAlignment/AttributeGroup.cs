@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2024 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -12,7 +12,8 @@ using static MoreLinq.Extensions.PartitionExtension;
 namespace PrettyRegistryXml.GroupedAlignment
 {
     /// <summary>
-    /// A list of attribute names, usually combined in a <see cref="GroupChoice"/>
+    /// A list of attribute names, usually combined in a <see cref="GroupChoice"/>.
+    /// They will all be aligned together.
     /// </summary>
     public class AttributeGroup : AttributeSequenceItemBase
     {
@@ -23,6 +24,11 @@ namespace PrettyRegistryXml.GroupedAlignment
         public HashSet<string> AttributeNameSet { get; private init; }
 
         /// <summary>
+        /// Extra space to add to this attribute group's width.
+        /// </summary>
+        public int ExtraSpace { get; private init; }
+
+        /// <summary>
         /// Create a group of attributes that will all be aligned (or replaced with placeholder spaces)
         /// </summary>
         /// <param name="attributeNames">Attribute names in the desired order</param>
@@ -30,8 +36,20 @@ namespace PrettyRegistryXml.GroupedAlignment
         {
             AttributeNames = attributeNames.ToArray();
             AttributeNameSet = AttributeNames.ToHashSet();
+            ExtraSpace = 0;
         }
 
+        /// <summary>
+        /// Create a group of attributes that will all be aligned (or replaced with placeholder spaces)
+        /// </summary>
+        /// <param name="extraSpace">Extra space</param>
+        /// <param name="attributeNames">Attribute names in the desired order</param>
+        public AttributeGroup(int extraSpace, params string[] attributeNames)
+        {
+            AttributeNames = attributeNames.ToArray();
+            AttributeNameSet = AttributeNames.ToHashSet();
+            ExtraSpace = extraSpace;
+        }
 
         /// <inheritdoc />
         public override int CountHandledAttributes(IEnumerable<string> elementAttrNames) => (from attrName in elementAttrNames
@@ -66,7 +84,7 @@ namespace PrettyRegistryXml.GroupedAlignment
 
                 Dictionary<string, int> lengthDictionary = new(from pair in observedLengths
                                                                group pair.Length by pair.Name into g
-                                                               select KeyValuePair.Create(g.Key, g.Max()));
+                                                               select KeyValuePair.Create(g.Key, g.Max() + attrGroup.ExtraSpace));
                 var alignments = (from name in attrGroup.AttributeNames
                                   let length = lengthDictionary.GetValueOrDefault(name, 0)
                                   select new Core.AttributeAlignment(name, length)).ToArray();
