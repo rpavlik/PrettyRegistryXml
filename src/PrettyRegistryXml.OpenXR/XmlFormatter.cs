@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Collabora, Ltd
+// Copyright 2021-2024 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -143,13 +143,19 @@ namespace PrettyRegistryXml.OpenXR
             });
 
         /// <summary>
-        /// Our alignment for interaction profile related things, which adds 2 extra spaces to user_path subpath attribute widths
+        /// Our alignment for interaction profile related things, which adds 2 extra spaces to user_path subpath attribute widths,
+        /// and aligns user path tag path attributes with component tag user_path attributes.
         /// </summary>
         private readonly IAlignmentFinder interactionProfileComponentAlignment
-            = new SimpleAlignment(new Dictionary<string, int>{
-                {"user_path", 2},
-                {"subpath", 2},
-            });
+            = new GroupedAttributeAlignment(
+                // First line up the paths.
+                new GroupChoice(
+                    // attributes from component tags, 2 extra spaces added
+                    new AttributeGroup(2, "user_path", "subpath"),
+                    // attribute from user_path tag, 2 extra spaces added
+                    new AttributeGroup(2, "path"))
+            // Everything else can be aligned normally
+            );
 
         /// <summary>
         /// Our slightly sophisticated way of grouping attributes for alignment in extensions.
