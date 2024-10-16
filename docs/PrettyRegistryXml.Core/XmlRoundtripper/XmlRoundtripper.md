@@ -1,6 +1,6 @@
 # XmlRoundtripper constructor (1 of 2)
 
-Construct this object, storing the "header lines" (those that start with &lt;? or &lt;!) for later reuse. If you want to also parse the XML into an XDocument, see [`ParseAndLoad`](./ParseAndLoad.md). Uses UTF-8 by default.
+Construct this object, storing the "header lines" (those that start with &lt;? or &lt;!) for later reuse. If you want to also parse the XML into an XDocument, see [`ParseAndLoad`](./ParseAndLoad.md). Uses UTF-8 (with no BOM) by default.
 
 ```csharp
 public XmlRoundtripper(Stream stream)
