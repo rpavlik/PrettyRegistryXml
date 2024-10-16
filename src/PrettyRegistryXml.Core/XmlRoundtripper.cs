@@ -21,7 +21,6 @@ namespace PrettyRegistryXml.Core
 
         /// <summary>
         /// Parse an XML file, and also load it into an XmlRoundtripper.
-        /// This overload assumes UTF-8
         /// </summary>
         /// <param name="filename">Path of an XML file to parse</param>
         /// <param name="encoding">File encoding for reading and writing</param>
@@ -38,12 +37,12 @@ namespace PrettyRegistryXml.Core
 
         /// <summary>
         /// Parse an XML file, and also load it into an XmlRoundtripper.
-        /// This overload assumes UTF-8.
+        /// This overload assumes UTF-8 with no BOM.
         /// </summary>
         /// <param name="filename">Path of an XML file to parse</param>
         /// <param name="document">The document object to populate</param>
         /// <returns>An object you can use to restore the header lines when writing out your document again.</returns>
-        public static XmlRoundtripper ParseAndLoad(string filename, out XDocument document) => ParseAndLoad(filename, Encoding.UTF8, out document);
+        public static XmlRoundtripper ParseAndLoad(string filename, out XDocument document) => ParseAndLoad(filename, new UTF8Encoding(false), out document);
 
         /// <summary>
         /// Construct this object, storing the "header lines" (those that start with &lt;? or &lt;!) for later reuse.
@@ -60,10 +59,10 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Construct this object, storing the "header lines" (those that start with &lt;? or &lt;!) for later reuse.
         /// If you want to also parse the XML into an <see cref="XDocument"/>, see <see cref="ParseAndLoad(string, out XDocument)"/>.
-        /// Uses UTF-8 by default.
+        /// Uses UTF-8 (with no BOM) by default.
         /// </summary>
         /// <param name="stream">A stream to read an XML file from</param>
-        public XmlRoundtripper(Stream stream) : this(stream, Encoding.UTF8) { }
+        public XmlRoundtripper(Stream stream) : this(stream, new UTF8Encoding(false)) { }
 
         /// <summary>
         /// Write a document to file, replacing the header lines with the ones from the original input.
