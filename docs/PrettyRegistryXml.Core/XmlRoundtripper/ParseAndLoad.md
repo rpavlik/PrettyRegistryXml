@@ -1,6 +1,6 @@
 # XmlRoundtripper.ParseAndLoad method (1 of 2)
 
-Parse an XML file, and also load it into an XmlRoundtripper. This overload assumes UTF-8.
+Parse an XML file, and also load it into an XmlRoundtripper. This overload assumes UTF-8 with no BOM.
 
 ```csharp
 public static XmlRoundtripper ParseAndLoad(string filename, out XDocument document)
@@ -24,7 +24,7 @@ An object you can use to restore the header lines when writing out your document
 
 # XmlRoundtripper.ParseAndLoad method (2 of 2)
 
-Parse an XML file, and also load it into an XmlRoundtripper. This overload assumes UTF-8
+Parse an XML file, and also load it into an XmlRoundtripper.
 
 ```csharp
 public static XmlRoundtripper ParseAndLoad(string filename, Encoding encoding, 
