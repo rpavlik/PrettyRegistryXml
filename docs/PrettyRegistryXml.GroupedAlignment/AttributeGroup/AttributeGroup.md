@@ -1,4 +1,4 @@
-# AttributeGroup constructor
+# AttributeGroup constructor (1 of 2)
 
 Create a group of attributes that will all be aligned (or replaced with placeholder spaces)
 
@@ -8,6 +8,26 @@ public AttributeGroup(params string[] attributeNames)
 
 | parameter | description |
 | --- | --- |
+| attributeNames | Attribute names in the desired order |
+
+## See Also
+
+* class [AttributeGroup](../AttributeGroup.md)
+* namespace [PrettyRegistryXml.GroupedAlignment](../../PrettyRegistryXml.GroupedAlignment.md)
+
+---
+
+# AttributeGroup constructor (2 of 2)
+
+Create a group of attributes that will all be aligned (or replaced with placeholder spaces)
+
+```csharp
+public AttributeGroup(int extraSpace, params string[] attributeNames)
+```
+
+| parameter | description |
+| --- | --- |
+| extraSpace | Extra space |
 | attributeNames | Attribute names in the desired order |
 
 ## See Also

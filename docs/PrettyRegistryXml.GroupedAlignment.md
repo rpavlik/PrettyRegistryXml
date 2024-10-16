@@ -5,7 +5,7 @@
 | public type | description |
 | --- | --- |
 | class [AlignedTrailer](./PrettyRegistryXml.GroupedAlignment/AlignedTrailer.md) | Alignment of the longest set of trailing attributes, just as in SimpleAlignment |
-| class [AttributeGroup](./PrettyRegistryXml.GroupedAlignment/AttributeGroup.md) | A list of attribute names, usually combined in a [`GroupChoice`](./PrettyRegistryXml.GroupedAlignment/GroupChoice.md) |
+| class [AttributeGroup](./PrettyRegistryXml.GroupedAlignment/AttributeGroup.md) | A list of attribute names, usually combined in a [`GroupChoice`](./PrettyRegistryXml.GroupedAlignment/GroupChoice.md). They will all be aligned together. |
 | abstract class [AttributeSequenceItemBase](./PrettyRegistryXml.GroupedAlignment/AttributeSequenceItemBase.md) | Base class for non-trailer implementations of [`IAttributeSequenceItem`](./PrettyRegistryXml.GroupedAlignment/IAttributeSequenceItem.md) |
 | abstract class [AttributeSequenceTrailerBase](./PrettyRegistryXml.GroupedAlignment/AttributeSequenceTrailerBase.md) | Base class for trailer implementations of [`IAttributeSequenceItem`](./PrettyRegistryXml.GroupedAlignment/IAttributeSequenceItem.md) |
 | class [GroupChoice](./PrettyRegistryXml.GroupedAlignment/GroupChoice.md) | A choice between some disjoint collections of attribute names represented by [`AttributeGroup`](./PrettyRegistryXml.GroupedAlignment/AttributeGroup.md) |
