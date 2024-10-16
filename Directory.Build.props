@@ -40,15 +40,15 @@
 
     <!-- dependency versions -->
     <PropertyGroup>
-        <MoreLinqVersion>3.3.2</MoreLinqVersion>
+        <MoreLinqVersion>3.4.2</MoreLinqVersion>
         <CommandLineParserVersion>2.9.1</CommandLineParserVersion>
     </PropertyGroup>
 
     <!-- test dependency versions -->
     <PropertyGroup>
-        <XunitVersion>2.4.2</XunitVersion>
-        <XunitRunnerVSVersion>2.4.5</XunitRunnerVSVersion>
-        <TestSdkVersion>17.2.0</TestSdkVersion>
-        <CoverletCollectorVersion>3.1.2</CoverletCollectorVersion>
+        <XunitVersion>2.9.2</XunitVersion>
+        <XunitRunnerVSVersion>2.8.2</XunitRunnerVSVersion>
+        <TestSdkVersion>17.11.1</TestSdkVersion>
+        <CoverletCollectorVersion>6.0.2</CoverletCollectorVersion>
     </PropertyGroup>
 </Project>
