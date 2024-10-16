@@ -1,5 +1,5 @@
 # Copyright 2020 GitHub
-# Copyright 2021 Collabora, Ltd
+# Copyright 2021-2024 Collabora, Ltd
 #
 # SPDX-License-Identifier: MIT
 
@@ -19,20 +19,20 @@ jobs:
     steps:
       # Do a deep checkout on main, for the git describe to work.
       - name: Deep checkout (for main branch)
-        uses: actions/checkout@v2
+        uses: "actions/checkout@v4"
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           fetch-depth: 0
       # Default shallow checkout OK everywhere else.
       - name: Shallow checkout
-        uses: actions/checkout@v2
-        if: ${{ github.ref != 'refs/heads/main' }}
+        uses: "actions/checkout@v4"
+        if: "${{ github.ref != 'refs/heads/main' }}"
 
       - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v1
+        uses: "fsfe/reuse-action@v4"
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: "actions/setup-dotnet@v4"
         with:
           dotnet-version: 6.0.x
       - name: Restore dependencies
@@ -44,15 +44,16 @@ jobs:
 
       # On main, let's build at least single-platform binaries.
       - name: Build artifacts
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: "${{ github.ref == 'refs/heads/main' }}"
         shell: pwsh
         env:
-          BUILD_OS: ${{ runner.os }}
-          BUILD_REF: ${{ github.ref }}
+          BUILD_OS: "${{ runner.os }}"
+          BUILD_REF: "${{ github.ref }}"
         run: ./Build-Artifacts.ps1
+
       - name: Upload artifacts to workflow
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@v2
+        uses: "actions/upload-artifact@v4"
         with:
-          name: PrettyRegistryXML-${{ runner.os }}
-          path: out/${{ env.ARTIFACT_NAME }}.7z
+          name: "PrettyRegistryXML-${{ runner.os }}"
+          path: "out/${{ env.ARTIFACT_NAME }}.7z"
