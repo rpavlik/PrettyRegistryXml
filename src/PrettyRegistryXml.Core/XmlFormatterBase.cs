@@ -84,7 +84,7 @@ namespace PrettyRegistryXml.Core
             {
                 Indent = true,
                 IndentChars = IndentChars,
-                Encoding = Encoding.UTF8,
+                Encoding = new UTF8Encoding(false), // to disable BOM
                 OmitXmlDeclaration = true,
 
             };
