@@ -1,6 +1,6 @@
 # AttributeGroup class
 
-A list of attribute names, usually combined in a [`GroupChoice`](./GroupChoice.md)
+A list of attribute names, usually combined in a [`GroupChoice`](./GroupChoice.md). They will all be aligned together.
 
 ```csharp
 public class AttributeGroup : AttributeSequenceItemBase
@@ -10,9 +10,10 @@ public class AttributeGroup : AttributeSequenceItemBase
 
 | name | description |
 | --- | --- |
-| [AttributeGroup](AttributeGroup/AttributeGroup.md)(…) | Create a group of attributes that will all be aligned (or replaced with placeholder spaces) |
+| [AttributeGroup](AttributeGroup/AttributeGroup.md)(…) | Create a group of attributes that will all be aligned (or replaced with placeholder spaces) (2 constructors) |
 | [AttributeNames](AttributeGroup/AttributeNames.md) { get; set; } |  |
 | [AttributeNameSet](AttributeGroup/AttributeNameSet.md) { get; } |  |
+| [ExtraSpace](AttributeGroup/ExtraSpace.md) { get; } | Extra space to add to this attribute group's width. |
 | override [CountHandledAttributes](AttributeGroup/CountHandledAttributes.md)(…) |  |
 | override [CreateWidthComputer](AttributeGroup/CreateWidthComputer.md)() |  |
 | override [ToString](AttributeGroup/ToString.md)() | Convert to string |
