@@ -46,9 +46,9 @@
 
     <!-- test dependency versions -->
     <PropertyGroup>
-        <XunitVersion>2.9.2</XunitVersion>
+        <XunitVersion>2.9.3</XunitVersion>
         <XunitRunnerVSVersion>2.8.2</XunitRunnerVSVersion>
-        <TestSdkVersion>17.11.1</TestSdkVersion>
-        <CoverletCollectorVersion>6.0.2</CoverletCollectorVersion>
+        <TestSdkVersion>17.13.0</TestSdkVersion>
+        <CoverletCollectorVersion>6.0.4</CoverletCollectorVersion>
     </PropertyGroup>
 </Project>
