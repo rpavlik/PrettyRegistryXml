@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
-    Copyright 2021 Collabora, Ltd
+    Copyright 2021-2025 Collabora, Ltd
 
     SPDX-License-Identifier: MIT
   -->
@@ -14,6 +15,8 @@
 
     <!-- only need to add license info in this file - the copyright notice is centralized -->
     <Copyright>$(Copyright) - Published under MIT, with dependencies under Apache-2.0 and MIT.</Copyright>
+
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>

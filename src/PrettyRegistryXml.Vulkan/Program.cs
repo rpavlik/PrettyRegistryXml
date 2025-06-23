@@ -11,7 +11,7 @@ using System.Xml.Linq;
 namespace PrettyRegistryXml.Vulkan
 {
 
-    class Program
+    sealed class Program
     {
 
         static void Run(Options options)

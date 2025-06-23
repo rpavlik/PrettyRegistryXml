@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -20,7 +20,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// </summary>
     public class GroupedAttributeAlignment : IAlignmentFinder
     {
-        private static IAttributeSequenceItem MakeDefaultTrailer() => new AlignedTrailer();
+        private static AlignedTrailer MakeDefaultTrailer() => new AlignedTrailer();
         private readonly IAttributeSequenceItem[] attributeSequenceItems;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <param name="attributeSequenceItems">At least one <see cref="IAttributeSequenceItem"/>-implementing object</param>
         public GroupedAttributeAlignment(params IAttributeSequenceItem[] attributeSequenceItems)
         {
-            if (!attributeSequenceItems.Any())
+            if (attributeSequenceItems.Length == 0)
             {
                 throw new ArgumentOutOfRangeException(paramName: nameof(attributeSequenceItems),
                                                       "Need at least one attribute sequence item");
@@ -103,7 +103,7 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                                         from sequenceItem in attributeSequenceItems
                                                                         select sequenceItem.ToString()));
 
-        private class State : IAlignmentState
+        private sealed class State : IAlignmentState
         {
             private readonly int ElementNameAlignment;
             private readonly IAttributeSequenceItemAligner[] aligners;
