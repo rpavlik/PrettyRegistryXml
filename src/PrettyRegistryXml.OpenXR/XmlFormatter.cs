@@ -119,6 +119,65 @@ namespace PrettyRegistryXml.OpenXR
                    && attr.Value == "bitmask";
         }
 
+        private static string? GetPreviousElementName(XText xt)
+        {
+            var elements = xt.ElementsBeforeSelf();
+            if (!elements.Any()) { return null; }
+            var sib = elements.Last();
+            return sib?.Name.LocalName;
+        }
+
+        private static string? GetNextElementName(XText xt)
+        {
+            var elements = xt.ElementsAfterSelf();
+            if (!elements.Any()) { return null; }
+            var sib = elements.First();
+            return sib?.Name.LocalName;
+        }
+
+        /// <inheritdoc/>
+        protected override TextWhitespace.Behavior ComputeWhitespaceBehavior(XText t)
+        {
+            if (t.Parent == null) { return TextWhitespace.Behavior.Preserve; }
+            var parentName = t.Parent.Name;
+            if (parentName == "name")
+            {
+                // inside leaf tag
+                return TextWhitespace.Behavior.Trim;
+            }
+            if (parentName == "type" && !t.Parent.HasAttributes)
+            {
+                // leaf tag for type too.
+                return TextWhitespace.Behavior.Trim;
+            }
+
+
+            var previousName = GetPreviousElementName(t);
+            var nextName = GetNextElementName(t);
+            if (parentName == "proto" || parentName == "param")
+            {
+                // we are in a command
+                if (previousName == null && nextName == "type")
+                {
+                    // this is before the return type or param type in a function.
+                    // Nothing or "const "
+                    return TextWhitespace.Behavior.EmptyOrSingleTrailingSpace;
+                }
+                if (previousName != null && nextName == null)
+                {
+                    // this is at the very end, tbh shouldn't have anything here.
+                    return TextWhitespace.Behavior.Trim;
+                }
+                if (previousName == "type" && nextName == "name")
+                {
+                    // between type and name
+                    return TextWhitespace.Behavior.Collapse;
+                }
+            }
+
+            return TextWhitespace.Behavior.Preserve;
+        }
+
         private static bool IsEnum(XElement element) => element.Name == "enum";
 
         /// <inheritdoc />

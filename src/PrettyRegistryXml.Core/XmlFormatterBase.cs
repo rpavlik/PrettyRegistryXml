@@ -122,6 +122,14 @@ namespace PrettyRegistryXml.Core
         /// <returns>true if it should be preserved as-is (default)</returns>
         protected virtual bool PreserveWhitespace(XText text) => true;
 
+        /// <summary>
+        /// What should be done with the whitespace in the provided text node?
+        /// This operates independently of alignment.
+        /// </summary>
+        /// <param name="t">A text node</param>
+        /// <returns>enumerant indicating the behavior to take</returns>
+        protected virtual TextWhitespace.Behavior ComputeWhitespaceBehavior(XText t) => TextWhitespace.Behavior.Preserve;
+
         private void WriteAlignedElement(XmlWriter writer,
                                          XElement e,
                                          IAlignmentState alignment,
@@ -309,21 +317,28 @@ namespace PrettyRegistryXml.Core
                 WriteElement(writer, element);
                 return;
             }
-            if (node is XText text && IsWhitespace(node))
+            if (node is XText text)
             {
-                if (!PreserveWhitespace(text))
-                {
-                    if (!text.Value.Contains(Environment.NewLine))
-                    {
-                        writer.WriteRaw(" ");
-                    }
-                    // early out here to not write this.
-                    return;
-                }
+                var behavior = ComputeWhitespaceBehavior(text);
+                text.Value = TextWhitespace.ApplyBehaviorNullable(behavior, text.Value);
 
-                // Possibly munge this, then write it.
-                CleanWhitespaceNode(text).WriteTo(writer);
-                return;
+                if (IsWhitespace(node))
+                {
+                    if (!PreserveWhitespace(text))
+                    {
+                        if (!text.Value.Contains(Environment.NewLine))
+                        {
+                            writer.WriteRaw(" ");
+                        }
+                        // early out here to not write this.
+                        return;
+                    }
+
+                    // Possibly munge this, then write it.
+                    CleanWhitespaceNode(text).WriteTo(writer);
+                    return;
+
+                }
             }
             // Write everything that remains in the "normal" way.
             node.WriteTo(writer);
