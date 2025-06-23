@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-# Copyright 2021 Collabora, Ltd
+# Copyright 2021-2025 Collabora, Ltd
 #
 # SPDX-License-Identifier: MIT
 
@@ -13,7 +13,7 @@ foreach ($srcdir in $dirs) {
     # Write-Output $srcdir
     $filename = $srcdir.BaseName + ".dll"
     $pathToSources = "../src/" + $srcdir.BaseName
-    $assemblypath = Join-Path $srcdir "bin/Debug/net5.0/$filename"
+    $assemblypath = Join-Path $srcdir "bin/Debug/net6.0/$filename"
     Write-Output $assemblypath
     dotnet tool run xmldocmd $assemblypath docs --source $pathToSources --clean
 }
