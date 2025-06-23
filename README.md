@@ -114,5 +114,5 @@ Dependencies downloaded from NuGet include:
 - [MoreLINQ][]: Apache-2.0
 - [CommandLineParser][]: MIT
 
-[MoreLINQ]: https://www.nuget.org/packages/morelinq/3.3.2
+[MoreLINQ]: https://www.nuget.org/packages/morelinq/4.4.0
 [CommandLineParser]: https://www.nuget.org/packages/CommandLineParser/2.9.1
