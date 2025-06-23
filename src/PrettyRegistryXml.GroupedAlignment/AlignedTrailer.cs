@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -18,7 +18,7 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <inheritdoc />
         public override IAttributeSequenceItemWidthComputer CreateWidthComputer() => new WidthComputer();
 
-        private class WidthComputer : IAttributeSequenceItemWidthComputer
+        private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
         {
             private readonly List<string[]> attributeNameOrders = new();
             private readonly List<NameLengthPair> observedLengths = new();

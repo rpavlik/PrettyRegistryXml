@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -68,7 +68,8 @@ namespace PrettyRegistryXml.Core
                 if (!ShouldAlign)
                 {
                     throw new InvalidOperationException("Makes no sense to access FullWidth when we should not align this attribute");
-                };
+                }
+
                 return AlignWidth + (IsPaddingOnly ? 0 : 1);
             }
         }
@@ -219,9 +220,9 @@ namespace PrettyRegistryXml.Core
                 for (int i = 0; i < aligned.Length; i++)
                 {
                     var name = aligned[i].Name;
-                    if (extraWidth.ContainsKey(name))
+                    if (extraWidth.TryGetValue(name, out int namedExtraWidth))
                     {
-                        aligned[i] = new AttributeAlignment(name, aligned[i].AlignWidth + extraWidth[name]);
+                        aligned[i] = new AttributeAlignment(name, aligned[i].AlignWidth + namedExtraWidth);
                     }
                 }
             }

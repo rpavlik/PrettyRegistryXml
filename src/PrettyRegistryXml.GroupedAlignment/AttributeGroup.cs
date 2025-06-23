@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -65,7 +65,7 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                             string.Join(", ", from name in AttributeNames
                                                                               select $"\"{name}\""));
 
-        private class WidthComputer : IAttributeSequenceItemWidthComputer
+        private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
         {
             private readonly AttributeGroup attrGroup;
 

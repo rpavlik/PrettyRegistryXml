@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -43,7 +43,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     }
     public partial class GroupChoice
     {
-        private class Aligner : IAttributeSequenceItemAligner
+        private sealed class Aligner : IAttributeSequenceItemAligner
         {
             private readonly GroupChoice groupChoice;
             private readonly Dictionary<AttributeGroup, IAttributeSequenceItemAligner> groupAligners;

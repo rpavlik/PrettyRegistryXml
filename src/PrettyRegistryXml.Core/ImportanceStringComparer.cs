@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -13,7 +13,7 @@ namespace PrettyRegistryXml.Core
     /// <summary>
     /// Implementation of <see cref="IComparer{T}"/> for pairs of integer importance and string.
     /// </summary>
-    internal class ImportanceStringComparer : Comparer<Tuple<int, string>>
+    internal sealed class ImportanceStringComparer : Comparer<Tuple<int, string>>
     {
         private readonly Comparer<int> intComparer = Comparer<int>.Default;
         private readonly StringComparer stringComparer = StringComparer.Ordinal;

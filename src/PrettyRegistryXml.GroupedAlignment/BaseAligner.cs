@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -10,7 +10,7 @@ using static MoreLinq.Extensions.PartitionExtension;
 
 namespace PrettyRegistryXml.GroupedAlignment
 {
-    internal class BaseAligner : IAttributeSequenceItemAligner
+    internal sealed class BaseAligner : IAttributeSequenceItemAligner
     {
         public readonly AttributeAlignment[] alignments;
         private readonly HashSet<string> knownNames;
