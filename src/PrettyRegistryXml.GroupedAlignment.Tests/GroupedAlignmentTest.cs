@@ -26,6 +26,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                                             new AttributeGroup("bitpos", "extends")),
                             new AlignedTrailer());
 
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
         public static IEnumerable<object[]> ExtensionEnums => new List<object[]>{
             // OpenXR data that got goofed up
             new object[]{
@@ -86,6 +87,7 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
                 new string[]{"offset", "name"},
             },
         };
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
 
 
         /// <summary>
