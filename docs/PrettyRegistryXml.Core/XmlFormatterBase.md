@@ -24,6 +24,7 @@ public abstract class XmlFormatterBase
 | --- | --- |
 | [XmlFormatterBase](XmlFormatterBase/XmlFormatterBase.md)() | The default constructor. |
 | virtual [CleanWhitespaceNode](XmlFormatterBase/CleanWhitespaceNode.md)(…) | Allows use of a modified version of a whitespace-only node. |
+| virtual [ComputeWhitespaceBehavior](XmlFormatterBase/ComputeWhitespaceBehavior.md)(…) | What should be done with the whitespace in the provided text node? This operates independently of alignment. |
 | virtual [PreserveWhitespace](XmlFormatterBase/PreserveWhitespace.md)(…) | Whether this whitespace node should be preserved. Can be overridden |
 | virtual [WriteAttributes](XmlFormatterBase/WriteAttributes.md)(…) | Write all attributes of *e* to *writer*. |
 | virtual [WriteElement](XmlFormatterBase/WriteElement.md)(…) | The main recursive function. |
