@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 using CommandLine;
+using CommandLine.Text;
 using PrettyRegistryXml.Core;
 using System;
 using System.IO;
@@ -33,11 +34,17 @@ namespace PrettyRegistryXml.Vulkan
 
         static void Main(string[] args)
         {
-            new Parser(with =>
-             {
-                 with.GetoptMode = true;
-             }).ParseArguments<Options>(args)
-                          .WithParsed(Run);
+            Parser parser = new Parser(with =>
+            {
+                with.GetoptMode = true;
+            });
+            ParserResult<Options> result = parser.ParseArguments<Options>(args);
+            if (result.Tag == ParserResultType.NotParsed)
+            {
+                Console.WriteLine(HelpText.AutoBuild(result));
+                return;
+            }
+            result.WithParsed(Run);
         }
     }
 }
