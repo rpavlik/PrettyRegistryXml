@@ -13,7 +13,7 @@ foreach ($srcdir in $dirs) {
     # Write-Output $srcdir
     $filename = $srcdir.BaseName + ".dll"
     $pathToSources = "../src/" + $srcdir.BaseName
-    $assemblypath = Join-Path $srcdir "bin/Debug/net6.0/$filename"
+    $assemblypath = Join-Path $srcdir "bin/Debug/net8.0/$filename"
     Write-Output $assemblypath
     dotnet tool run xmldocmd $assemblypath docs --source $pathToSources --clean
 }
