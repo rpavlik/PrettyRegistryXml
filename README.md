@@ -1,7 +1,7 @@
 # Pretty Registry (for OpenXR and other Khronos standards)
 
 <!--
-Copyright 2021-2023, Collabora, Ltd
+Copyright 2021-2025, Collabora, Ltd
 
 SPDX-License-Identifier: CC-BY-4.0
 -->
@@ -17,11 +17,11 @@ point.
 
 ## Building and Running
 
-This uses the [.NET 6.0 SDK][dotnet] (formerly known as .NET Core - the
+This uses the [.NET 8.0 SDK][dotnet] (formerly known as .NET Core - the
 cross-platform open source one) SDK to build. That link has instructions to
 download and install it.
 
-Releases include binaries which only require the .NET 6.0 runtime, not the SDK,
+Releases include binaries which only require the .NET 8.0 runtime, not the SDK,
 and can be invoked just like any other command -- no need for the `dotnet`
 commands below. Running either the OpenXR or Vulkan tools with no arguments will
 show you help text.
@@ -63,7 +63,7 @@ dotnet run --project src/PrettyRegistryXml.Vulkan/PrettyRegistryXml.Vulkan.cspro
 
 By default, with no arguments you'll see help/usage.
 
-[dotnet]: https://dotnet.microsoft.com/download/dotnet/6.0
+[dotnet]: https://dotnet.microsoft.com/download/dotnet/8.0
 
 ## API Docs
 
