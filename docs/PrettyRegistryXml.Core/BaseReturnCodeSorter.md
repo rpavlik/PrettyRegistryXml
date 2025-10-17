@@ -3,21 +3,16 @@
 Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries.
 
 ```csharp
-public abstract class BaseReturnCodeSorter
+public class BaseReturnCodeSorter
 ```
 
 ## Public Members
 
 | name | description |
 | --- | --- |
+| [BaseReturnCodeSorter](BaseReturnCodeSorter/BaseReturnCodeSorter.md)() | The default constructor. |
 | virtual [SortReturnCodes](BaseReturnCodeSorter/SortReturnCodes.md)(…) | Sorts an enumerable of return codes. |
 | [SortReturnCodeString](BaseReturnCodeSorter/SortReturnCodeString.md)(…) | Sorts a string of comma-separated return codes. |
-
-## Protected Members
-
-| name | description |
-| --- | --- |
-| [BaseReturnCodeSorter](BaseReturnCodeSorter/BaseReturnCodeSorter.md)() | The default constructor. |
 
 ## Remarks
 

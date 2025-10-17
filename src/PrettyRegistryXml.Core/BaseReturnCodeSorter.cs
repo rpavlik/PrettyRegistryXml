@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2025 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -16,7 +16,7 @@ namespace PrettyRegistryXml.Core
     /// <remarks>
     /// This also serves as a base class for sorters with more sophisticated policies.
     /// </remarks>
-    public abstract class BaseReturnCodeSorter
+    public class BaseReturnCodeSorter
     {
         /// <summary>
         /// Sorts a string of comma-separated return codes.
