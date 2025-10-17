@@ -6,7 +6,7 @@
 | --- | --- |
 | struct [AttributeAlignment](./PrettyRegistryXml.Core/AttributeAlignment.md) | A structure storing the name of an attribute and a value width that it should be aligned/padded to. |
 | static class [AttributeAlignmentExtensions](./PrettyRegistryXml.Core/AttributeAlignmentExtensions.md) | Extensions for an enumerable of [`AttributeAlignment`](./PrettyRegistryXml.Core/AttributeAlignment.md) objects. |
-| abstract class [BaseReturnCodeSorter](./PrettyRegistryXml.Core/BaseReturnCodeSorter.md) | Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries. |
+| class [BaseReturnCodeSorter](./PrettyRegistryXml.Core/BaseReturnCodeSorter.md) | Utility class for sorting return codes. The default is to sort all alphabetically, removing empty entries. |
 | abstract class [BaseReturnCodeSorterWithSpecialCodes](./PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodes.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest alphabetical after that. |
 | abstract class [BaseReturnCodeSorterWithSpecialCodesAndReverse](./PrettyRegistryXml.Core/BaseReturnCodeSorterWithSpecialCodesAndReverse.md) | Base utility class for sorting return codes when some are "special", with some provided codes always in a given order, and the rest reverse (by accident, but left that way for now) alphabetical after that. |
 | struct [ElementAlignment](./PrettyRegistryXml.Core/ElementAlignment.md) | Aligment for an entire element: element name and attributes. |

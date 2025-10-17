@@ -3,7 +3,7 @@
 The default constructor.
 
 ```csharp
-protected BaseReturnCodeSorter()
+public BaseReturnCodeSorter()
 ```
 
 ## See Also
