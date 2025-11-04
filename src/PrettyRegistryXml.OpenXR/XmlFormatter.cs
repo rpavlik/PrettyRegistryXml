@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2024 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -51,7 +51,7 @@ namespace PrettyRegistryXml.OpenXR
         /// </summary>
         private bool DeindentExtensions { get; init; }
 
-        private readonly BaseReturnCodeSorter CodeSorter = new();
+        private readonly ReturnCodeSorter CodeSorter = new();
 
         /// <summary>
         /// Constructor
