@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -17,22 +17,22 @@ namespace PrettyRegistryXml.OpenXR.Tests
         private static readonly string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments
-        public static IEnumerable<object[]> SmallData => new List<object[]>{
+        public static IEnumerable<object[]> SmallData => [
             // not special, underscore sorting
             new object[]{
-                // expected - what the python does (when sorting reverse!)
-                new string[]{"XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"},
-                // unsorted
+                // expected
                 new string[]{"XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH"},
+                // unsorted
+                new string[]{"XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"},
             },
             // special codes
             new object[]{
                 // expected
-                Sorter.PresortedSpecialCodes.Take(2).ToArray(),
+                new string[]{Sorter.PresortedSpecialCodes.First(), "XR_SESSION_LOSS_PENDING",},
                 // unsorted
-                Sorter.PresortedSpecialCodes.Take(2).Reverse().ToArray()
+                new string[]{"XR_SESSION_LOSS_PENDING", Sorter.PresortedSpecialCodes.First(),},
             },
-        };
+        ];
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
         [Theory]
         [MemberData(nameof(SmallData))]
@@ -41,15 +41,15 @@ namespace PrettyRegistryXml.OpenXR.Tests
             Assert.Equal(expected, Sorter.SortReturnCodes(unsorted));
         }
 
-        public static IEnumerable<object[]> RealStringData => new List<object[]>{
+        public static IEnumerable<object[]> RealStringData => [
             new object[]{
                 // from xrGetActionStateVector2f
                 // expected
-                "XR_ERROR_VALIDATION_FAILURE,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_SESSION_LOST,XR_ERROR_PATH_UNSUPPORTED,XR_ERROR_PATH_INVALID,XR_ERROR_ACTION_TYPE_MISMATCH,XR_ERROR_ACTIONSET_NOT_ATTACHED",
+                "XR_ERROR_ACTIONSET_NOT_ATTACHED,XR_ERROR_ACTION_TYPE_MISMATCH,XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_PATH_INVALID,XR_ERROR_PATH_UNSUPPORTED,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SESSION_LOST,XR_ERROR_VALIDATION_FAILURE",
                 // unsorted
                 "XR_ERROR_INSTANCE_LOST,XR_ERROR_SESSION_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_HANDLE_INVALID,XR_ERROR_ACTIONSET_NOT_ATTACHED,XR_ERROR_ACTION_TYPE_MISMATCH,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_PATH_INVALID,XR_ERROR_PATH_UNSUPPORTED"
             },
-        };
+        ];
 
         [Theory]
         [MemberData(nameof(RealStringData))]
@@ -60,15 +60,37 @@ namespace PrettyRegistryXml.OpenXR.Tests
         }
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments
-        public static IEnumerable<object[]> RealData => new List<object[]>{
+        public static IEnumerable<object[]> RealData => [
             new object[]{
                 // from xrGetActionStateVector2f
                 // expected
-                new string[]{"XR_ERROR_VALIDATION_FAILURE", "XR_ERROR_RUNTIME_FAILURE", "XR_ERROR_HANDLE_INVALID", "XR_ERROR_INSTANCE_LOST", "XR_ERROR_SESSION_LOST", "XR_ERROR_PATH_UNSUPPORTED", "XR_ERROR_PATH_INVALID", "XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"},
+                new string[]
+                {
+                    "XR_ERROR_ACTIONSET_NOT_ATTACHED",
+                    "XR_ERROR_ACTION_TYPE_MISMATCH",
+                    "XR_ERROR_HANDLE_INVALID",
+                    "XR_ERROR_INSTANCE_LOST",
+                    "XR_ERROR_PATH_INVALID",
+                    "XR_ERROR_PATH_UNSUPPORTED",
+                    "XR_ERROR_RUNTIME_FAILURE",
+                    "XR_ERROR_SESSION_LOST",
+                    "XR_ERROR_VALIDATION_FAILURE",
+                },
                 // unsorted
-                new string[]{"XR_ERROR_INSTANCE_LOST", "XR_ERROR_SESSION_LOST", "XR_ERROR_RUNTIME_FAILURE", "XR_ERROR_HANDLE_INVALID", "XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_VALIDATION_FAILURE", "XR_ERROR_PATH_INVALID", "XR_ERROR_PATH_UNSUPPORTED"}
+                new string[]
+                {
+                    "XR_ERROR_VALIDATION_FAILURE",
+                    "XR_ERROR_RUNTIME_FAILURE",
+                    "XR_ERROR_HANDLE_INVALID",
+                    "XR_ERROR_INSTANCE_LOST",
+                    "XR_ERROR_SESSION_LOST",
+                    "XR_ERROR_PATH_UNSUPPORTED",
+                    "XR_ERROR_PATH_INVALID",
+                    "XR_ERROR_ACTION_TYPE_MISMATCH",
+                    "XR_ERROR_ACTIONSET_NOT_ATTACHED"
+                }
             },
-        };
+        ];
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
 
         [Theory]
@@ -76,13 +98,12 @@ namespace PrettyRegistryXml.OpenXR.Tests
         public void SortRealData(string[] expected, string[] unsorted)
         {
             Assert.Equal(expected, Sorter.SortReturnCodes(unsorted));
-
         }
 
-        public static IEnumerable<object[]> AllSpecialCodes => new List<object[]>{
+        public static IEnumerable<object[]> AllSpecialCodes => [
             new object[]{Sorter.PresortedSpecialCodes},
             new object[]{Sorter.PresortedSpecialCodes.Reverse()},
-        };
+        ];
 
         [Theory]
         [MemberData(nameof(AllSpecialCodes))]
@@ -92,13 +113,13 @@ namespace PrettyRegistryXml.OpenXR.Tests
             Assert.Equal(Sorter.PresortedSpecialCodes, Sorter.SortReturnCodes(value));
         }
 
-        public static IEnumerable<object[]> AllSpecialCodesStrings => new List<object[]>{
+        public static IEnumerable<object[]> AllSpecialCodesStrings => [
             new object[]{SpecialCodesStringInOrder},
             new object[]{string.Join(',', Sorter.PresortedSpecialCodes.Reverse())},
             // with empty items between
             new object[]{string.Join(",,", Sorter.PresortedSpecialCodes)},
             new object[]{string.Join(",,", Sorter.PresortedSpecialCodes.Reverse())},
-        };
+        ];
 
         [Theory]
         [MemberData(nameof(AllSpecialCodesStrings))]
