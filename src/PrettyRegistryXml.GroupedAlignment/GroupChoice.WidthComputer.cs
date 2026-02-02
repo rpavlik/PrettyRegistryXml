@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -11,17 +11,11 @@ namespace PrettyRegistryXml.GroupedAlignment
 {
     public partial class GroupChoice
     {
-        private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
+        private sealed class WidthComputer(GroupChoice groupChoice, AttributeGroup[] groups) : IAttributeSequenceItemWidthComputer
         {
-            private readonly GroupChoice groupChoice;
-            private readonly Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer> groupWidthComputers;
-
-            public WidthComputer(GroupChoice groupChoice, AttributeGroup[] groups)
-            {
-                this.groupChoice = groupChoice;
-                groupWidthComputers = new(from attrGroup in groups
-                                          select KeyValuePair.Create(attrGroup, attrGroup.CreateWidthComputer()));
-            }
+            private readonly GroupChoice groupChoice = groupChoice;
+            private readonly Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer> groupWidthComputers = new(from attrGroup in groups
+                                                                                                                       select KeyValuePair.Create(attrGroup, attrGroup.CreateWidthComputer()));
 
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {

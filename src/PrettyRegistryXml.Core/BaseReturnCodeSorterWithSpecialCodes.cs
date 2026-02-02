@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -28,15 +28,13 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Constructor - processes your PresorterSpecialCodes
         /// </summary>
-        public BaseReturnCodeSorterWithSpecialCodes()
-        {
+        public BaseReturnCodeSorterWithSpecialCodes() =>
             // Construct dictionary from IEnumerable<KeyValuePair>
             importance = new(PresortedSpecialCodes
                                 // reverse so that later codes get a smaller index
                                 .Reverse()
                                 // turn codes into a key-value pair: mapping a code to a (negated-decreased-reverse-index, code) tuple
                                 .Select((code, index) => KeyValuePair.Create(code, (-index - 100, code).ToTuple())));
-        }
 
 
         /// <summary>

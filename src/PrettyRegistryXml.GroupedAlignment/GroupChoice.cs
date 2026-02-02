@@ -14,19 +14,14 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// A choice between some disjoint collections of attribute names
     /// represented by <see cref="AttributeGroup"/>
     /// </summary>
-    public partial class GroupChoice : AttributeSequenceItemBase
+    /// <remarks>
+    /// Create a group choice.
+    /// </remarks>
+    /// <param name="groups">Two or more <see cref="AttributeGroup"/> objects,
+    /// to alternate between.</param>
+    public partial class GroupChoice(params AttributeGroup[] groups) : AttributeSequenceItemBase
     {
-        private AttributeGroup[] Groups { get; init; }
-
-        /// <summary>
-        /// Create a group choice.
-        /// </summary>
-        /// <param name="groups">Two or more <see cref="AttributeGroup"/> objects,
-        /// to alternate between.</param>
-        public GroupChoice(params AttributeGroup[] groups)
-        {
-            Groups = groups;
-        }
+        private AttributeGroup[] Groups { get; init; } = groups;
 
         private (AttributeGroup, int) FindBestMatchingGroup(IEnumerable<string> elementAttrNames)
         {

@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -103,16 +103,10 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                                         from sequenceItem in attributeSequenceItems
                                                                         select sequenceItem.ToString()));
 
-        private sealed class State : IAlignmentState
+        private sealed class State(int elementNameAlignment, IEnumerable<IAttributeSequenceItemAligner> aligners) : IAlignmentState
         {
-            private readonly int ElementNameAlignment;
-            private readonly IAttributeSequenceItemAligner[] aligners;
-
-            public State(int elementNameAlignment, IEnumerable<IAttributeSequenceItemAligner> aligners)
-            {
-                ElementNameAlignment = elementNameAlignment;
-                this.aligners = aligners.ToArray();
-            }
+            private readonly int ElementNameAlignment = elementNameAlignment;
+            private readonly IAttributeSequenceItemAligner[] aligners = [.. aligners];
 
             private IEnumerable<AttributeAlignment> HandleAttribute(IEnumerable<string> attributeNames)
             {

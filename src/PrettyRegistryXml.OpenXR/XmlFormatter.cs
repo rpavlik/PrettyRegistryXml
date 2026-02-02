@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -18,7 +18,11 @@ namespace PrettyRegistryXml.OpenXR
     /// <summary>
     /// OpenXR-specific policy for formatting XML.
     /// </summary>
-    public class XmlFormatter : XmlFormatterBase
+    /// <remarks>
+    /// Constructor
+    /// </remarks>
+    /// <param name="options">Formatting options, typically from command line.</param>
+    public class XmlFormatter(Options options) : XmlFormatterBase
     {
         /// <inheritdoc />
         public override int IndentLevelWidth { get => 4; }
@@ -29,42 +33,29 @@ namespace PrettyRegistryXml.OpenXR
         /// <summary>
         /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
         /// </summary>
-        private bool WrapExtensions { get; init; }
+        private bool WrapExtensions { get; init; } = options.WrapExtensions;
 
         /// <summary>
         /// Whether we should trim the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool TrimAttributes { get; init; }
+        private bool TrimAttributes { get; init; } = options.TrimAttributes;
 
         /// <summary>
         /// Whether we should normalize spaces in the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool NormalizeAttributeSpaces { get; init; }
+        private bool NormalizeAttributeSpaces { get; init; } = options.NormalizeAttributeSpaces;
 
         /// <summary>
         /// Whether we should sort the return values, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool SortReturnVals { get; init; }
+        private bool SortReturnVals { get; init; } = options.SortCodes;
 
         /// <summary>
         /// Whether to artificially de-indent extensions by one level - legacy behavior, on by default.
         /// </summary>
-        private bool DeindentExtensions { get; init; }
+        private bool DeindentExtensions { get; init; } = options.DeindentExtensions;
 
         private readonly ReturnCodeSorter CodeSorter = new();
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="options">Formatting options, typically from command line.</param>
-        public XmlFormatter(Options options)
-        {
-            WrapExtensions = options.WrapExtensions;
-            TrimAttributes = options.TrimAttributes;
-            NormalizeAttributeSpaces = options.NormalizeAttributeSpaces;
-            SortReturnVals = options.SortCodes;
-            DeindentExtensions = options.DeindentExtensions;
-        }
 
         /// <summary>
         /// Checks an element category attribute to tell if it's a known "not single line" element.

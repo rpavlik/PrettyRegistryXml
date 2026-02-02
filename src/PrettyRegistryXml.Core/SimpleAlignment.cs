@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -14,14 +14,11 @@ namespace PrettyRegistryXml.Core
     /// <summary>
     /// Simplest alignment: The attributes of the element with most attributes are aligned, any leftovers aren't aligned.
     /// </summary>
-    public class SimpleAlignment : IAlignmentFinder
+    /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
+    public class SimpleAlignment(IDictionary<string, int>? extraWidth = null) : IAlignmentFinder
     {
 
-        private readonly IDictionary<string, int>? extraWidth;
-
-
-        /// <param name="extraWidth">Optional dictionary of attribute name to additional width</param>
-        public SimpleAlignment(IDictionary<string, int>? extraWidth = null) => this.extraWidth = extraWidth;
+        private readonly IDictionary<string, int>? extraWidth = extraWidth;
 
         /// <summary>
         /// Find the simple alignment, delegating to
