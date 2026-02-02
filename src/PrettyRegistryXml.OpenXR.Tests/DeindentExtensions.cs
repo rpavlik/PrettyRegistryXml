@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -13,14 +13,10 @@ namespace PrettyRegistryXml.OpenXR.Tests
 {
     public class DeindentExtensionsTest
     {
-        public static IEnumerable<object[]> RoundTripFilenamesAndDeindentSettings => new List<object[]>{
-            new object[] {
-                "deindent-off.xml", false
-            },
-            new object[] {
-                "deindent-on.xml", true
-            },
-        };
+        public static IEnumerable<TheoryDataRow<string, bool>> RoundTripFilenamesAndDeindentSettings => [
+            new TheoryDataRow<string,bool>("deindent-off.xml", false),
+            new TheoryDataRow<string,bool>("deindent-on.xml", true),
+        ];
 
         [Theory]
         [MemberData(nameof(RoundTripFilenamesAndDeindentSettings))]

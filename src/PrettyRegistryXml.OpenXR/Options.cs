@@ -52,9 +52,9 @@ namespace PrettyRegistryXml.OpenXR
         {
             get => new List<Example>()
                 {
-                    new Example("Format the registry file in-place",
+                    new("Format the registry file in-place",
                                 new Options { InputFile = "../openxr/specification/registry/xr.xml" }),
-                    new Example("Format the registry file, with experimental extension attribute wrapping, to a new file",
+                    new("Format the registry file, with experimental extension attribute wrapping, to a new file",
                                 new Options {
                                     InputFile = "../openxr/specification/registry/xr.xml" ,
                                     OutputFile = "../openxr/specification/registry/xr-wrapped.xml",

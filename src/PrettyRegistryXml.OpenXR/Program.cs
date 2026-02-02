@@ -40,7 +40,7 @@ namespace PrettyRegistryXml.OpenXR
 
         static void Main(string[] args)
         {
-            Parser parser = new Parser(with =>
+            Parser parser = new(with =>
             {
                 with.GetoptMode = true;
             });
