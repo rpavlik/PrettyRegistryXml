@@ -21,15 +21,15 @@ namespace PrettyRegistryXml.GroupedAlignment
         private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
         {
 
-            private readonly List<string[]> attributeNameOrders = new();
-            private readonly List<NameLengthPair> observedLengths = new();
+            private readonly List<string[]> attributeNameOrders = [];
+            private readonly List<NameLengthPair> observedLengths = [];
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
                 // takes all remaining
                 observedLengths.AddRange(attributes);
-                attributeNameOrders.Add((from pair in attributes
-                                         select pair.Name).ToArray());
-                return Enumerable.Empty<NameLengthPair>();
+                attributeNameOrders.Add([.. from pair in attributes
+                                         select pair.Name]);
+                return [];
             }
 
             public IAttributeSequenceItemAligner Finish()
@@ -50,7 +50,7 @@ namespace PrettyRegistryXml.GroupedAlignment
                                  select new Core.AttributeAlignment(name, length);
                 var leftoverNonAlignments = from name in leftoverNames
                                             select Core.AttributeAlignment.MakeUnaligned(name);
-                return new BaseAligner(alignments.Concat(leftoverNonAlignments).ToArray());
+                return new BaseAligner([.. alignments, .. leftoverNonAlignments]);
             }
         }
 

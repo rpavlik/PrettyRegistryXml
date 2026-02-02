@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -20,7 +20,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// </summary>
     public class GroupedAttributeAlignment : IAlignmentFinder
     {
-        private static AlignedTrailer MakeDefaultTrailer() => new AlignedTrailer();
+        private static AlignedTrailer MakeDefaultTrailer() => new();
         private readonly IAttributeSequenceItem[] attributeSequenceItems;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace PrettyRegistryXml.GroupedAlignment
             else
             {
                 // add a default trailer
-                this.attributeSequenceItems = attributeSequenceItems.Append(MakeDefaultTrailer()).ToArray();
+                this.attributeSequenceItems = [.. attributeSequenceItems, MakeDefaultTrailer()];
             }
             // If we have more than one trailer (and thus have any trailers anywhere before the last item),
             // that was a configuration error.
@@ -103,16 +103,10 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                                         from sequenceItem in attributeSequenceItems
                                                                         select sequenceItem.ToString()));
 
-        private sealed class State : IAlignmentState
+        private sealed class State(int elementNameAlignment, IEnumerable<IAttributeSequenceItemAligner> aligners) : IAlignmentState
         {
-            private readonly int ElementNameAlignment;
-            private readonly IAttributeSequenceItemAligner[] aligners;
-
-            public State(int elementNameAlignment, IEnumerable<IAttributeSequenceItemAligner> aligners)
-            {
-                ElementNameAlignment = elementNameAlignment;
-                this.aligners = aligners.ToArray();
-            }
+            private readonly int ElementNameAlignment = elementNameAlignment;
+            private readonly IAttributeSequenceItemAligner[] aligners = [.. aligners];
 
             private IEnumerable<AttributeAlignment> HandleAttribute(IEnumerable<string> attributeNames)
             {

@@ -18,7 +18,7 @@ namespace PrettyRegistryXml.Core
     /// Typically created with <see cref="FindElementAlignment(IEnumerable{XElement}, IDictionary{string, int}?)"/>.
     /// Wraps an integer for element name alignment, and an array of <see cref="AttributeAlignment"/>
     /// </remarks>
-    public struct ElementAlignment
+    public readonly struct ElementAlignment
     {
         /// <summary>
         /// Alignment for the element name

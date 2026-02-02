@@ -43,9 +43,9 @@ namespace PrettyRegistryXml.Vulkan
         {
             get => new List<Example>()
                 {
-                    new Example("Format the registry file in-place",
+                    new("Format the registry file in-place",
                                 new Options { InputFile = "../vulkan/xml/vk.xml" }),
-                    new Example("Format the registry file, with experimental extension attribute wrapping, to a new file",
+                    new("Format the registry file, with experimental extension attribute wrapping, to a new file",
                                 new Options {
                                     InputFile = "../vulkan/xml/vk.xml" ,
                                     OutputFile = "../vulkan/xml/vk-wrapped.xml",

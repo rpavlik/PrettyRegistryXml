@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -34,8 +34,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <param name="attributeNames">Attribute names in the desired order</param>
         public AttributeGroup(params string[] attributeNames)
         {
-            AttributeNames = attributeNames.ToArray();
-            AttributeNameSet = AttributeNames.ToHashSet();
+            AttributeNames = [.. attributeNames];
+            AttributeNameSet = [.. AttributeNames];
             ExtraSpace = 0;
         }
 
@@ -46,8 +46,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <param name="attributeNames">Attribute names in the desired order</param>
         public AttributeGroup(int extraSpace, params string[] attributeNames)
         {
-            AttributeNames = attributeNames.ToArray();
-            AttributeNameSet = AttributeNames.ToHashSet();
+            AttributeNames = [.. attributeNames];
+            AttributeNameSet = [.. AttributeNames];
             ExtraSpace = extraSpace;
         }
 
@@ -65,12 +65,9 @@ namespace PrettyRegistryXml.GroupedAlignment
                                                             string.Join(", ", from name in AttributeNames
                                                                               select $"\"{name}\""));
 
-        private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
+        private sealed class WidthComputer(AttributeGroup attrGroup) : IAttributeSequenceItemWidthComputer
         {
-            private readonly AttributeGroup attrGroup;
-
-            public WidthComputer(AttributeGroup attrGroup) => this.attrGroup = attrGroup;
-
+            private readonly AttributeGroup attrGroup = attrGroup;
             private readonly List<NameLengthPair> observedLengths = new();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {

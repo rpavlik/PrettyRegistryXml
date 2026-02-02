@@ -1,4 +1,4 @@
-// Copyright 2021 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -16,7 +16,11 @@ namespace PrettyRegistryXml.Vulkan
     /// <summary>
     /// Vulkan-specific policy for formatting XML.
     /// </summary>
-    public class XmlFormatter : XmlFormatterBase
+    /// <remarks>
+    /// Constructor
+    /// </remarks>
+    /// <param name="options">Formatting options, typically from command line.</param>
+    public class XmlFormatter(Options options) : XmlFormatterBase
     {
         /// <inheritdoc />
         public override int IndentLevelWidth { get => 4; }
@@ -27,23 +31,13 @@ namespace PrettyRegistryXml.Vulkan
         /// <summary>
         /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
         /// </summary>
-        private bool WrapExtensions { get; init; }
+        private bool WrapExtensions { get; init; } = options.WrapExtensions;
 
 
         /// <summary>
         /// Whether we should align the attributes of SPIR-V-related tags, a runtime preference set by the command line.
         /// </summary>
-        private bool AlignSPIRV { get; init; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="options">Formatting options, typically from command line.</param>
-        public XmlFormatter(Options options)
-        {
-            WrapExtensions = options.WrapExtensions;
-            AlignSPIRV = options.AlignSPIRV;
-        }
+        private bool AlignSPIRV { get; init; } = options.AlignSPIRV;
 
         /// <summary>
         /// Checks an element category attribute to tell if it's a known "not single line" element.
