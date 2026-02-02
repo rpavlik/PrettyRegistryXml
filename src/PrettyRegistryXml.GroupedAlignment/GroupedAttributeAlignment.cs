@@ -20,7 +20,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// </summary>
     public class GroupedAttributeAlignment : IAlignmentFinder
     {
-        private static AlignedTrailer MakeDefaultTrailer() => new AlignedTrailer();
+        private static AlignedTrailer MakeDefaultTrailer() => new();
         private readonly IAttributeSequenceItem[] attributeSequenceItems;
 
         /// <summary>
