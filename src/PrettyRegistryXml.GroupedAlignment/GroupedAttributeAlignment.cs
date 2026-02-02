@@ -49,7 +49,7 @@ namespace PrettyRegistryXml.GroupedAlignment
             else
             {
                 // add a default trailer
-                this.attributeSequenceItems = attributeSequenceItems.Append(MakeDefaultTrailer()).ToArray();
+                this.attributeSequenceItems = [.. attributeSequenceItems, MakeDefaultTrailer()];
             }
             // If we have more than one trailer (and thus have any trailers anywhere before the last item),
             // that was a configuration error.

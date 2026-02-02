@@ -234,9 +234,12 @@ namespace PrettyRegistryXml.Core
             }
 
             // Combine the aligned ones with unaligned leftovers.
-            return aligned.Concat(from name in leftovers
-                                  select MakeUnaligned(name))
-                          .ToArray();
+            return
+            [
+                .. aligned,
+                .. from name in leftovers
+                select MakeUnaligned(name),
+            ];
         }
 
         /// <summary>
@@ -264,7 +267,7 @@ namespace PrettyRegistryXml.Core
                 from a in lengthDictionary
                 where !alignedNamesSet.Contains(a.Key)
                 select a.Key;
-            return (aligned.ToArray(), leftoverNames.ToArray());
+            return ([.. aligned], [.. leftoverNames]);
         }
 
         #endregion

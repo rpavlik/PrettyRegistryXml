@@ -34,8 +34,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <param name="attributeNames">Attribute names in the desired order</param>
         public AttributeGroup(params string[] attributeNames)
         {
-            AttributeNames = attributeNames.ToArray();
-            AttributeNameSet = AttributeNames.ToHashSet();
+            AttributeNames = [.. attributeNames];
+            AttributeNameSet = [.. AttributeNames];
             ExtraSpace = 0;
         }
 
@@ -46,8 +46,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         /// <param name="attributeNames">Attribute names in the desired order</param>
         public AttributeGroup(int extraSpace, params string[] attributeNames)
         {
-            AttributeNames = attributeNames.ToArray();
-            AttributeNameSet = AttributeNames.ToHashSet();
+            AttributeNames = [.. attributeNames];
+            AttributeNameSet = [.. AttributeNames];
             ExtraSpace = extraSpace;
         }
 
