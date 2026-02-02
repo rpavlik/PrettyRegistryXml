@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -13,11 +13,9 @@ namespace PrettyRegistryXml.OpenXR.Tests
 {
     public class PreserveSchemasTest
     {
-        public static IEnumerable<object[]> RoundTripFilenames => new List<object[]>{
-            new object[] {
+        public static TheoryData<string> RoundTripFilenames => [
                 "sample.xml"
-            },
-        };
+        ];
         [Theory]
         [MemberData(nameof(RoundTripFilenames))]
         public void RoundtripData(string filename)

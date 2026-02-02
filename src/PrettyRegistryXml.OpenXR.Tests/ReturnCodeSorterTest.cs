@@ -17,21 +17,21 @@ namespace PrettyRegistryXml.OpenXR.Tests
         private static readonly string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments
-        public static IEnumerable<object[]> SmallData => [
+        public static IEnumerable<TheoryDataRow<string[], string[]>> SmallData => [
             // not special, underscore sorting
-            new object[]{
+            new TheoryDataRow<string[], string[]>(
                 // expected
-                new string[]{"XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH"},
+                ["XR_ERROR_ACTIONSET_NOT_ATTACHED", "XR_ERROR_ACTION_TYPE_MISMATCH"],
                 // unsorted
-                new string[]{"XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"},
-            },
+                ["XR_ERROR_ACTION_TYPE_MISMATCH", "XR_ERROR_ACTIONSET_NOT_ATTACHED"]
+            ),
             // special codes
-            new object[]{
+            new TheoryDataRow<string[], string[]>(
                 // expected
-                new string[]{Sorter.PresortedSpecialCodes.First(), "XR_SESSION_LOSS_PENDING",},
+                [Sorter.PresortedSpecialCodes.First(), "XR_SESSION_LOSS_PENDING",],
                 // unsorted
-                new string[]{"XR_SESSION_LOSS_PENDING", Sorter.PresortedSpecialCodes.First(),},
-            },
+                ["XR_SESSION_LOSS_PENDING", Sorter.PresortedSpecialCodes.First(),]
+            ),
         ];
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
         [Theory]
@@ -41,14 +41,14 @@ namespace PrettyRegistryXml.OpenXR.Tests
             Assert.Equal(expected, Sorter.SortReturnCodes(unsorted));
         }
 
-        public static IEnumerable<object[]> RealStringData => [
-            new object[]{
+        public static IEnumerable<TheoryDataRow<string, string>> RealStringData => [
+            new TheoryDataRow<string, string>(
                 // from xrGetActionStateVector2f
                 // expected
                 "XR_ERROR_ACTIONSET_NOT_ATTACHED,XR_ERROR_ACTION_TYPE_MISMATCH,XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_PATH_INVALID,XR_ERROR_PATH_UNSUPPORTED,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SESSION_LOST,XR_ERROR_VALIDATION_FAILURE",
                 // unsorted
                 "XR_ERROR_INSTANCE_LOST,XR_ERROR_SESSION_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_HANDLE_INVALID,XR_ERROR_ACTIONSET_NOT_ATTACHED,XR_ERROR_ACTION_TYPE_MISMATCH,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_PATH_INVALID,XR_ERROR_PATH_UNSUPPORTED"
-            },
+            ),
         ];
 
         [Theory]
@@ -60,12 +60,11 @@ namespace PrettyRegistryXml.OpenXR.Tests
         }
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments
-        public static IEnumerable<object[]> RealData => [
-            new object[]{
+        public static IEnumerable<TheoryDataRow<string[], string[]>> RealData => [
+            new TheoryDataRow<string[], string[]>(
                 // from xrGetActionStateVector2f
                 // expected
-                new string[]
-                {
+                [
                     "XR_ERROR_ACTIONSET_NOT_ATTACHED",
                     "XR_ERROR_ACTION_TYPE_MISMATCH",
                     "XR_ERROR_HANDLE_INVALID",
@@ -75,10 +74,9 @@ namespace PrettyRegistryXml.OpenXR.Tests
                     "XR_ERROR_RUNTIME_FAILURE",
                     "XR_ERROR_SESSION_LOST",
                     "XR_ERROR_VALIDATION_FAILURE",
-                },
+                ],
                 // unsorted
-                new string[]
-                {
+                [
                     "XR_ERROR_VALIDATION_FAILURE",
                     "XR_ERROR_RUNTIME_FAILURE",
                     "XR_ERROR_HANDLE_INVALID",
@@ -88,8 +86,8 @@ namespace PrettyRegistryXml.OpenXR.Tests
                     "XR_ERROR_PATH_INVALID",
                     "XR_ERROR_ACTION_TYPE_MISMATCH",
                     "XR_ERROR_ACTIONSET_NOT_ATTACHED"
-                }
-            },
+                ]
+            ),
         ];
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
 
@@ -100,10 +98,10 @@ namespace PrettyRegistryXml.OpenXR.Tests
             Assert.Equal(expected, Sorter.SortReturnCodes(unsorted));
         }
 
-        public static IEnumerable<object[]> AllSpecialCodes => [
-            new object[]{Sorter.PresortedSpecialCodes},
-            new object[]{Sorter.PresortedSpecialCodes.Reverse()},
-        ];
+        public static TheoryData<IEnumerable<string>> AllSpecialCodes => new() {
+            Sorter.PresortedSpecialCodes,
+            Sorter.PresortedSpecialCodes.Reverse(),
+        };
 
         [Theory]
         [MemberData(nameof(AllSpecialCodes))]
@@ -113,12 +111,12 @@ namespace PrettyRegistryXml.OpenXR.Tests
             Assert.Equal(Sorter.PresortedSpecialCodes, Sorter.SortReturnCodes(value));
         }
 
-        public static IEnumerable<object[]> AllSpecialCodesStrings => [
-            new object[]{SpecialCodesStringInOrder},
-            new object[]{string.Join(',', Sorter.PresortedSpecialCodes.Reverse())},
+        public static TheoryData<string> AllSpecialCodesStrings => [
+            SpecialCodesStringInOrder,
+            string.Join(',', Sorter.PresortedSpecialCodes.Reverse()),
             // with empty items between
-            new object[]{string.Join(",,", Sorter.PresortedSpecialCodes)},
-            new object[]{string.Join(",,", Sorter.PresortedSpecialCodes.Reverse())},
+            string.Join(",,", Sorter.PresortedSpecialCodes),
+            string.Join(",,", Sorter.PresortedSpecialCodes.Reverse()),
         ];
 
         [Theory]
