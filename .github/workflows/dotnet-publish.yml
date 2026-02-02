@@ -1,5 +1,5 @@
 # Copyright 2020 GitHub
-# Copyright 2021-2025 Collabora, Ltd
+# Copyright 2021-2026 Collabora, Ltd
 #
 # SPDX-License-Identifier: MIT
 
@@ -21,11 +21,11 @@ jobs:
           - os: windows-latest
 
     steps:
-      - uses: "actions/checkout@v4"
+      - uses: "actions/checkout@v6"
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: "actions/setup-dotnet@v4"
+        uses: "actions/setup-dotnet@v5.1.0"
         with:
           dotnet-version: 8.0.x
       - name: Restore dependencies
@@ -39,7 +39,7 @@ jobs:
         run: ./Build-Artifacts.ps1
 
       - name: Upload artifacts to workflow
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v6.0.0"
         with:
           name: "PrettyRegistryXML-${{ runner.os }}"
           path: "out/${{ env.ARTIFACT_NAME }}.7z"
