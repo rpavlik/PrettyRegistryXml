@@ -28,6 +28,15 @@ namespace PrettyRegistryXml.GroupedAlignment
             Groups = groups;
         }
 
+        /// <summary>
+        /// Create a group choice.
+        /// </summary>
+        /// <param name="groups">An enumerable of <see cref="AttributeGroup"/> objects to alternate between.</param>
+        public GroupChoice(IEnumerable<AttributeGroup> groups)
+        {
+            Groups = groups.ToArray();
+        }
+
         private (AttributeGroup, int) FindBestMatchingGroup(IEnumerable<string> elementAttrNames)
         {
             // find the option that handles the most.
