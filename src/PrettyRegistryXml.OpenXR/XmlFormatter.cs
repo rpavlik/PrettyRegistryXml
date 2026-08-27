@@ -29,27 +29,27 @@ namespace PrettyRegistryXml.OpenXR
         /// <summary>
         /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
         /// </summary>
-        private bool WrapExtensions { get; init; }
+        private bool WrapExtensions { get; set; }
 
         /// <summary>
         /// Whether we should trim the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool TrimAttributes { get; init; }
+        private bool TrimAttributes { get; set; }
 
         /// <summary>
         /// Whether we should normalize spaces in the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool NormalizeAttributeSpaces { get; init; }
+        private bool NormalizeAttributeSpaces { get; set; }
 
         /// <summary>
         /// Whether we should sort the return values, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool SortReturnVals { get; init; }
+        private bool SortReturnVals { get; set; }
 
         /// <summary>
         /// Whether to artificially de-indent extensions by one level - legacy behavior, on by default.
         /// </summary>
-        private bool DeindentExtensions { get; init; }
+        private bool DeindentExtensions { get; set; }
 
         private readonly ReturnCodeSorter CodeSorter = new();
 

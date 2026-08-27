@@ -19,7 +19,7 @@ namespace PrettyRegistryXml.Core
     public abstract class BaseReturnCodeSorterWithSpecialCodes : BaseReturnCodeSorter
     {
         private readonly Dictionary<string, Tuple<int, string>> importance;
-        private readonly ImportanceStringComparer comparer = new();
+        private readonly ImportanceStringComparer comparer = new ImportanceStringComparer();
 
         /// <value>Your "special" codes, in the order you want them to appear.</value>
         /// <remarks>This is public for ease of unit testing</remarks>
@@ -31,11 +31,11 @@ namespace PrettyRegistryXml.Core
         public BaseReturnCodeSorterWithSpecialCodes()
         {
             // Construct dictionary from IEnumerable<KeyValuePair>
-            importance = new(PresortedSpecialCodes
+            importance = (Dictionary<string, Tuple<int, string>>)PresortedSpecialCodes
                                 // reverse so that later codes get a smaller index
                                 .Reverse()
                                 // turn codes into a key-value pair: mapping a code to a (negated-decreased-reverse-index, code) tuple
-                                .Select((code, index) => KeyValuePair.Create(code, (-index - 100, code).ToTuple())));
+                                .Select((code, index) => KeyValuePair.Create(code, (-index - 100, code).ToTuple()));
         }
 
 

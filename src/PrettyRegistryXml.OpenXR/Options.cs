@@ -12,13 +12,13 @@ using System.Text;
 
 namespace PrettyRegistryXml.OpenXR
 {
-    public record Options
+    public struct Options
     {
         [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original xr.xml file from OpenXR")]
-        public string InputFile { get; init; }
+        public string InputFile { get; set; }
 
         [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
-        public string OutputFile { get; init; }
+        public string OutputFile { get; set; }
 
         /// <summary>
         /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
@@ -30,19 +30,19 @@ namespace PrettyRegistryXml.OpenXR
         }
 
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
-        public bool WrapExtensions { get; init; }
+        public bool WrapExtensions { get; set; }
 
         [Option("trim-attributes", Default = true, HelpText = "Whether to trim the values of attributes.")]
-        public bool TrimAttributes { get; init; }
+        public bool TrimAttributes { get; set; }
 
         [Option("normalize-attribute-spaces", Default = true, HelpText = "Whether to normalize spaces in the values of attributes.")]
-        public bool NormalizeAttributeSpaces { get; init; }
+        public bool NormalizeAttributeSpaces { get; set; }
 
         [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
-        public bool SortCodes { get; init; }
+        public bool SortCodes { get; set; }
 
         [Option("deindent-extensions", Default = true, HelpText = "Whether to artificially de-indent extensions by one level.")]
-        public bool DeindentExtensions { get; init; }
+        public bool DeindentExtensions { get; set; }
 
         // Automatically used by CommandLineParser for help.
 

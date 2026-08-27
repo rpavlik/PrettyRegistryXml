@@ -48,12 +48,12 @@ namespace PrettyRegistryXml.GroupedAlignment
             private readonly GroupChoice groupChoice;
             private readonly Dictionary<AttributeGroup, IAttributeSequenceItemAligner> groupAligners;
 
-            public int FullWidth { get; private init; }
+            public int FullWidth { get; private set; }
 
             public Aligner(GroupChoice groupChoice,
                            IEnumerable<KeyValuePair<AttributeGroup, IAttributeSequenceItemAligner>> groupsToAligners)
             {
-                groupAligners = new(groupsToAligners);
+                groupAligners = new Dictionary<AttributeGroup, IAttributeSequenceItemAligner>(groupsToAligners);
                 FullWidth = (from aligner in groupAligners.Values
                              select aligner.FullWidth).Max();
                 this.groupChoice = groupChoice;

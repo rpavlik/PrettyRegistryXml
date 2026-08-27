@@ -7,6 +7,7 @@
 using PrettyRegistryXml.Core;
 using PrettyRegistryXml.GroupedAlignment;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -27,13 +28,13 @@ namespace PrettyRegistryXml.Vulkan
         /// <summary>
         /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
         /// </summary>
-        private bool WrapExtensions { get; init; }
+        private bool WrapExtensions { get; set; }
 
 
         /// <summary>
         /// Whether we should align the attributes of SPIR-V-related tags, a runtime preference set by the command line.
         /// </summary>
-        private bool AlignSPIRV { get; init; }
+        private bool AlignSPIRV { get; set; }
 
         /// <summary>
         /// Constructor
@@ -62,7 +63,7 @@ namespace PrettyRegistryXml.Vulkan
         /// A set of element names who always act as single-line containers.
         /// See also <see cref="ChildrenShouldBeSingleLine(XElement)"/> where this is used.
         /// </summary>
-        private static readonly HashSet<string> singleLineContainers = new() { "member", "param", "proto" };
+        private static readonly HashSet<string> singleLineContainers = new HashSet<string>() { "member", "param", "proto" };
 
         /// <summary>
         /// Determine whether an element and its children should all be on a single line.
@@ -98,7 +99,7 @@ namespace PrettyRegistryXml.Vulkan
                 // also, any comment *not* under one of these elements
                 // This is just trying to minimize the diff.
                 var parentName = node.Parent.Name.ToString();
-                return parentName is not "registry" and not "enums" and not "require";
+                return (parentName != "registry") && (parentName != "enums") && (parentName != "require");
             }
             return false;
 
@@ -222,6 +223,7 @@ namespace PrettyRegistryXml.Vulkan
                                                                           return true;
                                                                       }
                                                                       // These categories look weird when aligned, so don't align them.
+                                                                      HashSet<string> skipCategories = new HashSet<string> { "define", "funcpointer", "struct", "union", "include" };
                                                                       return catName is not "define"
                                                                                     and not "funcpointer"
                                                                                     and not "struct"

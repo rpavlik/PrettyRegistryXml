@@ -17,13 +17,14 @@ namespace PrettyRegistryXml.GroupedAlignment.Tests
     public class GroupedAlignmentTest
     {
         private static GroupedAttributeAlignment OpenXREnumAlignment =>
-                        new(new GroupChoice(new AttributeGroup("value"),
-                                            new AttributeGroup("offset", "dir", "extends")));
+                        new GroupedAttributeAlignment(new GroupChoice(new AttributeGroup("value"),
+                                                                      new AttributeGroup("offset", "dir", "extends")));
         private static GroupedAttributeAlignment VulkanEnumAlignment =>
-                        new(
-                            new GroupChoice(new AttributeGroup("value"),
-                                            new AttributeGroup("extends", "extnumber", "offset", "dir"),
-                                            new AttributeGroup("bitpos", "extends")),
+                        new GroupedAttributeAlignment(
+                            new GroupChoice(
+                                new AttributeGroup("value"),
+                                new AttributeGroup("extends", "extnumber", "offset", "dir"),
+                                new AttributeGroup("bitpos", "extends")),
                             new AlignedTrailer());
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments

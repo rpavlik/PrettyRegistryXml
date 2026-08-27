@@ -23,12 +23,12 @@ namespace PrettyRegistryXml.Core
         /// <summary>
         /// Alignment for the element name
         /// </summary>
-        public int NameAlignment { get; init; }
+        public int NameAlignment { get; set; }
 
         /// <summary>
         /// An array of alignments for attributes.
         /// </summary>
-        public AttributeAlignment[] AttributeAlignments { get; init; }
+        public AttributeAlignment[] AttributeAlignments { get; set; }
 
         #region XElement-related methods
 

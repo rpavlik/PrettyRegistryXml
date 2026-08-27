@@ -1,9 +1,9 @@
-# NameLengthPair record
+# NameLengthPair structure
 
 An attribute name and length
 
 ```csharp
-public record NameLengthPair
+public struct NameLengthPair
 ```
 
 ## Public Members

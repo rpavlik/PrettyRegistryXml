@@ -12,13 +12,13 @@ using System.Text;
 
 namespace PrettyRegistryXml.Vulkan
 {
-    public record Options
+    public struct Options
     {
         [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original vk.xml file from Vulkan")]
-        public string InputFile { get; init; }
+        public string InputFile { get; set; }
 
         [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
-        public string OutputFile { get; init; }
+        public string OutputFile { get; set; }
 
         /// <summary>
         /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
@@ -30,10 +30,10 @@ namespace PrettyRegistryXml.Vulkan
         }
 
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
-        public bool WrapExtensions { get; init; }
+        public bool WrapExtensions { get; set; }
 
         [Option("align-spir-v", Default = false, HelpText = "Whether to align attributes of children of <spirvextension> and <spirvcapability> tags.")]
-        public bool AlignSPIRV { get; init; }
+        public bool AlignSPIRV { get; set; }
 
         // Automatically used by CommandLineParser for help.
 
