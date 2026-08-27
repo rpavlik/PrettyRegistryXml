@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -32,7 +32,7 @@ namespace PrettyRegistryXml.OpenXR.Tests
         /// <returns>normalized string</returns>
         public static string NormalizeText(string s)
         {
-            return s.ReplaceLineEndings().Trim();
+            return s.Replace("\r\n", "").Replace("\n", "").Trim();
         }
 
     }
