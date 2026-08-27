@@ -1,10 +1,11 @@
-// Copyright 2021-2026 Collabora, Ltd
+// Copyright 2021-2023 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
 using CommandLine;
 using CommandLine.Text;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 // Disabling in this file because there's help text for each, lack of XML docs doesn't bother me here.
@@ -66,13 +67,13 @@ namespace PrettyRegistryXml.OpenXR
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"- Input file: {InputFile}");
-            sb.AppendLine($"- Output file: {ActualOutputFile}");
-            sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine($"- Trim attribute values: {TrimAttributes}");
-            sb.AppendLine($"- Normalize spaces in attribute values: {NormalizeAttributeSpaces}");
-            sb.AppendLine($"- De-indent extensions: {DeindentExtensions}");
-            sb.AppendLine($"- Sort return codes: {SortCodes}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Trim attribute values: {TrimAttributes}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Normalize spaces in attribute values: {NormalizeAttributeSpaces}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- De-indent extensions: {DeindentExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Sort return codes: {SortCodes}");
             return sb.ToString();
         }
     }

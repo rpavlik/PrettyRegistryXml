@@ -1,10 +1,11 @@
-// Copyright 2021-2026 Collabora, Ltd
+// Copyright 2021 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
 using CommandLine;
 using CommandLine.Text;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 // Disabling in this file because there's help text for each, lack of XML docs doesn't both me here.
@@ -57,10 +58,10 @@ namespace PrettyRegistryXml.Vulkan
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"- Input file: {InputFile}");
-            sb.AppendLine($"- Output file: {ActualOutputFile}");
-            sb.AppendLine($"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine($"- Align attributes of children of SPIR-V tags: {AlignSPIRV}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
+            sb.AppendLine(CultureInfo.InvariantCulture, $"- Align attributes of children of SPIR-V tags: {AlignSPIRV}");
             return sb.ToString();
         }
     }
