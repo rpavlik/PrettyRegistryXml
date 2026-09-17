@@ -1,7 +1,7 @@
-# Options.SortCodes property
+# Options.NoSortCodes property
 
 ```csharp
-public bool SortCodes { get; set; }
+public bool NoSortCodes { get; set; }
 ```
 
 ## See Also
