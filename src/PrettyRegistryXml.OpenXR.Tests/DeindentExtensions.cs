@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -34,7 +34,7 @@ namespace PrettyRegistryXml.OpenXR.Tests
                 InputFile = fullPath,
                 OutputFile = outFullPath,
                 WrapExtensions = false,
-                SortCodes = false,
+                NoSortCodes = true,
                 DeindentExtensions = deindentSetting,
             };
             Program.Run(opts);

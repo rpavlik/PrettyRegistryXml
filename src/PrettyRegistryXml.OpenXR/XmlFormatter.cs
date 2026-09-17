@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Collabora, Ltd
+// Copyright 2021-2026 Collabora, Ltd
 //
 // SPDX-License-Identifier: MIT
 
@@ -62,7 +62,7 @@ namespace PrettyRegistryXml.OpenXR
             WrapExtensions = options.WrapExtensions;
             TrimAttributes = options.TrimAttributes;
             NormalizeAttributeSpaces = options.NormalizeAttributeSpaces;
-            SortReturnVals = options.SortCodes;
+            SortReturnVals = !options.NoSortCodes;
             DeindentExtensions = options.DeindentExtensions;
         }
 
