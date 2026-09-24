@@ -14,10 +14,10 @@ namespace PrettyRegistryXml.OpenXR
     /// </summary>
     public sealed class ReturnCodeSorter : BaseReturnCodeSorterWithSpecialCodes
     {
-        private static readonly string[] _specialPresorted = [
+        private static readonly string[] _specialPresorted = new string[] {
                 // These codes will be sorted first, in this order.
                 "XR_SUCCESS",
-            ];
+            };
 
         /// <inheritdoc />
         public override IEnumerable<string> PresortedSpecialCodes => _specialPresorted;

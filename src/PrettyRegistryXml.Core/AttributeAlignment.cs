@@ -29,7 +29,7 @@ namespace PrettyRegistryXml.Core
         /// <remarks>
         /// An empty name means this is just explicit padding.
         /// </remarks>
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         /// <value>true if <see cref="Name"/> is empty and thus this should be considered padding only.</value>
         public bool IsPaddingOnly => string.IsNullOrEmpty(Name);
@@ -129,13 +129,13 @@ namespace PrettyRegistryXml.Core
         /// </summary>
         /// <param name="name">Attribute name</param>
         /// <returns>A new unaligned AttributeAlignment</returns>
-        public static AttributeAlignment MakeUnaligned(string name) => new(name, 0);
+        public static AttributeAlignment MakeUnaligned(string name) => new AttributeAlignment(name, 0);
         /// <summary>
         /// Make an AttributeAlignment that is padding only.
         /// </summary>
         /// <param name="alignWidth">Value width for alignment</param>
         /// <returns>A new padding-only AttributeAlignment</returns>
-        public static AttributeAlignment MakePaddingOnly(int alignWidth) => new("", alignWidth);
+        public static AttributeAlignment MakePaddingOnly(int alignWidth) => new AttributeAlignment("", alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but different width from the old one.
@@ -143,7 +143,7 @@ namespace PrettyRegistryXml.Core
         /// <param name="old">An old attributeAlignment to use name from</param>
         /// <param name="alignWidth">New width</param>
         /// <returns>A new AttributeAlignment with name from old.Name but with new width</returns>
-        public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new(old.Name, alignWidth);
+        public static AttributeAlignment ReplaceWidth(AttributeAlignment old, int alignWidth) => new AttributeAlignment(old.Name, alignWidth);
 
         /// <summary>
         /// Make an AttributeAlignment with the same name but marked as unaligned.
@@ -247,7 +247,7 @@ namespace PrettyRegistryXml.Core
         /// and an array of all attribute names found in the collection that aren't in the first array.</returns>
         private static (AttributeAlignment[], string[]) FindAttributeAlignmentsAndLeftovers(IEnumerable<XElement> elements)
         {
-            Dictionary<string, int> lengthDictionary = new(from el in elements
+            Dictionary<string, int> lengthDictionary = new Dictionary<string, int>(from el in elements
                                                            from attr in el.Attributes()
                                                            group GetAttributeAlignLength(attr) by attr.Name.LocalName into g
                                                            select KeyValuePair.Create(g.Key, g.Max()));

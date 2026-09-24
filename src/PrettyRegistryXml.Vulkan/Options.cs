@@ -13,13 +13,13 @@ using System.Text;
 
 namespace PrettyRegistryXml.Vulkan
 {
-    public record Options
+    public class Options
     {
         [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original vk.xml file from Vulkan")]
-        public string InputFile { get; init; }
+        public string InputFile { get; set; }
 
         [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
-        public string OutputFile { get; init; }
+        public string OutputFile { get; set; }
 
         /// <summary>
         /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
@@ -27,21 +27,22 @@ namespace PrettyRegistryXml.Vulkan
         /// <value></value>
         public string ActualOutputFile
         {
-            get => OutputFile ?? InputFile;
+            get { return OutputFile != null ? OutputFile : InputFile; }
         }
 
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
-        public bool WrapExtensions { get; init; }
+        public bool WrapExtensions { get; set; } = false;
 
         [Option("align-spir-v", Default = false, HelpText = "Whether to align attributes of children of <spirvextension> and <spirvcapability> tags.")]
-        public bool AlignSPIRV { get; init; }
+        public bool AlignSPIRV { get; set; } = false;
 
         // Automatically used by CommandLineParser for help.
 
         [Usage(ApplicationAlias = "PrettyRegistryXml.Vulkan")]
         public static IEnumerable<Example> Examples
         {
-            get => new List<Example>()
+            get {
+              return new List<Example>()
                 {
                     new Example("Format the registry file in-place",
                                 new Options { InputFile = "../vulkan/xml/vk.xml" }),
@@ -52,16 +53,16 @@ namespace PrettyRegistryXml.Vulkan
                                     WrapExtensions = true,
                                 }),
                 };
-
+            }
         }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Align attributes of children of SPIR-V tags: {AlignSPIRV}");
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Input file: {0}", InputFile));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Output file: {0}", ActualOutputFile));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Wrap extensions attributes: {0}", WrapExtensions));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Align attributes of children of SPIR-V tags: {0}", AlignSPIRV));
             return sb.ToString();
         }
     }

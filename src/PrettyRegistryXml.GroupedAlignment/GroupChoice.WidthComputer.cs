@@ -19,7 +19,7 @@ namespace PrettyRegistryXml.GroupedAlignment
             public WidthComputer(GroupChoice groupChoice, AttributeGroup[] groups)
             {
                 this.groupChoice = groupChoice;
-                groupWidthComputers = new(from attrGroup in groups
+                groupWidthComputers = new Dictionary<AttributeGroup, IAttributeSequenceItemWidthComputer>(from attrGroup in groups
                                           select KeyValuePair.Create(attrGroup, attrGroup.CreateWidthComputer()));
             }
 

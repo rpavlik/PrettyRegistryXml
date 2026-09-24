@@ -13,13 +13,13 @@ using System.Text;
 
 namespace PrettyRegistryXml.OpenXR
 {
-    public record Options
+    public class Options
     {
         [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original xr.xml file from OpenXR")]
-        public string InputFile { get; init; }
+        public string InputFile { get; set; }
 
         [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
-        public string OutputFile { get; init; }
+        public string OutputFile { get; set; }
 
         /// <summary>
         /// This will be <see cref="OutputFile"/>, if set, otherwise <see cref="InputFile"/>
@@ -27,30 +27,31 @@ namespace PrettyRegistryXml.OpenXR
         /// <value></value>
         public string ActualOutputFile
         {
-            get => OutputFile ?? InputFile;
+            get { return OutputFile != null ? OutputFile : InputFile; }
         }
 
         [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
-        public bool WrapExtensions { get; init; }
+        public bool WrapExtensions { get; set; } = false;
 
         [Option("trim-attributes", Default = true, HelpText = "Whether to trim the values of attributes.")]
-        public bool TrimAttributes { get; init; }
+        public bool TrimAttributes { get; set; } = true;
 
         [Option("normalize-attribute-spaces", Default = true, HelpText = "Whether to normalize spaces in the values of attributes.")]
-        public bool NormalizeAttributeSpaces { get; init; }
+        public bool NormalizeAttributeSpaces { get; set; } = true;
 
         [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
-        public bool SortCodes { get; init; }
+        public bool SortCodes { get; set; } = true;
 
         [Option("deindent-extensions", Default = true, HelpText = "Whether to artificially de-indent extensions by one level.")]
-        public bool DeindentExtensions { get; init; }
+        public bool DeindentExtensions { get; set; } = true;
 
         // Automatically used by CommandLineParser for help.
 
         [Usage(ApplicationAlias = "PrettyRegistryXml.OpenXR")]
         public static IEnumerable<Example> Examples
         {
-            get => new List<Example>()
+            get {
+                return new List<Example>()
                 {
                     new Example("Format the registry file in-place",
                                 new Options { InputFile = "../openxr/specification/registry/xr.xml" }),
@@ -61,19 +62,19 @@ namespace PrettyRegistryXml.OpenXR
                                     WrapExtensions = true,
                                 }),
                 };
-
+            }
         }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Input file: {InputFile}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Output file: {ActualOutputFile}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Wrap extensions attributes: {WrapExtensions}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Trim attribute values: {TrimAttributes}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Normalize spaces in attribute values: {NormalizeAttributeSpaces}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- De-indent extensions: {DeindentExtensions}");
-            sb.AppendLine(CultureInfo.InvariantCulture, $"- Sort return codes: {SortCodes}");
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Input file: {0}", InputFile));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Output file: {0}", ActualOutputFile));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Wrap extensions attributes: {0}", WrapExtensions));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Trim attribute values: {0}", TrimAttributes));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Normalize spaces in attribute values: {0}", NormalizeAttributeSpaces));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- De-indent extensions: {0}", DeindentExtensions));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Sort return codes: {0}", SortCodes));
             return sb.ToString();
         }
     }

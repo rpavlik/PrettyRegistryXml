@@ -13,7 +13,7 @@ namespace PrettyRegistryXml.OpenXR.Tests
 {
     public class ReturnCodeSorterTest
     {
-        private static readonly ReturnCodeSorter Sorter = new();
+        private static readonly ReturnCodeSorter Sorter = new Dictionary<string, int>();
         private static readonly string SpecialCodesStringInOrder = string.Join(',', Sorter.PresortedSpecialCodes);
 
 #pragma warning disable CA1861 // Avoid constant arrays as arguments

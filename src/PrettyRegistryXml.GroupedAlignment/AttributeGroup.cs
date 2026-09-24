@@ -18,15 +18,15 @@ namespace PrettyRegistryXml.GroupedAlignment
     public class AttributeGroup : AttributeSequenceItemBase
     {
         /// <value>The attribute names in the desired order</value>
-        public string[] AttributeNames { get; init; }
+        public string[] AttributeNames { get; set; }
 
         /// <value>A <see cref="HashSet{T}"/> of the elements of <see cref="AttributeNames"/> </value>
-        public HashSet<string> AttributeNameSet { get; private init; }
+        public HashSet<string> AttributeNameSet { get; private set; }
 
         /// <summary>
         /// Extra space to add to this attribute group's width.
         /// </summary>
-        public int ExtraSpace { get; private init; }
+        public int ExtraSpace { get; private set; }
 
         /// <summary>
         /// Create a group of attributes that will all be aligned (or replaced with placeholder spaces)
@@ -71,7 +71,7 @@ namespace PrettyRegistryXml.GroupedAlignment
 
             public WidthComputer(AttributeGroup attrGroup) => this.attrGroup = attrGroup;
 
-            private readonly List<NameLengthPair> observedLengths = new();
+            private readonly List<NameLengthPair> observedLengths = new List<NameLengthPair>();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
                 var (selected, notSelected) = attributes.Partition(attr => attrGroup.AttributeNameSet.Contains(attr.Name));
@@ -82,7 +82,7 @@ namespace PrettyRegistryXml.GroupedAlignment
             public IAttributeSequenceItemAligner Finish()
             {
 
-                Dictionary<string, int> lengthDictionary = new(from pair in observedLengths
+                Dictionary<string, int> lengthDictionary = new Dictionary<string, int>(from pair in observedLengths
                                                                group pair.Length by pair.Name into g
                                                                select KeyValuePair.Create(g.Key, g.Max() + attrGroup.ExtraSpace));
                 var alignments = (from name in attrGroup.AttributeNames

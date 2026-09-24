@@ -16,7 +16,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// </summary>
     public partial class GroupChoice : AttributeSequenceItemBase
     {
-        private AttributeGroup[] Groups { get; init; }
+        private AttributeGroup[] Groups { get; set; }
 
         /// <summary>
         /// Create a group choice.

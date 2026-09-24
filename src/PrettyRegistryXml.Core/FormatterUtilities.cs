@@ -58,7 +58,7 @@ namespace PrettyRegistryXml.Core
         {
             return width switch
             {
-                < 0 => throw new ArgumentOutOfRangeException(paramName: nameof(width),
+                _ when width < 0 => throw new ArgumentOutOfRangeException(paramName: nameof(width),
                                                              "Cannot make negative spaces"),
                 0 => string.Empty,
                 _ => "".PadRight(width),

@@ -21,8 +21,8 @@ namespace PrettyRegistryXml.GroupedAlignment
         private sealed class WidthComputer : IAttributeSequenceItemWidthComputer
         {
 
-            private readonly List<string[]> attributeNameOrders = new();
-            private readonly List<NameLengthPair> observedLengths = new();
+            private readonly List<string[]> attributeNameOrders = new List<string[]>();
+            private readonly List<NameLengthPair> observedLengths = new List<NameLengthPair>();
             public IEnumerable<NameLengthPair> TakeAndHandleAttributes(IEnumerable<NameLengthPair> attributes)
             {
                 // takes all remaining
@@ -38,7 +38,7 @@ namespace PrettyRegistryXml.GroupedAlignment
                                             orderby attrList.Length descending
                                             select attrList).First();
                 var alignedNamesSet = biggestAttrList.ToHashSet();
-                Dictionary<string, int> lengthDictionary = new(from pair in observedLengths
+                Dictionary<string, int> lengthDictionary = new Dictionary<string, int>(from pair in observedLengths
                                                                group pair.Length by pair.Name into g
                                                                select KeyValuePair.Create(g.Key, g.Max()));
                 var leftoverNames =

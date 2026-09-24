@@ -53,7 +53,7 @@ namespace PrettyRegistryXml.Core
         public XmlRoundtripper(Stream stream, Encoding encoding)
         {
             _encoding = encoding;
-            _header = new(ReadLines(stream).TakeWhile(IsHeader));
+            _header = new List<string>(ReadLines(stream).TakeWhile(IsHeader));
         }
 
         /// <summary>

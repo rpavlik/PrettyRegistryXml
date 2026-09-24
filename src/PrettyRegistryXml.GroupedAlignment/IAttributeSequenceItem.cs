@@ -14,7 +14,7 @@ namespace PrettyRegistryXml.GroupedAlignment
     /// <summary>
     /// An attribute name and length
     /// </summary>
-    public record NameLengthPair
+    public class NameLengthPair
     {
         /// <summary>
         /// Constructor
@@ -27,11 +27,11 @@ namespace PrettyRegistryXml.GroupedAlignment
         }
 
         /// <value>The name of an attribute</value>
-        public string Name { get; init; }
+        public string Name { get; set; }
 
 
         /// <value>The length of an attribute</value>
-        public int Length { get; init; }
+        public int Length { get; set; }
     }
 
     /// <summary>

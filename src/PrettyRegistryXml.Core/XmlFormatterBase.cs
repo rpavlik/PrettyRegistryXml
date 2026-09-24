@@ -485,7 +485,7 @@ namespace PrettyRegistryXml.Core
             // This wraps the element alignment predicate and and groupingFunc,
             // to make a function that returns a bool (whether to align, using predicate) and the group key type (using groupingFunc).
             // Also handles the whole "whitespace in between elements" business.
-            (bool ShouldAlign, TKey? GroupKey) completeGrouping(XNode n)
+            (bool ShouldAlign, TKey GroupKey) completeGrouping(XNode n)
             {
                 if (n is XElement element && alignmentPredicate(element))
                 {
@@ -494,10 +494,10 @@ namespace PrettyRegistryXml.Core
                 if (includeEmptyTextNodesBetween && XmlUtilities.IsWhitespaceBetweenSelectedElements(n, alignmentPredicate))
                 {
                     // Empty text gets the group key of the previous node.
-                    TKey? prevKey = n.PreviousNode is XElement prevElement ? groupingFunc(prevElement) : default;
+                    TKey prevKey = n.PreviousNode is XElement prevElement ? groupingFunc(prevElement) : default!;
                     return (ShouldAlign: true, GroupKey: prevKey);
                 }
-                return (ShouldAlign: false, GroupKey: default(TKey));
+                return (ShouldAlign: false, GroupKey: default(TKey)!);
             }
 
             // Now, group the nodes, and iterate through the groups.

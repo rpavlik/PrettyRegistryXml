@@ -116,7 +116,7 @@ namespace PrettyRegistryXml.GroupedAlignment
 
             private IEnumerable<AttributeAlignment> HandleAttribute(IEnumerable<string> attributeNames)
             {
-                HashSet<string> known = new();
+                HashSet<string> known = new HashSet<string>();
                 IEnumerable<string> remaining = attributeNames;
 
                 foreach (var aligner in aligners)

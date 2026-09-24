@@ -29,29 +29,29 @@ namespace PrettyRegistryXml.OpenXR
         /// <summary>
         /// Whether we should wrap the attributes of extension tags, a runtime preference set by the command line.
         /// </summary>
-        private bool WrapExtensions { get; init; }
+        private bool WrapExtensions { get; set; }
 
         /// <summary>
         /// Whether we should trim the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool TrimAttributes { get; init; }
+        private bool TrimAttributes { get; set; }
 
         /// <summary>
         /// Whether we should normalize spaces in the values of attributes, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool NormalizeAttributeSpaces { get; init; }
+        private bool NormalizeAttributeSpaces { get; set; }
 
         /// <summary>
         /// Whether we should sort the return values, a runtime preference set by the command line, on by default.
         /// </summary>
-        private bool SortReturnVals { get; init; }
+        private bool SortReturnVals { get; set; }
 
         /// <summary>
         /// Whether to artificially de-indent extensions by one level - legacy behavior, on by default.
         /// </summary>
-        private bool DeindentExtensions { get; init; }
+        private bool DeindentExtensions { get; set; }
 
-        private readonly ReturnCodeSorter CodeSorter = new();
+        private readonly ReturnCodeSorter CodeSorter = new ReturnCodeSorter();
 
         /// <summary>
         /// Constructor
@@ -83,7 +83,7 @@ namespace PrettyRegistryXml.OpenXR
         /// A set of element names who always act as single-line containers.
         /// See also <see cref="ChildrenShouldBeSingleLine(XElement)"/> where this is used.
         /// </summary>
-        private static readonly HashSet<string> singleLineContainers = new() { "member", "param", "proto" };
+        private static readonly HashSet<string> singleLineContainers = new HashSet<string>() { "member", "param", "proto" };
 
         /// <summary>
         /// Determine whether an element and its children should all be on a single line.
