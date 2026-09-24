@@ -2,23 +2,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-using CommandLine;
-using CommandLine.Text;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-
-// Disabling in this file because there's help text for each, lack of XML docs doesn't both me here.
-#pragma warning disable CS1591
 
 namespace PrettyRegistryXml.Vulkan
 {
     public class Options
     {
-        [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original vk.xml file from Vulkan")]
+        // Path to original vk.xml file from Vulkan
         public string InputFile { get; set; }
 
-        [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
+        // Path to write formatted output file. Defaults to the same as the input file.
         public string OutputFile { get; set; }
 
         /// <summary>
@@ -30,30 +26,72 @@ namespace PrettyRegistryXml.Vulkan
             get { return OutputFile != null ? OutputFile : InputFile; }
         }
 
-        [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
+        // Whether to wrap attributes of <extension> tags.
         public bool WrapExtensions { get; set; } = false;
 
-        [Option("align-spir-v", Default = false, HelpText = "Whether to align attributes of children of <spirvextension> and <spirvcapability> tags.")]
+        // Whether to align attributes of children of <spirvextension> and <spirvcapability> tags.
         public bool AlignSPIRV { get; set; } = false;
 
-        // Automatically used by CommandLineParser for help.
-
-        [Usage(ApplicationAlias = "PrettyRegistryXml.Vulkan")]
-        public static IEnumerable<Example> Examples
+        public static Options Parse(string[] args)
         {
-            get {
-              return new List<Example>()
+            var options = new Options();
+            var posArgs = new List<string>();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].StartsWith("--"))
                 {
-                    new Example("Format the registry file in-place",
-                                new Options { InputFile = "../vulkan/xml/vk.xml" }),
-                    new Example("Format the registry file, with experimental extension attribute wrapping, to a new file",
-                                new Options {
-                                    InputFile = "../vulkan/xml/vk.xml" ,
-                                    OutputFile = "../vulkan/xml/vk-wrapped.xml",
-                                    WrapExtensions = true,
-                                }),
-                };
+                    string option = args[i].Substring(2);
+                    string name;
+                    bool val;
+                    int eqIndex = option.IndexOf('=');
+                    if (eqIndex >= 0)
+                    {
+                        name = option.Substring(0, eqIndex);
+                        string valStr = option.Substring(eqIndex + 1);
+                        bool.TryParse(valStr, out val);
+                    }
+                    else
+                    {
+                        name = option;
+                        val = true;
+                    }
+
+                    switch (name)
+                    {
+                        case "wrap-extensions":
+                            options.WrapExtensions = val;
+                            break;
+                        case "align-spir-v":
+                            options.AlignSPIRV = val;
+                            break;
+                        default:
+                            Console.WriteLine("Ignoring unknown option {0}",
+                                              args[i]);
+                            break;
+                    }
+                }
+                else
+                {
+                    posArgs.Add(args[i]);
+                }
             }
+
+            if (posArgs.Count > 2)
+            {
+                Console.WriteLine("Too many positional arguments: {0}",
+                                  posArgs.Count);
+            }
+            else if (posArgs.Count == 2)
+            {
+                options.InputFile = posArgs[0];
+                options.OutputFile = posArgs[1];
+            }
+            else if (posArgs.Count == 1)
+            {
+                options.InputFile = posArgs[0];
+            }
+
+            return options;
         }
 
         public override string ToString()

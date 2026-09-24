@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-using CommandLine;
-using CommandLine.Text;
 using PrettyRegistryXml.Core;
 using System;
 using System.IO;
@@ -34,17 +32,13 @@ namespace PrettyRegistryXml.Vulkan
 
         static void Main(string[] args)
         {
-            Parser parser = new Parser(with =>
+            var options = Options.Parse(args);
+            if (string.IsNullOrEmpty(options.InputFile))
             {
-                with.GetoptMode = true;
-            });
-            ParserResult<Options> result = parser.ParseArguments<Options>(args);
-            if (result.Tag == ParserResultType.NotParsed)
-            {
-                Console.WriteLine(HelpText.AutoBuild(result));
+                Console.WriteLine("Usage: PrettyRegistryXml.Vulkan <input> [<output>] [--wrap-extensions=true/false] ...");
                 return;
             }
-            result.WithParsed(Run);
+            Run(options);
         }
     }
 }

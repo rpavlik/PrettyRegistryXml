@@ -2,23 +2,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-using CommandLine;
-using CommandLine.Text;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-
-// Disabling in this file because there's help text for each, lack of XML docs doesn't bother me here.
-#pragma warning disable CS1591
 
 namespace PrettyRegistryXml.OpenXR
 {
     public class Options
     {
-        [Value(0, MetaName = "inputFile", Required = true, HelpText = "Path to original xr.xml file from OpenXR")]
+        // Path to original xr.xml file from OpenXR
         public string InputFile { get; set; }
 
-        [Value(1, MetaName = "outputFile", HelpText = "Path to write formatted output file. Defaults to the same as the input file.")]
+        // Path to write formatted output file. Defaults to the same as the input file.
         public string OutputFile { get; set; }
 
         /// <summary>
@@ -30,39 +26,90 @@ namespace PrettyRegistryXml.OpenXR
             get { return OutputFile != null ? OutputFile : InputFile; }
         }
 
-        [Option("wrap-extensions", Default = false, HelpText = "Whether to wrap attributes of <extension> tags.")]
+        // Whether to wrap attributes of <extension> tags.
         public bool WrapExtensions { get; set; } = false;
 
-        [Option("trim-attributes", Default = true, HelpText = "Whether to trim the values of attributes.")]
+        // Whether to trim the values of attributes.
         public bool TrimAttributes { get; set; } = true;
 
-        [Option("normalize-attribute-spaces", Default = true, HelpText = "Whether to normalize spaces in the values of attributes.")]
+        // Whether to normalize spaces in the values of attributes.
         public bool NormalizeAttributeSpaces { get; set; } = true;
 
-        [Option("sort-codes", Default = true, HelpText = "Whether to sort success and error codes.")]
+        // Whether to sort success and error codes.
         public bool SortCodes { get; set; } = true;
 
-        [Option("deindent-extensions", Default = true, HelpText = "Whether to artificially de-indent extensions by one level.")]
+        // Whether to artificially de-indent extensions by one level.
         public bool DeindentExtensions { get; set; } = true;
 
-        // Automatically used by CommandLineParser for help.
-
-        [Usage(ApplicationAlias = "PrettyRegistryXml.OpenXR")]
-        public static IEnumerable<Example> Examples
+        public static Options Parse(string[] args)
         {
-            get {
-                return new List<Example>()
+            var options = new Options();
+            var posArgs = new List<string>();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].StartsWith("--"))
                 {
-                    new Example("Format the registry file in-place",
-                                new Options { InputFile = "../openxr/specification/registry/xr.xml" }),
-                    new Example("Format the registry file, with experimental extension attribute wrapping, to a new file",
-                                new Options {
-                                    InputFile = "../openxr/specification/registry/xr.xml" ,
-                                    OutputFile = "../openxr/specification/registry/xr-wrapped.xml",
-                                    WrapExtensions = true,
-                                }),
-                };
+                    string option = args[i].Substring(2);
+                    string name;
+                    bool val;
+                    int eqIndex = option.IndexOf('=');
+                    if (eqIndex >= 0)
+                    {
+                        name = option.Substring(0, eqIndex);
+                        string valStr = option.Substring(eqIndex + 1);
+                        bool.TryParse(valStr, out val);
+                    }
+                    else
+                    {
+                        name = option;
+                        val = true;
+                    }
+
+                    switch (name)
+                    {
+                        case "wrap-extensions":
+                            options.WrapExtensions = val;
+                            break;
+                        case "trim-attributes":
+                            options.TrimAttributes = val;
+                            break;
+                        case "normalize-attribute-spaces":
+                            options.NormalizeAttributeSpaces = val;
+                            break;
+                        case "sort-codes":
+                            options.SortCodes = val;
+                            break;
+                        case "deindent-extensions":
+                            options.DeindentExtensions = val;
+                            break;
+                        default:
+                            Console.WriteLine("Ignoring unknown option {0}",
+                                              args[i]);
+                            break;
+                    }
+                }
+                else
+                {
+                    posArgs.Add(args[i]);
+                }
             }
+
+            if (posArgs.Count > 2)
+            {
+                Console.WriteLine("Too many positional arguments: {0}",
+                                  posArgs.Count);
+            }
+            else if (posArgs.Count == 2)
+            {
+                options.InputFile = posArgs[0];
+                options.OutputFile = posArgs[1];
+            }
+            else if (posArgs.Count == 1)
+            {
+                options.InputFile = posArgs[0];
+            }
+
+            return options;
         }
 
         public override string ToString()
