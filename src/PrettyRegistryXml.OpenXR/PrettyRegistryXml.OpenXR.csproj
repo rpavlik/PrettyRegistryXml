@@ -21,10 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="$(CommandLineParserVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PrettyRegistryXml.Core\PrettyRegistryXml.Core.csproj" />
     <ProjectReference Include="..\PrettyRegistryXml.GroupedAlignment\PrettyRegistryXml.GroupedAlignment.csproj" />
   </ItemGroup>
