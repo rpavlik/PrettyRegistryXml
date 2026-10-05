@@ -1,7 +1,7 @@
-# Options record
+# Options class
 
 ```csharp
-public record Options
+public class Options
 ```
 
 ## Public Members
@@ -9,12 +9,13 @@ public record Options
 | name | description |
 | --- | --- |
 | [Options](Options/Options.md)() | The default constructor. |
+| static [Parse](Options/Parse.md)(…) |  |
 | [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](./Options/OutputFile.md), if set, otherwise [`InputFile`](./Options/InputFile.md) |
 | [AlignSPIRV](Options/AlignSPIRV.md) { get; set; } |  |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [OutputFile](Options/OutputFile.md) { get; set; } |  |
 | [WrapExtensions](Options/WrapExtensions.md) { get; set; } |  |
-| static [Examples](Options/Examples.md) { get; } |  |
+| override [ToString](Options/ToString.md)() |  |
 
 ## See Also
 

@@ -16,7 +16,7 @@ A sequence containing items in *attributes* we didn't handle, preferably in thei
 
 ## See Also
 
-* record [NameLengthPair](../NameLengthPair.md)
+* class [NameLengthPair](../NameLengthPair.md)
 * interface [IAttributeSequenceItemWidthComputer](../IAttributeSequenceItemWidthComputer.md)
 * namespace [PrettyRegistryXml.GroupedAlignment](../../PrettyRegistryXml.GroupedAlignment.md)
 
