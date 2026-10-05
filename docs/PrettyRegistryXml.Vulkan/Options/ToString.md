@@ -1,9 +1,7 @@
-# Options.ActualOutputFile property
-
-This will be [`OutputFile`](./OutputFile.md), if set, otherwise [`InputFile`](./InputFile.md)
+# Options.ToString method
 
 ```csharp
-public string ActualOutputFile { get; }
+public override string ToString()
 ```
 
 ## See Also

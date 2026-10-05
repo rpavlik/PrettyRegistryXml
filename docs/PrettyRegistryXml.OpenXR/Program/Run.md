@@ -12,7 +12,7 @@ public static void Run(Options options)
 
 ## See Also
 
-* record [Options](../Options.md)
+* class [Options](../Options.md)
 * class [Program](../Program.md)
 * namespace [PrettyRegistryXml.OpenXR](../../PrettyRegistryXml.OpenXR.md)
 
