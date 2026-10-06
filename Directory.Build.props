@@ -23,7 +23,7 @@
 
     <!-- build config -->
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>8.0</LangVersion>
         <RootNamespace>PrettyRegistryXml</RootNamespace>
     </PropertyGroup>
