@@ -160,15 +160,16 @@ namespace PrettyRegistryXml.OpenXR
 
             var previousName = GetPreviousElementName(t);
             var nextName = GetNextElementName(t);
+            if ((parentName == "proto" || parentName == "param" || parentName == "member")
+                && previousName == null && nextName == "type")
+            {
+                // this is before the return type, param type, or member type.
+                // Nothing or "const " or "struct "
+                return TextWhitespace.Behavior.EmptyOrSingleTrailingSpace;
+            }
             if (parentName == "proto" || parentName == "param")
             {
                 // we are in a command
-                if (previousName == null && nextName == "type")
-                {
-                    // this is before the return type or param type in a function.
-                    // Nothing or "const "
-                    return TextWhitespace.Behavior.EmptyOrSingleTrailingSpace;
-                }
                 if (previousName != null && nextName == null)
                 {
                     // this is at the very end, tbh shouldn't have anything here.
@@ -461,4 +462,3 @@ namespace PrettyRegistryXml.OpenXR
             => FormatterUtilities.RegenerateIndentation(this, whitespaceText);
     }
 }
-
