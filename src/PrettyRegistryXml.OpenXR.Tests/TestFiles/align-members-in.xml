@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registry>
+    <comment>
+Copyright (c) 2017-2026, The Khronos Group Inc.
+
+SPDX-License-Identifier: Apache-2.0 OR MIT
+    </comment>
+
+    <types>
+        <type category="struct" name="XrSystemExampleProperties" structextends="XrSystemProperties" returnedonly="true">
+            <member values="XR_TYPE_SYSTEM_EXAMPLE_PROPERTIES"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member>
+            <member><type>XrBool32</type> <name>supportsExample</name></member>
+        </type>
+        <type category="struct" name="XrExampleCreateInfo">
+            <member values="XR_TYPE_EXAMPLE_CREATE_INFO"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>*     <name>next</name></member>
+            <member optional="true"><type>uint32_t</type> <name>itemCount</name></member>
+            <member len="itemCount">const <type>XrExampleItem</type>* <name>items</name></member>
+            <member><type>float</type> <name>values</name>[<enum>XR_EXAMPLE_VALUE_COUNT</enum>]</member>
+        </type>
+        <type category="struct" name="XrExampleVector2f">
+            <member><type>float</type>          <name>x</name></member>
+            <member><type>float</type>          <name>y</name></member>
+        </type>
+        <type category="union" name="XrExampleUnion">
+            <member><type>float</type> <name>f</name></member>
+            <member><type>uint64_t</type> <name>u</name></member>
+        </type>
+    </types>
+
+</registry>
