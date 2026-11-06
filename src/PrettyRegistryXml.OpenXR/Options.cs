@@ -41,6 +41,9 @@ namespace PrettyRegistryXml.OpenXR
         // Whether to artificially de-indent extensions by one level.
         public bool DeindentExtensions { get; set; } = true;
 
+        // Whether to align the <name> of struct and union members in one column.
+        public bool AlignMemberNames { get; set; } = true;
+
         public static Options Parse(string[] args)
         {
             var options = new Options();
@@ -82,6 +85,9 @@ namespace PrettyRegistryXml.OpenXR
                         case "deindent-extensions":
                             options.DeindentExtensions = val;
                             break;
+                        case "align-member-names":
+                            options.AlignMemberNames = val;
+                            break;
                         default:
                             Console.WriteLine("Ignoring unknown option {0}",
                                               args[i]);
@@ -122,6 +128,7 @@ namespace PrettyRegistryXml.OpenXR
             sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Normalize spaces in attribute values: {0}", NormalizeAttributeSpaces));
             sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- De-indent extensions: {0}", DeindentExtensions));
             sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Sort return codes: {0}", SortCodes));
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "- Align member names: {0}", AlignMemberNames));
             return sb.ToString();
         }
     }

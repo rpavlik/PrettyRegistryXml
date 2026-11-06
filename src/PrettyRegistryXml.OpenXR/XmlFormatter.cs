@@ -51,6 +51,11 @@ namespace PrettyRegistryXml.OpenXR
         /// </summary>
         private bool DeindentExtensions { get; set; }
 
+        /// <summary>
+        /// Whether to align the names of struct and union members in one column, a runtime preference set by the command line, on by default.
+        /// </summary>
+        private bool AlignMemberNames { get; set; }
+
         private readonly ReturnCodeSorter CodeSorter = new ReturnCodeSorter();
 
         /// <summary>
@@ -64,6 +69,7 @@ namespace PrettyRegistryXml.OpenXR
             NormalizeAttributeSpaces = options.NormalizeAttributeSpaces;
             SortReturnVals = options.SortCodes;
             DeindentExtensions = options.DeindentExtensions;
+            AlignMemberNames = options.AlignMemberNames;
         }
 
         /// <summary>
@@ -178,6 +184,93 @@ namespace PrettyRegistryXml.OpenXR
             return TextWhitespace.Behavior.Preserve;
         }
 
+        /// <summary>
+        /// Checks whether an element is a struct or union type definition.
+        /// </summary>
+        /// <param name="element">An element</param>
+        /// <returns>true if the element is a &lt;type&gt; with category "struct" or "union"</returns>
+        private static bool IsStructOrUnion(XElement element)
+        {
+            var category = element.Attribute("category");
+            return element.Name == "type"
+                   && category != null
+                   && (category.Value == "struct" || category.Value == "union");
+        }
+
+        /// <summary>
+        /// Escape text the way <see cref="XmlWriter"/> does, so that widths match the output.
+        /// </summary>
+        /// <param name="value">Text or an attribute value</param>
+        /// <param name="isAttribute">Whether the value is an attribute value, which also escapes quotes</param>
+        /// <returns>The escaped value</returns>
+        private static string EscapeXml(string value, bool isAttribute)
+        {
+            var escaped = value.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+            return isAttribute ? escaped.Replace("\"", "&quot;") : escaped;
+        }
+
+        /// <summary>
+        /// The width of a member as written up to its &lt;name&gt;.
+        /// </summary>
+        /// <param name="member">A &lt;member&gt; element</param>
+        /// <param name="name">Its &lt;name&gt; child</param>
+        /// <param name="includeTrailingWhitespace">Whether to count the whitespace just before &lt;name&gt;</param>
+        /// <returns>The number of characters before &lt;name&gt;, or before the whitespace that precedes it</returns>
+        private int MemberPrefixWidth(XElement member, XElement name, bool includeTrailingWhitespace = false)
+        {
+            var prefix = new System.Text.StringBuilder("<member");
+            foreach (var attr in member.Attributes())
+            {
+                prefix.Append(' ').Append(attr.Name.LocalName).Append("=\"").Append(EscapeXml(FormatAttributeValue(attr.Value), true)).Append('"');
+            }
+            prefix.Append('>');
+            foreach (var node in name.NodesBeforeSelf())
+            {
+                prefix.Append(node is XText text ? EscapeXml(text.Value, false) : node.ToString(SaveOptions.DisableFormatting));
+            }
+            var written = prefix.ToString();
+            return includeTrailingWhitespace ? written.Length : written.TrimEnd().Length;
+        }
+
+        /// <summary>
+        /// Pad the whitespace before each member's &lt;name&gt; so that all names start in one column,
+        /// one space past the longest member. Members already aligned in one column at least that wide
+        /// are left alone. The member with a "values" attribute (the sType member) keeps its spacing,
+        /// as in the existing registry.
+        /// </summary>
+        /// <param name="element">A struct or union &lt;type&gt; element</param>
+        private void AlignStructMemberNames(XElement element)
+        {
+            var members = (from member in element.Elements("member")
+                           where member.Attribute("values") == null
+                           let name = member.Element("name")
+                           where name != null
+                           select (member, name)).ToList();
+            if (members.Count < 2)
+            {
+                return;
+            }
+            var widths = members.Select(m => MemberPrefixWidth(m.member, m.name)).ToList();
+            var column = widths.Max() + 1;
+            var existingColumns = members.Select(m => MemberPrefixWidth(m.member, m.name, true)).Distinct().ToList();
+            if (existingColumns.Count == 1 && existingColumns[0] >= column)
+            {
+                return;
+            }
+            for (int i = 0; i < members.Count; ++i)
+            {
+                var padding = FormatterUtilities.MakeSpaces(column - widths[i]);
+                if (members[i].name.PreviousNode is XText text)
+                {
+                    text.Value = text.Value.TrimEnd() + padding;
+                }
+                else
+                {
+                    members[i].name.AddBeforeSelf(new XText(padding));
+                }
+            }
+        }
+
         private static bool IsEnum(XElement element) => element.Name == "enum";
 
         /// <inheritdoc />
@@ -247,6 +340,11 @@ namespace PrettyRegistryXml.OpenXR
                 }
             }
 
+            if (AlignMemberNames && IsStructOrUnion(element))
+            {
+                AlignStructMemberNames(element);
+            }
+
             // Now, only one of these paths should execute.
             if (ChildrenShouldBeSingleLine(element))
             {
@@ -314,17 +412,26 @@ namespace PrettyRegistryXml.OpenXR
         {
             foreach (var attr in e.Attributes())
             {
-                var value = attr.Value;
-                if (TrimAttributes)
-                {
-                    value = value.Trim();
-                }
-                if (NormalizeAttributeSpaces)
-                {
-                    value = Regex.Replace(value, "\\s+", " ");
-                }
-                writer.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, value);
+                writer.WriteAttributeString(attr.Name.LocalName, attr.Name.NamespaceName, FormatAttributeValue(attr.Value));
             }
+        }
+
+        /// <summary>
+        /// An attribute value as <see cref="WriteAttributes(XmlWriter, XElement)"/> writes it.
+        /// </summary>
+        /// <param name="value">The attribute value</param>
+        /// <returns>The value, trimmed and with spaces normalized if those options are set</returns>
+        private string FormatAttributeValue(string value)
+        {
+            if (TrimAttributes)
+            {
+                value = value.Trim();
+            }
+            if (NormalizeAttributeSpaces)
+            {
+                value = Regex.Replace(value, "\\s+", " ");
+            }
+            return value;
         }
 
         /// <inheritdoc />
