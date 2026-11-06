@@ -48,7 +48,12 @@ namespace PrettyRegistryXml.Vulkan
                     {
                         name = option.Substring(0, eqIndex);
                         string valStr = option.Substring(eqIndex + 1);
-                        bool.TryParse(valStr, out val);
+                        if (!bool.TryParse(valStr, out val))
+                        {
+                            Console.Error.WriteLine("Invalid value {0} for option {1}: expected true or false",
+                                                    valStr, name);
+                            Environment.Exit(1);
+                        }
                     }
                     else
                     {
