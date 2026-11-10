@@ -226,7 +226,19 @@ namespace PrettyRegistryXml.OpenXR
             prefix.Append('>');
             foreach (var node in name.NodesBeforeSelf())
             {
-                prefix.Append(node is XText text ? EscapeXml(text.Value, false) : node.ToString(SaveOptions.DisableFormatting));
+                if (node is XText text)
+                {
+                    // Count text as it will be written: WriteNode applies the whitespace behavior later.
+                    // The whitespace just before <name> is the padding being computed, so it stays as is.
+                    var value = node == name.PreviousNode
+                        ? text.Value
+                        : TextWhitespace.ApplyBehaviorNullable(ComputeWhitespaceBehavior(text), text.Value);
+                    prefix.Append(EscapeXml(value, false));
+                }
+                else
+                {
+                    prefix.Append(node.ToString(SaveOptions.DisableFormatting));
+                }
             }
             var written = prefix.ToString();
             return includeTrailingWhitespace ? written.Length : written.TrimEnd().Length;
