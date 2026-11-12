@@ -218,7 +218,8 @@ namespace PrettyRegistryXml.OpenXR
         /// <returns>The number of characters before &lt;name&gt;, or before the whitespace that precedes it</returns>
         private int MemberPrefixWidth(XElement member, XElement name, bool includeTrailingWhitespace = false)
         {
-            var prefix = new System.Text.StringBuilder("<member");
+            var prefix = new System.Text.StringBuilder("<");
+            prefix.Append(member.Name.LocalName);
             foreach (var attr in member.Attributes())
             {
                 prefix.Append(' ').Append(attr.Name.LocalName).Append("=\"").Append(EscapeXml(FormatAttributeValue(attr.Value), true)).Append('"');
@@ -247,14 +248,14 @@ namespace PrettyRegistryXml.OpenXR
         /// <summary>
         /// Pad the whitespace before each member's &lt;name&gt; so that all names start in one column,
         /// one space past the longest member. Members already aligned in one column at least that wide
-        /// are left alone. The member with a "values" attribute (the sType member) keeps its spacing,
-        /// as in the existing registry.
+        /// are left alone. The member with a "values" attribute (the <code>XrStructureType</code> member)
+        /// keeps its spacing, as in the existing registry.
         /// </summary>
-        /// <param name="element">A struct or union &lt;type&gt; element</param>
+        /// <param name="element">A struct or union &lt;type&gt; element (child of &lt;types&gt;)</param>
         private void AlignStructMemberNames(XElement element)
         {
             var members = (from member in element.Elements("member")
-                           where member.Attribute("values") == null
+                           where member.Attribute("values") == null // exclude the type member
                            let name = member.Element("name")
                            where name != null
                            select (member, name)).ToList();
@@ -262,13 +263,22 @@ namespace PrettyRegistryXml.OpenXR
             {
                 return;
             }
+            // we need this per-member width later
             var widths = members.Select(m => MemberPrefixWidth(m.member, m.name)).ToList();
+
+            // where we will align to
             var column = widths.Max() + 1;
+
+            // where members are currently aligned to (including whitespace)
             var existingColumns = members.Select(m => MemberPrefixWidth(m.member, m.name, true)).Distinct().ToList();
+
             if (existingColumns.Count == 1 && existingColumns[0] >= column)
             {
+                // Everything is already aligned to a larger column than we require, leave it alone
                 return;
             }
+
+            // Adjust each struct member's alignment
             for (int i = 0; i < members.Count; ++i)
             {
                 var padding = FormatterUtilities.MakeSpaces(column - widths[i]);
