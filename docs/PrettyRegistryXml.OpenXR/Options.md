@@ -11,6 +11,7 @@ public class Options
 | [Options](Options/Options.md)() | The default constructor. |
 | static [Parse](Options/Parse.md)(…) |  |
 | [ActualOutputFile](Options/ActualOutputFile.md) { get; } | This will be [`OutputFile`](./Options/OutputFile.md), if set, otherwise [`InputFile`](./Options/InputFile.md) |
+| [AlignMemberNames](Options/AlignMemberNames.md) { get; set; } |  |
 | [DeindentExtensions](Options/DeindentExtensions.md) { get; set; } |  |
 | [InputFile](Options/InputFile.md) { get; set; } |  |
 | [NormalizeAttributeSpaces](Options/NormalizeAttributeSpaces.md) { get; set; } |  |
