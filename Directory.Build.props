@@ -14,6 +14,7 @@
         <Company>Collabora, Ltd.</Company>
         <!-- augment this with license data in individual projects -->
         <Copyright>Copyright 2021-2026, $(Company)</Copyright>
+        <BaseCopyright>$(Copyright)</BaseCopyright>
 
         <!-- augment this here or in individual projects as appropriate -->
         <Authors>Rylie Pavlik (Collabora, Ltd.)</Authors>
